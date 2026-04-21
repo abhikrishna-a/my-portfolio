@@ -1,16 +1,16 @@
 import React, { useEffect } from 'react';
-import Navbar from './components/Navbar'
-import Hero from './components/Hero'
-import Marquee from './components/Marquee'
-import SkillsStack from './components/SkillsStack'
-import PortfolioGrid from './components/PortfolioGrid'
-import Footer from './components/Footer'
+import Navbar from './components/layout/Navbar'
+import Hero from './components/sections/Hero'
+import Marquee from './components/ui/Marquee'
+import SkillsStack from './components/sections/SkillsStack'
+import PortfolioGrid from './components/sections/PortfolioGrid'
+import Footer from './components/layout/Footer'
 import useSmoothScroll from './hooks/useSmoothScroll'
-import Reveal from './components/Reveal'
-import CustomCursor from './components/CustomCursor'
-import Preloader from './components/Preloader'
-import ThemeToggle from './components/ThemeToggle'
-import AnimatedCounter from './components/AnimatedCounter'
+import Reveal from './components/ui/Reveal'
+import CustomCursor from './components/layout/CustomCursor'
+import Preloader from './components/layout/Preloader'
+import ThemeToggle from './components/ui/ThemeToggle'
+import AnimatedCounter from './components/ui/AnimatedCounter'
 
 function App() {
   useEffect(() => {

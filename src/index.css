@@ -26,7 +26,6 @@
   }
 
   html {
-    @apply scroll-smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -98,4 +97,47 @@ html.lenis body {
 .sticky-card {
   position: sticky;
   top: 100px;
+}
+
+/* Scroll Mouse Animation */
+@keyframes scroll-dot {
+  0% { transform: translateY(0); opacity: 1; }
+  50% { transform: translateY(8px); opacity: 0.5; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+.animate-scroll-dot {
+  animation: scroll-dot 2s infinite ease-in-out;
+}
+/* GPU Acceleration - Prevent layout thrashing during scroll */
+html {
+  scroll-behavior: auto !important;
+}
+
+body * {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  will-change: auto;
+}
+
+/* Animations with GPU acceleration */
+.animate-revealUp,
+.animate-revealDown,
+.animate-fadeIn,
+.animate-scaleUp {
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  perspective: 1000px;
+  -webkit-perspective: 1000px;
+}
+
+/* Framer Motion elements */
+[style*="transform"],
+[style*="opacity"] {
+  will-change: auto;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }

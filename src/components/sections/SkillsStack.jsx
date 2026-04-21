@@ -1,6 +1,6 @@
-import { motion } from 'framer-motion';
-import Reveal from './Reveal';
-import { Layout, Codepen, Globe, Database, Smartphone, Palette } from 'lucide-react';
+import { motion } from "framer-motion";
+import Reveal from "../ui/Reveal";
+import { Layout, Codepen, Globe, Database, Smartphone, Palette, Code } from "lucide-react";
 
 const skills = [
   {
@@ -8,34 +8,27 @@ const skills = [
     description: "Building immersive user interfaces using modern frameworks like React, Next.js, and Vite. Expertise in Tailwind CSS and advanced animations with Framer Motion.",
     icon: <Layout className="w-12 h-12 text-primary" />,
     color: "bg-card",
-    tags: ["HTML", "JavaScript", "TailwindCSS", "Framer Motion"],
+    tags: ["HTML","TailwindCSS","JavaScript", "React", "Redux"],
   },
   {
     title: "Backend Development",
-    description: "Architecting robust server-side applications with Node.js, Express, and PostgreSQL. Focused on scalability, performance, and secure API design.",
+    description: "Architecting robust server-side applications with Django REST Framework, ORM, and PostgreSQL. Focused on scalability, performance, and secure API design.",
     icon: <Database className="w-12 h-12 text-primary" />,
     color: "bg-card",
-    tags: ["Node.js", "Express", "PostgreSQL", "Prisma"],
+    tags: ["Django REST Framework", "REST API", "ORM", "PostgreSQL"],
   },
   {
-    title: "UI/UX Design",
-    description: "Crafting visually stunning designs and seamless user flows. Specialized in creating high-fidelity prototypes and design systems.",
-    icon: <Palette className="w-12 h-12 text-primary" />,
+    title: "Programming Languages",
+    description: "Building efficient and scalable solutions with a strong command of both back-end and front-end languages � writing clean, maintainable code across the full stack.",
+    icon: <Code className="w-12 h-12 text-primary" />,
     color: "bg-card",
-    tags: ["Figma", "Web Design", "Design Systems", "Prototyping"],
-  },
-  {
-    title: "Performance Optimization",
-    description: "Analyzing and optimizing web performance for lightning-fast load times. Expert in SEO best practices and core web vitals.",
-    icon: <Globe className="w-12 h-12 text-primary" />,
-    color: "bg-card",
-    tags: ["SEO", "Web Vitals", "Lighthouse", "Edge Computing"],
+    tags: ["Python", "JavaScript"],
   },
 ];
 
 const SkillsStack = () => {
   return (
-    <section id="skills" className="py-20 px-6 max-w-7xl mx-auto flex flex-col gap-8">
+    <section id="skills" className="py-20 px-6 max-w-7xl mx-auto flex flex-col gap-8 relative">
       <Reveal>
         <div className="flex flex-col mb-12">
           <h2 className="text-sm font-bold tracking-[0.3em] uppercase text-gray-400 mb-2">Capabilities</h2>
@@ -43,7 +36,7 @@ const SkillsStack = () => {
         </div>
       </Reveal>
 
-      <div className="flex flex-col gap-10">
+      <div className="flex flex-col gap-10 relative">
         {skills.map((skill, index) => (
           <Reveal key={index} delay={index * 0.15} width="100%">
             <div

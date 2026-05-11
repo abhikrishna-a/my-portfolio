@@ -1,22 +1,25 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useMemo } from 'react';
 
 const useInView = (options = {}) => {
   const [isInView, setIsInView] = useState(false);
   const ref = useRef(null);
 
+  const { once = true, margin = "-100px", ...observerOptions } = options;
+  const memoizedOptions = useMemo(() => observerOptions, [observerOptions.root, observerOptions.threshold]);
+
   useEffect(() => {
     const observer = new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting) {
         setIsInView(true);
-        if (options.once) {
+        if (once) {
           observer.unobserve(entry.target);
         }
       } else {
-        if (!options.once) {
+        if (!once) {
           setIsInView(false);
         }
       }
-    }, options);
+    }, { margin, ...memoizedOptions });
 
     const currentRef = ref.current;
     if (currentRef) {
@@ -28,7 +31,7 @@ const useInView = (options = {}) => {
         observer.unobserve(currentRef);
       }
     };
-  }, [options]);
+  }, [margin, once, memoizedOptions]);
 
   return [ref, isInView];
 };

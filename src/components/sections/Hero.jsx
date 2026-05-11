@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
 import Reveal from '../ui/Reveal';
 import profileImg from '../../assets/Abhi.jpeg';
+import useParallax from '../../hooks/useParallax';
 
 const AnimatedText = ({ text, className, delay = 0 }) => {
   const letters = Array.from(text);
@@ -9,32 +9,35 @@ const AnimatedText = ({ text, className, delay = 0 }) => {
   return (
     <h1 className={`flex overflow-hidden ${className}`}>
       {letters.map((letter, index) => (
-        <motion.span
+        <span
           key={index}
-          initial={{ y: "100%", opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{
-            duration: 0.8,
-            delay: delay + (index * 0.05),
-            ease: [0.215, 0.61, 0.355, 1]
+          className="inline-block animate-revealUp"
+          style={{
+            animationDuration: '0.8s',
+            animationDelay: `${delay + (index * 0.05)}s`,
+            animationTimingFunction: 'cubic-bezier(0.215, 0.61, 0.355, 1)'
           }}
-          className="inline-block"
         >
           {letter === " " ? "\u00A0" : letter}
-        </motion.span>
+        </span>
       ))}
     </h1>
   );
 };
 
 const ScrollIndicator = ({ delay }) => {
-  const { scrollY } = useScroll();
-  const opacity = useTransform(scrollY, [0, 100], [1, 0]);
-  const scale = useTransform(scrollY, [0, 100], [1, 0.8]);
+  const scrollY = useParallax();
+  const progress = Math.min(scrollY / 100, 1);
+  const opacity = 1 - progress;
+  const scale = 1 - (progress * 0.2);
 
   return (
-    <motion.div 
-      style={{ opacity, scale }}
+    <div
+      style={{
+        opacity,
+        transform: `scale(${scale})`,
+        willChange: 'opacity, transform'
+      }}
       className="mt-20 flex flex-col items-center"
     >
       <Reveal delay={delay} yOffset={10}>
@@ -47,47 +50,48 @@ const ScrollIndicator = ({ delay }) => {
           </span>
         </div>
       </Reveal>
-    </motion.div>
+    </div>
   );
 };
 
 const Hero = () => {
   const containerRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end start"]
-  });
+  const scrollY = useParallax();
 
-  const y1 = useTransform(scrollYProgress, [0, 1], [0, -200]);
-  const y2 = useTransform(scrollYProgress, [0, 1], [0, 150]);
-  const xLeft = useTransform(scrollYProgress, [0, 1], [0, -100]);
-  const xRight = useTransform(scrollYProgress, [0, 1], [0, 100]);
-  const scrollScale = useTransform(scrollYProgress, [0, 1], [1, 1.2]);
-  const rotate = useTransform(scrollYProgress, [0, 1], [0, 5]);
+  // Calculate progress assuming hero is 100vh
+  // To avoid errors before mount, assume 1000px if window is undefined
+  const vh = typeof window !== 'undefined' ? window.innerHeight : 1000;
+  const progress = Math.min(Math.max(scrollY / vh, 0), 1);
+
+  const y1 = progress * -200;
+  const y2 = progress * 150;
+  const xLeft = progress * -100;
+  const xRight = progress * 100;
+  const scrollScale = 1 + (progress * 0.2);
+  const rotate = progress * 5;
 
   return (
-    <section 
-      id="home" 
+    <section
+      id="home"
       ref={containerRef}
       className="min-h-screen flex flex-col items-center justify-center pt-20 px-6 overflow-hidden relative"
     >
       <div className="max-w-7xl w-full flex flex-col items-center relative z-10">
         {/* Name Headline - Split Design */}
         <div className="flex flex-col items-center leading-[0.8] tracking-tighter uppercase font-black text-7xl md:text-9xl lg:text-[14rem]">
-          <motion.div style={{ x: xLeft, y: y1 }}>
+          <div style={{ transform: `translate(${xLeft}px, ${y1}px)`, willChange: 'transform' }}>
             <AnimatedText text="Creative" className="text-foreground" delay={1.6} />
-          </motion.div>
+          </div>
 
           {/* Profile Image Badge - Floating in the middle */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, delay: 1.8, ease: [0.215, 0.61, 0.355, 1] }}
-            className="w-48 h-48 md:w-64 md:h-64 rounded-full overflow-hidden border-8 border-white dark:border-[#111] shadow-2xl z-10 -my-4 md:-my-8 bg-primary/10 flex items-center justify-center relative"
-            style={{ 
-              scale: scrollScale,
-              rotate,
-              y: y2
+          <div
+            className="w-48 h-48 md:w-64 md:h-64 rounded-full overflow-hidden border-8 border-white dark:border-[#111] shadow-2xl z-10 -my-4 md:-my-8 bg-primary/10 flex items-center justify-center relative animate-scaleUp"
+            style={{
+              animationDelay: '1.8s',
+              animationDuration: '1s',
+              animationTimingFunction: 'cubic-bezier(0.215, 0.61, 0.355, 1)',
+              transform: `translateY(${y2}px) scale(${scrollScale}) rotate(${rotate}deg)`,
+              willChange: 'transform'
             }}
           >
             <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-transparent"></div>
@@ -97,11 +101,11 @@ const Hero = () => {
               className="w-full h-full object-cover object-[center_15%] grayscale hover:grayscale-0 transition-all duration-500"
             />
             <div className="absolute inset-0 border-2 border-white/20 dark:border-white/5 rounded-full"></div>
-          </motion.div>
+          </div>
 
-          <motion.div style={{ x: xRight, y: y1 }}>
+          <div style={{ transform: `translate(${xRight}px, ${y1}px)`, willChange: 'transform' }}>
             <AnimatedText text="Developer" className="text-primary z-20" delay={1.7} />
-          </motion.div>
+          </div>
         </div>
 
         {/* Subtitle / Intro */}

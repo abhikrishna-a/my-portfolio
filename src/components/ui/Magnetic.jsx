@@ -1,5 +1,4 @@
 import React, { useRef, useState } from 'react';
-import { motion } from 'framer-motion';
 
 const Magnetic = ({ children }) => {
   const ref = useRef(null);
@@ -20,16 +19,19 @@ const Magnetic = ({ children }) => {
 
   const { x, y } = position;
   return (
-    <motion.div
-      style={{ position: 'relative', display: 'inline-block' }}
+    <div
+      style={{ 
+        position: 'relative', 
+        display: 'inline-block',
+        transform: `translate(${x}px, ${y}px)`,
+        transition: x === 0 && y === 0 ? 'transform 0.5s cubic-bezier(0.25, 1, 0.5, 1)' : 'transform 0.1s linear'
+      }}
       ref={ref}
       onMouseMove={handleMouse}
       onMouseLeave={reset}
-      animate={{ x, y }}
-      transition={{ type: 'spring', stiffness: 150, damping: 15, mass: 0.1 }}
     >
       {children}
-    </motion.div>
+    </div>
   );
 };
 

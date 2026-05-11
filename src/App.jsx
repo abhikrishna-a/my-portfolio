@@ -9,7 +9,6 @@ import useSmoothScroll from './hooks/useSmoothScroll'
 import Reveal from './components/ui/Reveal'
 import CustomCursor from './components/layout/CustomCursor'
 import Preloader from './components/layout/Preloader'
-import ThemeToggle from './components/ui/ThemeToggle'
 import AnimatedCounter from './components/ui/AnimatedCounter'
 
 function App() {
@@ -26,7 +25,6 @@ function App() {
     <main className="min-h-screen bg-background text-foreground overflow-x-hidden selection:bg-primary selection:text-white transition-colors duration-500">
       <Preloader />
       <CustomCursor />
-      <ThemeToggle />
       {/* Background Subtle Gradient */}
       <div className="fixed inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(230,126,34,0.05),_transparent_50%)] pointer-events-none"></div>
       

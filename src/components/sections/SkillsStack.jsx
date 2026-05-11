@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import Reveal from "../ui/Reveal";
 import { Layout, Codepen, Globe, Database, Smartphone, Palette, Code } from "lucide-react";
 

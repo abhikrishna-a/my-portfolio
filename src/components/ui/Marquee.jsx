@@ -1,5 +1,4 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 
 const stats = [
   "10+ HOURS OF CODING •",
@@ -14,14 +13,11 @@ const Marquee = () => {
   return (
     <div className="relative w-full py-12 md:py-20 bg-black text-white overflow-hidden transform skew-y-2 translate-y-[-2rem] z-20">
       <div className="flex whitespace-nowrap">
-        <motion.div
-          animate={{ x: ["0%", "-50%"] }}
-          transition={{
-            duration: 20,
-            ease: "linear",
-            repeat: Infinity,
-          }}
+        <div
           className="flex items-center gap-8 text-4xl md:text-6xl font-black uppercase tracking-tighter"
+          style={{
+            animation: "marquee 20s linear infinite",
+          }}
         >
           {/* Double content for seamless looping */}
           {[...stats, ...stats].map((stat, index) => (
@@ -29,8 +25,14 @@ const Marquee = () => {
               {stat}
             </span>
           ))}
-        </motion.div>
+        </div>
       </div>
+      <style>{`
+        @keyframes marquee {
+          0% { transform: translateX(0%); }
+          100% { transform: translateX(-50%); }
+        }
+      `}</style>
     </div>
   );
 };

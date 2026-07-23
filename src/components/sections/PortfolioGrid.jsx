@@ -49,11 +49,12 @@ const ProjectCard = ({ project, index, onClick }) => {
       <button
         type="button"
         onClick={() => onClick(project)}
-        className="group relative w-full overflow-hidden rounded-[2rem] border border-black/5 bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(244,244,244,0.96))] text-left transition-all duration-500 hover:-translate-y-2 hover:border-primary/20 hover:shadow-[0_30px_80px_-40px_rgba(230,126,34,0.45)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 focus-visible:ring-offset-4 dark:border-white/10 dark:bg-[linear-gradient(180deg,rgba(22,22,22,0.96),rgba(12,12,12,0.98))] dark:hover:border-primary/20 dark:hover:shadow-[0_30px_80px_-40px_rgba(230,126,34,0.22)]"
+        className="group relative w-full overflow-hidden rounded-[2rem] border border-black/5 bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(244,244,244,0.96))] text-left transition-all duration-700 hover:-translate-y-3 hover:border-primary/30 hover:shadow-[0_40px_100px_-20px_rgba(230,126,34,0.50)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 focus-visible:ring-offset-4 dark:border-white/10 dark:bg-[linear-gradient(180deg,rgba(22,22,22,0.96),rgba(12,12,12,0.98))] dark:hover:border-primary/30 dark:hover:shadow-[0_40px_100px_-20px_rgba(230,126,34,0.28)]"
         aria-label={`Open ${project.title} project`}
       >
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(230,126,34,0.16),transparent_34%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-        <div className="absolute inset-x-0 top-0 h-28 bg-[linear-gradient(180deg,rgba(230,126,34,0.10),transparent)] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(230,126,34,0.22),transparent_34%)] opacity-0 transition-opacity duration-700 group-hover:opacity-100" />
+        <div className="absolute inset-x-0 top-0 h-28 bg-[linear-gradient(180deg,rgba(230,126,34,0.12),transparent)] opacity-0 transition-opacity duration-700 group-hover:opacity-100" />
+        <div className="absolute inset-x-0 bottom-0 h-20 bg-[linear-gradient(0deg,rgba(230,126,34,0.06),transparent)] opacity-0 transition-opacity duration-700 group-hover:opacity-100" />
 
         <div className="relative flex items-center justify-between border-b border-black/5 px-6 py-5 text-[10px] font-bold uppercase tracking-[0.34em] text-gray-500 dark:border-white/10">
           <span>{project.category}</span>
@@ -61,12 +62,12 @@ const ProjectCard = ({ project, index, onClick }) => {
         </div>
 
         <div className="relative aspect-[5/6] overflow-hidden p-5 md:p-6">
-          <div className="absolute inset-x-5 bottom-0 top-5 rounded-[1.6rem] border border-black/5 bg-[linear-gradient(180deg,rgba(249,249,249,0.92),rgba(241,241,241,0.96))] transition-all duration-500 group-hover:border-primary/15 group-hover:bg-[linear-gradient(180deg,rgba(255,250,245,0.96),rgba(255,244,232,0.98))] dark:border-white/10 dark:bg-[linear-gradient(180deg,rgba(24,24,24,0.96),rgba(14,14,14,0.98))] dark:group-hover:border-primary/15 dark:group-hover:bg-[linear-gradient(180deg,rgba(40,24,12,0.96),rgba(18,18,18,0.98))]" />
-          <div className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-[1.45rem] border border-black/5 bg-white shadow-[0_18px_40px_-30px_rgba(0,0,0,0.25)] transition-all duration-500 group-hover:-translate-y-1 group-hover:border-primary/20 group-hover:shadow-[0_24px_60px_-32px_rgba(230,126,34,0.32)] dark:border-white/10 dark:bg-[#181818]">
+          <div className="absolute inset-x-5 bottom-0 top-5 rounded-[1.6rem] border border-black/5 bg-[linear-gradient(180deg,rgba(249,249,249,0.92),rgba(241,241,241,0.96))] transition-all duration-700 group-hover:border-primary/25 group-hover:shadow-[inset_0_0_40px_-12px_rgba(230,126,34,0.18)] group-hover:bg-[linear-gradient(180deg,rgba(255,250,245,0.98),rgba(255,244,232,0.99))] dark:border-white/10 dark:bg-[linear-gradient(180deg,rgba(24,24,24,0.96),rgba(14,14,14,0.98))] dark:group-hover:border-primary/25 dark:group-hover:bg-[linear-gradient(180deg,rgba(40,24,12,0.96),rgba(18,18,18,0.98))]" />
+          <div className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-[1.45rem] border border-black/5 bg-white shadow-[0_18px_40px_-30px_rgba(0,0,0,0.25)] transition-all duration-700 group-hover:-translate-y-1.5 group-hover:border-primary/30 group-hover:shadow-[0_30px_70px_-32px_rgba(230,126,34,0.40)] dark:border-white/10 dark:bg-[#181818]">
             <img
               src={project.image}
               alt={project.title}
-              className="h-full w-full object-contain p-4 md:p-5 transition-transform duration-500 group-hover:scale-[1.04]"
+              className="h-full w-full object-contain p-4 md:p-5 transition-transform duration-700 group-hover:scale-[1.06]"
             />
           </div>
         </div>
@@ -88,15 +89,21 @@ const ProjectCard = ({ project, index, onClick }) => {
 
           <div className="mt-4 flex flex-wrap gap-2.5">
             {project.tags.map(tag => (
-              <span key={tag} className="rounded-full border border-black/5 bg-black/[0.03] px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-widest text-gray-600 transition-colors duration-300 group-hover:border-primary/20 group-hover:bg-primary/[0.08] dark:border-white/10 dark:bg-white/[0.03] dark:text-gray-300 dark:group-hover:border-primary/20 dark:group-hover:bg-primary/[0.14]">
+              <span key={tag} className="rounded-full border border-black/5 bg-black/[0.03] px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-widest text-gray-600 transition-all duration-500 group-hover:border-primary/30 group-hover:bg-primary/[0.10] group-hover:text-primary dark:border-white/10 dark:bg-white/[0.03] dark:text-gray-300 dark:group-hover:border-primary/30 dark:group-hover:bg-primary/[0.16]">
                 {tag}
               </span>
             ))}
           </div>
 
-          <div className="mt-6 flex items-center justify-between border-t border-black/5 pt-4 text-xs font-bold uppercase tracking-[0.24em] text-gray-500 transition-colors duration-300 group-hover:border-primary/15 dark:border-white/10 dark:group-hover:border-primary/15">
-            <span className="transition-colors duration-300 group-hover:text-primary">Open Project</span>
-            <span className="transition-transform duration-300 group-hover:translate-x-1">Case Study</span>
+          <div className="mt-6 flex items-center justify-between border-t border-black/5 pt-4 text-xs font-bold uppercase tracking-[0.24em] text-gray-500 transition-all duration-500 group-hover:border-primary/20 dark:border-white/10 dark:group-hover:border-primary/20">
+            <span className="inline-flex items-center gap-2 transition-all duration-500 group-hover:text-primary group-hover:translate-x-1">
+              Open Project
+              <span className="block h-px w-0 bg-primary transition-all duration-500 group-hover:w-8" />
+            </span>
+            <span className="inline-flex items-center gap-2 transition-all duration-500 group-hover:translate-x-2 group-hover:text-primary/80">
+              Case Study
+              <ArrowUpRight size={14} className="transition-transform duration-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </span>
           </div>
         </div>
       </button>
@@ -114,7 +121,10 @@ const PortfolioGrid = () => {
           <div className="mb-14 grid gap-8 md:mb-16 md:grid-cols-[minmax(0,1.35fr)_minmax(260px,0.65fr)] md:items-end">
             <div className="max-w-3xl">
               <Reveal>
-                <h2 className="text-sm font-bold tracking-[0.4em] uppercase text-gray-400 mb-6">Selected Works</h2>
+                <div className="flex items-center gap-4 mb-6">
+                  <span className="h-px w-8 bg-primary/60" />
+                  <h2 className="text-sm font-bold tracking-[0.4em] uppercase text-gray-400">Selected Works</h2>
+                </div>
               </Reveal>
               <Reveal delay={0.2}>
                 <h3 className="text-4xl md:text-6xl font-black tracking-tighter leading-[0.95] text-foreground">

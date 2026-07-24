@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -13,6 +13,7 @@
     --border: #e5e7eb;
     --card: #F4F4F4;
     --muted: #6b7280;
+    --amber: #ffb454;
   }
 
   .dark {
@@ -23,14 +24,17 @@
     --border: #333333;
     --card: #111111;
     --muted: #9ca3af;
+    --amber: #ffb454;
   }
 
   html {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(230,126,34,0.35) transparent;
   }
-  
-  /* Hide default cursor on desktop for custom experience */
+
   @media (min-width: 1024px) {
     body, a, button {
       cursor: none !important;
@@ -46,99 +50,30 @@
   .no-scrollbar::-webkit-scrollbar {
     display: none;
   }
-
   .no-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
 }
 
-/* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 5px;
 }
-
 ::-webkit-scrollbar-track {
-  background: #F1F1F1;
+  background: transparent;
 }
-
 ::-webkit-scrollbar-thumb {
-  background: #D1D1D1;
+  background: rgba(230,126,34,0.35);
   border-radius: 4px;
 }
-
 ::-webkit-scrollbar-thumb:hover {
-  background: #B1B1B1;
+  background: rgba(230,126,34,0.55);
 }
 
-html {
-  scroll-behavior: smooth;
-}
-
-@keyframes revealUp {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes revealDown {
-  from { opacity: 0; transform: translateY(-30px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes scaleUp {
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
-}
-
-.animate-revealUp {
-  animation-name: revealUp;
-  animation-fill-mode: both;
-}
-
-.animate-revealDown {
-  animation-name: revealDown;
-  animation-fill-mode: both;
-}
-
-.animate-fadeIn {
-  animation-name: fadeIn;
-  animation-fill-mode: both;
-}
-
-.animate-scaleUp {
-  animation-name: scaleUp;
-  animation-fill-mode: both;
-}
-
-/* Sticky Stacking Animation Utilities */
-.sticky-card {
-  position: sticky;
-  top: 100px;
-}
-
-/* Scroll Mouse Animation */
-@keyframes scroll-dot {
-  0% { transform: translateY(0); opacity: 1; }
-  50% { transform: translateY(8px); opacity: 0.5; }
-  100% { transform: translateY(0); opacity: 1; }
-}
-
-.animate-scroll-dot {
-  animation: scroll-dot 2s infinite ease-in-out;
-}
-
-/* Animations */
-.animate-revealUp,
-.animate-revealDown,
-.animate-fadeIn,
-.animate-scaleUp {
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { ArrowUpRight } from 'lucide-react';
 import Reveal from '../ui/Reveal';
 import ProjectShowcase from './ProjectShowcase';
@@ -12,10 +12,7 @@ const projects = [
     description: "A clean, modern platform designed to help students confidently manage courses, track progress, and crush academic goals without the clutter.",
     link: "https://student-management-eight-rho.vercel.app/",
     github: "https://github.com/abhikrishna-a/student-management",
-    screenshots: [
-      "/edusphere-1.png",
-      "/edusphere-2.png"
-    ]
+    screenshots: ["/edusphere-1.png", "/edusphere-2.png"]
   },
   {
     title: "Sprint.X",
@@ -24,23 +21,8 @@ const projects = [
     tags: ["React", "JavaScript", "Django"],
     description: "A clean e-commerce app built with full frontend and backend functionality, focused on smooth shopping, clear product discovery, and a simple user-friendly experience.",
     github: "https://github.com/abhikrishna-a/Ecommerce_online",
-    screenshots: [
-      "/SprintX1.png",
-      "/SprintX2.png"
-    ]
+    screenshots: ["/SprintX1.png", "/SprintX2.png"]
   },
-  // {
-  //   title: "Aether Brand Identity",
-  //   category: "Branding",
-  //   image: "https://images.unsplash.com/photo-1558655146-d09347e92766?w=800&auto=format&fit=crop&q=60",
-  //   tags: ["Typography", "Logo", "Styleguide"]
-  // },
-  // {
-  //   title: "Lumina E-Commerce",
-  //   category: "E-Commerce",
-  //   image: "https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=800&auto=format&fit=crop&q=60",
-  //   tags: ["Next.js", "Stripe", "Tailwind"]
-  // }
 ];
 
 const ProjectCard = ({ project, index, onClick }) => {
@@ -49,21 +31,30 @@ const ProjectCard = ({ project, index, onClick }) => {
       <button
         type="button"
         onClick={() => onClick(project)}
-        className="group relative w-full overflow-hidden rounded-[2rem] border border-black/5 bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(244,244,244,0.96))] text-left transition-all duration-700 hover:-translate-y-3 hover:border-primary/30 hover:shadow-[0_40px_100px_-20px_rgba(230,126,34,0.50)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 focus-visible:ring-offset-4 dark:border-white/10 dark:bg-[linear-gradient(180deg,rgba(22,22,22,0.96),rgba(12,12,12,0.98))] dark:hover:border-primary/30 dark:hover:shadow-[0_40px_100px_-20px_rgba(230,126,34,0.28)]"
+        className="group relative w-full overflow-hidden rounded-[2rem] text-left transition-all duration-700 hover:-translate-y-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 focus-visible:ring-offset-4 backdrop-blur-2xl bg-black/70 border border-white/10"
         aria-label={`Open ${project.title} project`}
       >
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(230,126,34,0.22),transparent_34%)] opacity-0 transition-opacity duration-700 group-hover:opacity-100" />
-        <div className="absolute inset-x-0 top-0 h-28 bg-[linear-gradient(180deg,rgba(230,126,34,0.12),transparent)] opacity-0 transition-opacity duration-700 group-hover:opacity-100" />
-        <div className="absolute inset-x-0 bottom-0 h-20 bg-[linear-gradient(0deg,rgba(230,126,34,0.06),transparent)] opacity-0 transition-opacity duration-700 group-hover:opacity-100" />
+        {/* Hover glow */}
+        <div
+          className="absolute inset-0 opacity-0 transition-opacity duration-700 group-hover:opacity-100"
+          style={{
+            background: 'radial-gradient(circle at top right, rgba(230,126,34,0.15), transparent 34%)',
+            boxShadow: '0 40px 100px -20px rgba(230,126,34,0.20)',
+          }}
+        />
 
-        <div className="relative flex items-center justify-between border-b border-black/5 px-6 py-5 text-[10px] font-bold uppercase tracking-[0.34em] text-gray-500 dark:border-white/10">
-          <span>{project.category}</span>
-          <span className="transition-colors duration-300 group-hover:text-primary">Selected Project</span>
+        <div className="relative flex items-center justify-between border-b border-white/10 px-6 py-5">
+          <span className="font-mono text-[10px] font-bold uppercase tracking-[0.34em] text-gray-500">
+            {project.category}
+          </span>
+          <span className="font-mono text-[10px] font-bold uppercase tracking-[0.34em] text-gray-500 transition-colors duration-300 group-hover:text-primary">
+            Selected Project
+          </span>
         </div>
 
         <div className="relative aspect-[5/6] overflow-hidden p-5 md:p-6">
-          <div className="absolute inset-x-5 bottom-0 top-5 rounded-[1.6rem] border border-black/5 bg-[linear-gradient(180deg,rgba(249,249,249,0.92),rgba(241,241,241,0.96))] transition-all duration-700 group-hover:border-primary/25 group-hover:shadow-[inset_0_0_40px_-12px_rgba(230,126,34,0.18)] group-hover:bg-[linear-gradient(180deg,rgba(255,250,245,0.98),rgba(255,244,232,0.99))] dark:border-white/10 dark:bg-[linear-gradient(180deg,rgba(24,24,24,0.96),rgba(14,14,14,0.98))] dark:group-hover:border-primary/25 dark:group-hover:bg-[linear-gradient(180deg,rgba(40,24,12,0.96),rgba(18,18,18,0.98))]" />
-          <div className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-[1.45rem] border border-black/5 bg-white shadow-[0_18px_40px_-30px_rgba(0,0,0,0.25)] transition-all duration-700 group-hover:-translate-y-1.5 group-hover:border-primary/30 group-hover:shadow-[0_30px_70px_-32px_rgba(230,126,34,0.40)] dark:border-white/10 dark:bg-[#181818]">
+          <div className="absolute inset-x-5 bottom-0 top-5 rounded-[1.6rem] border border-white/10 bg-black/80 transition-all duration-700 group-hover:border-primary/25" />
+          <div className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-[1.45rem] border border-white/10 bg-black shadow-[0_18px_40px_-30px_rgba(0,0,0,0.50)] transition-all duration-700 group-hover:-translate-y-1.5 group-hover:border-primary/30 group-hover:shadow-[0_0_12px_rgba(230,126,34,0.30)]">
             <img
               src={project.image}
               alt={project.title}
@@ -75,27 +66,32 @@ const ProjectCard = ({ project, index, onClick }) => {
         <div className="relative p-6 md:p-7">
           <div className="mb-4 flex items-start justify-between gap-4">
             <div>
-              <h3 className="text-2xl md:text-[2rem] font-black tracking-tight leading-none">{project.title}</h3>
+              <h3 className="font-mono text-2xl md:text-[2rem] font-black tracking-tight leading-none">
+                {project.title}
+              </h3>
               {project.description && (
                 <p className="mt-4 line-clamp-3 max-w-xl text-sm font-medium leading-relaxed text-foreground/78 md:text-[15px]">
                   {project.description}
                 </p>
               )}
             </div>
-            <span className="mt-1 inline-flex h-12 w-12 items-center justify-center rounded-full border border-black/5 bg-background text-foreground transition-all duration-300 group-hover:-translate-y-1 group-hover:border-primary/20 group-hover:bg-primary group-hover:text-white dark:border-white/10">
+            <span className="mt-1 inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-black text-foreground transition-all duration-300 group-hover:-translate-y-1 group-hover:border-primary/20 group-hover:bg-primary group-hover:text-black">
               <ArrowUpRight size={18} />
             </span>
           </div>
 
           <div className="mt-4 flex flex-wrap gap-2.5">
             {project.tags.map(tag => (
-              <span key={tag} className="rounded-full border border-black/5 bg-black/[0.03] px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-widest text-gray-600 transition-all duration-500 group-hover:border-primary/30 group-hover:bg-primary/[0.10] group-hover:text-primary dark:border-white/10 dark:bg-white/[0.03] dark:text-gray-300 dark:group-hover:border-primary/30 dark:group-hover:bg-primary/[0.16]">
+              <span
+                key={tag}
+                className="rounded-full border border-primary-hair px-3.5 py-1.5 font-mono text-[10px] font-bold uppercase tracking-widest text-primary transition-all duration-500 group-hover:border-primary/50 group-hover:bg-primary/10"
+              >
                 {tag}
               </span>
             ))}
           </div>
 
-          <div className="mt-6 flex items-center justify-between border-t border-black/5 pt-4 text-xs font-bold uppercase tracking-[0.24em] text-gray-500 transition-all duration-500 group-hover:border-primary/20 dark:border-white/10 dark:group-hover:border-primary/20">
+          <div className="mt-6 flex items-center justify-between border-t border-white/10 pt-4 text-xs font-mono font-bold uppercase tracking-[0.24em] text-gray-500 transition-all duration-500 group-hover:border-primary/20">
             <span className="inline-flex items-center gap-2 transition-all duration-500 group-hover:text-primary group-hover:translate-x-1">
               Open Project
               <span className="block h-px w-0 bg-primary transition-all duration-500 group-hover:w-8" />
@@ -116,25 +112,27 @@ const PortfolioGrid = () => {
 
   return (
     <>
-      <section id="portfolio" className="py-24 md:py-28 px-6 bg-[radial-gradient(circle_at_top,_rgba(230,126,34,0.08),_transparent_24%),linear-gradient(180deg,_rgba(249,249,249,1)_0%,_rgba(249,249,249,1)_100%)] transition-colors duration-500 dark:bg-[radial-gradient(circle_at_top,_rgba(230,126,34,0.08),_transparent_24%),linear-gradient(180deg,_rgba(10,10,10,1)_0%,_rgba(10,10,10,1)_100%)]">
+      <section id="portfolio" className="py-24 md:py-28 px-6 bg-background transition-colors duration-500">
         <div className="max-w-6xl mx-auto">
           <div className="mb-14 grid gap-8 md:mb-16 md:grid-cols-[minmax(0,1.35fr)_minmax(260px,0.65fr)] md:items-end">
             <div className="max-w-3xl">
               <Reveal>
                 <div className="flex items-center gap-4 mb-6">
                   <span className="h-px w-8 bg-primary/60" />
-                  <h2 className="text-sm font-bold tracking-[0.4em] uppercase text-gray-400">Selected Works</h2>
+                  <span className="font-mono text-[10px] font-bold tracking-[0.4em] uppercase text-primary-dim">
+                    Selected Works
+                  </span>
                 </div>
               </Reveal>
               <Reveal delay={0.2}>
-                <h3 className="text-4xl md:text-6xl font-black tracking-tighter leading-[0.95] text-foreground">
+                <h3 className="font-mono text-4xl md:text-6xl font-black tracking-tighter leading-[0.95] text-foreground">
                   PROJECTS THAT TURN <span className="text-primary italic">IDEAS</span> INTO EXPERIENCES
                 </h3>
               </Reveal>
             </div>
 
             <Reveal delay={0.4}>
-              <div className="rounded-[1.5rem] border border-black/5 bg-white/70 p-5 backdrop-blur-sm dark:border-white/10 dark:bg-white/[0.03]">
+              <div className="rounded-[1.5rem] p-5 backdrop-blur-2xl backdrop-saturate-[140%] bg-black/55 border border-white/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.09)]">
                 <p className="text-gray-500 text-base md:text-lg font-medium leading-relaxed">
                   A focused collection of products shaped around clarity, performance, and interfaces people can use without friction.
                 </p>

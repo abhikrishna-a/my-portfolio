@@ -1,26 +1,23 @@
 import Reveal from "../ui/Reveal";
-import { Layout, Codepen, Globe, Database, Smartphone, Palette, Code } from "lucide-react";
+import { Layout, Code, Database } from "lucide-react";
 
 const skills = [
   {
     title: "Frontend Engineering",
     description: "Building immersive user interfaces using modern frameworks like React, Next.js, and Vite. Expertise in Tailwind CSS and advanced animations with Framer Motion.",
     icon: <Layout className="w-12 h-12 text-primary" />,
-    color: "bg-card",
-    tags: ["HTML","TailwindCSS","JavaScript", "React", "Redux"],
+    tags: ["HTML", "TailwindCSS", "JavaScript", "React", "Redux"],
   },
   {
     title: "Backend Development",
     description: "Architecting robust server-side applications with Django REST Framework, ORM, and PostgreSQL. Focused on scalability, performance, and secure API design.",
     icon: <Database className="w-12 h-12 text-primary" />,
-    color: "bg-card",
     tags: ["Django REST Framework", "REST API", "ORM", "PostgreSQL"],
   },
   {
     title: "Programming Languages",
-    description: "Building efficient and scalable solutions with a strong command of both back-end and front-end languages � writing clean, maintainable code across the full stack.",
+    description: "Building efficient and scalable solutions with a strong command of both back-end and front-end languages — writing clean, maintainable code across the full stack.",
     icon: <Code className="w-12 h-12 text-primary" />,
-    color: "bg-card",
     tags: ["Python", "JavaScript"],
   },
 ];
@@ -30,8 +27,12 @@ const SkillsStack = () => {
     <section id="skills" className="py-20 px-6 max-w-7xl mx-auto flex flex-col gap-8 relative">
       <Reveal>
         <div className="flex flex-col mb-12">
-          <h2 className="text-sm font-bold tracking-[0.3em] uppercase text-gray-400 mb-2">Capabilities</h2>
-          <h3 className="text-5xl md:text-7xl font-black tracking-tighter">What I do best</h3>
+          <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-primary-dim mb-2">
+            Capabilities
+          </span>
+          <h3 className="font-mono text-5xl md:text-7xl font-black tracking-tighter">
+            What I do best
+          </h3>
         </div>
       </Reveal>
 
@@ -39,15 +40,14 @@ const SkillsStack = () => {
         {skills.map((skill, index) => (
           <Reveal key={index} delay={index * 0.15} width="100%">
             <div
-              className={`sticky-card ${skill.color} border border-gray-200 rounded-4xl p-8 md:p-16 shadow-lg flex flex-col md:flex-row gap-8 items-start transition-all duration-500 hover:shadow-2xl`}
-              style={{
-                top: `${100 + index * 40}px`,
-                zIndex: index + 1,
-              }}
+              className="sticky-card rounded-4xl p-8 md:p-16 flex flex-col md:flex-row gap-8 items-start backdrop-blur-2xl backdrop-saturate-[140%] bg-black/70 border border-white/10 transition-all duration-500 hover:shadow-[0_0_12px_rgba(230,126,34,0.30)]"
+              style={{ top: `${100 + index * 40}px`, zIndex: index + 1 }}
             >
               <div className="w-full md:w-1/3">
                 <div className="mb-6">{skill.icon}</div>
-                <h4 className="text-3xl md:text-4xl font-bold mb-4">{skill.title}</h4>
+                <h4 className="font-mono text-3xl md:text-4xl font-bold mb-4 tracking-tight">
+                  {skill.title}
+                </h4>
                 <p className="text-gray-500 text-lg leading-relaxed">
                   {skill.description}
                 </p>
@@ -55,7 +55,10 @@ const SkillsStack = () => {
 
               <div className="w-full md:w-2/3 flex flex-wrap gap-3 mt-4 md:mt-0 justify-start md:justify-end">
                 {skill.tags.map(tag => (
-                  <span key={tag} className="px-6 py-2 bg-black text-white text-sm font-bold rounded-full">
+                  <span
+                    key={tag}
+                    className="px-5 py-2 text-sm font-mono font-bold tracking-wider uppercase rounded-full border border-primary-hair text-primary hover:bg-primary/10 transition-colors duration-300"
+                  >
                     {tag}
                   </span>
                 ))}

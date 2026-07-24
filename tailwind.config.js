@@ -70,6 +70,15 @@ export default {
           '80%': { opacity: '1' },
           '100%': { opacity: '0', transform: 'scale(0.99)', filter: 'blur(0)' },
         },
+        introReveal: {
+          '0%': { opacity: '0', transform: 'scale(1.06)', filter: 'blur(8px)' },
+          '100%': { opacity: '1', transform: 'scale(1)', filter: 'blur(0)' },
+        },
+        grainShift: {
+          '0%': { transform: 'translate(0, 0)' },
+          '50%': { transform: 'translate(-2%, -3%)' },
+          '100%': { transform: 'translate(1%, 2%)' },
+        },
         streak: {
           from: { transform: 'translateX(-56px)' },
           to: { transform: 'translateX(168px)' },
@@ -89,6 +98,8 @@ export default {
         scrollDot: 'scrollDot 2s infinite ease-in-out',
         marquee: 'marquee 20s linear infinite',
         introCard: 'introCard 5.2s ease forwards',
+        introReveal: 'introReveal 4.2s ease-out forwards',
+        grainShift: 'grainShift 0.4s steps(2) infinite',
         streak: 'streak 1.4s linear infinite',
         comet: 'comet 25s linear infinite',
       },

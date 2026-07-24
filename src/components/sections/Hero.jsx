@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import StarfieldNebula from '../three/StarfieldNebula';
+import HeroBackground from '../effects/HeroBackground';
 import HudOverlay from '../ui/HudOverlay';
 
 const Hero = () => {
@@ -18,7 +18,7 @@ const Hero = () => {
       id="home"
       className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-black"
     >
-      <StarfieldNebula />
+      <HeroBackground />
       <HudOverlay />
 
       <div className="relative z-20 flex flex-col items-center text-center px-6">
@@ -69,15 +69,6 @@ const Hero = () => {
             </p>
 
             <div className="mt-10 w-16 h-px bg-primary-hair" />
-
-            <div className="mt-16 flex flex-col items-center animate-glowPulse">
-              <div className="w-5 h-8 border border-primary-hair rounded-full p-1 flex justify-center">
-                <div className="w-1 h-2 bg-primary rounded-full animate-scrollDot" />
-              </div>
-              <span className="mt-3 font-mono text-[9px] tracking-[0.2em] uppercase text-primary-dim">
-                Scroll
-              </span>
-            </div>
           </div>
         )}
       </div>

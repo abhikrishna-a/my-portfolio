@@ -22,30 +22,35 @@ varying float vAlpha;
 varying float vDist;
 
 void main() {
-  /* Keplerian orbit: angular speed ∝ 1/√r (closer = faster) */
   float speed = 0.3 / sqrt(max(aRadius, 0.1));
   float angle = aAngle + uTime * speed;
 
-  /* position in orbital plane with slight vertical drift */
   float x = aRadius * cos(angle);
   float z = aRadius * sin(angle);
   float y = aYOffset + sin(uTime * 0.08 + aSeed * 6.28) * 0.25;
 
   vec3 worldPos = vec3(x, y, z);
-
   vec4 mvPosition = modelViewMatrix * vec4(worldPos, 1.0);
 
-  /* size: closer = bigger, with per-particle variation */
-  float baseSize = mix(1.5, 4.0, fract(aSeed * 7.13));
-  gl_PointSize = baseSize * (200.0 / -mvPosition.z);
+  // camera-space distance, floored so it can never approach zero
+  float camDist = max(-mvPosition.z, 1.0);
 
-  /* alpha: slight flicker + distance fade */
+  float baseSize = mix(1.5, 4.0, fract(aSeed * 7.13));
+  // hard cap in addition to the floor above — belt and suspenders
+  gl_PointSize = clamp(baseSize * (200.0 / camDist), 0.5, 8.0);
+
   float flicker = sin(uTime * (1.0 + fract(aSeed * 3.71) * 2.0) + aSeed * 31.4) * 0.2 + 0.8;
   float distFade = 1.0 - smoothstep(3.0, 8.0, aRadius);
-  vAlpha = flicker * distFade * 0.6;
+  vAlpha = flicker * distFade * 0.3;
   vDist = aRadius;
 
-  gl_Position = projectionMatrix * mvPosition;
+  // push anything behind or too near the camera off-screen instead of
+  // letting it rasterize as a giant point sprite
+  if (mvPosition.z > -0.5) {
+    gl_Position = vec4(2.0, 2.0, 2.0, 1.0);
+  } else {
+    gl_Position = projectionMatrix * mvPosition;
+  }
 }
 `;
 
@@ -87,10 +92,18 @@ export default function ParticleField({ reduced }) {
     for (let i = 0; i < PARTICLE_COUNT; i++) {
       const seed = Math.random();
       seeds[i] = seed;
-      /* distribute at varying orbital radii: more particles closer in */
-      radii[i] = 0.8 + Math.pow(Math.random(), 0.6) * 6.0;
-      angles[i] = Math.random() * Math.PI * 2;
-      yOffsets[i] = (Math.random() - 0.5) * 0.6; /* slight tilt */
+
+      /* golden-ratio Fibonacci sphere distribution (ported from
+         buildwithfavas/galactic-blackhole) — evenly spaced,
+         no clustering, cube-root radius for more particles near center */
+      const goldenRatio = (1 + Math.sqrt(5)) / 2;
+      const theta = 2 * Math.PI * i / goldenRatio;
+      const phi = Math.acos(1 - 2 * (i + 0.5) / PARTICLE_COUNT);
+      const radius = Math.cbrt(Math.random()) * 6.0 + 0.8;
+
+      radii[i] = radius;
+      angles[i] = theta;
+      yOffsets[i] = Math.cos(phi) * 0.6; /* slight vertical spread from sphere distribution */
     }
 
     geo.setAttribute('aSeed',   new THREE.BufferAttribute(seeds, 1));

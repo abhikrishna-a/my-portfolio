@@ -1,6 +1,6 @@
 # Portfolio
 
-A modern, animated portfolio built with React, Vite, Tailwind CSS, and Framer Motion.
+A modern, animated portfolio built with React, Vite, Three.js, and Tailwind CSS.
 
 ## Features
 
@@ -28,7 +28,8 @@ npm run preview
 ## Tech Stack
 
 - React 18
-- Vite
+- Vite 5
 - Tailwind CSS
-- Framer Motion
-- Lenis (smooth scroll)
+- Three.js (WebGL black hole shader)
+- React Three Fiber
+- Lucide React (icons)

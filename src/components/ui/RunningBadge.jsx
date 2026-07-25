@@ -1,11 +1,15 @@
+import { useMemo } from 'react';
+
 const items = [
   "Available for Freelance",
   "Full Stack Developer",
   "Open to Opportunities",
 ];
 
+const repeatedItems = [...items, ...items, ...items, ...items, ...items, ...items];
+
 const RunningBadge = () => {
-  const repeated = [...items, ...items, ...items, ...items, ...items, ...items];
+  const repeated = useMemo(() => repeatedItems, []);
 
   return (
     <div className="relative w-full py-3 bg-black overflow-hidden border-y border-white/5">

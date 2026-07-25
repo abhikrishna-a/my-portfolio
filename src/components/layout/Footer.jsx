@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Copy, Linkedin, Github, Mail, Check } from 'lucide-react';
 import useInView from '../../hooks/useInView';
 import Magnetic from '../ui/Magnetic';
@@ -7,11 +7,19 @@ const Footer = () => {
   const [copied, setCopied] = useState(false);
   const email = "abhikrishna616@gmail.com";
   const [ref, inView] = useInView({ once: true, margin: "-100px" });
+  const timerRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
+  }, []);
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(email);
     setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    if (timerRef.current) clearTimeout(timerRef.current);
+    timerRef.current = setTimeout(() => setCopied(false), 2000);
   };
 
   return (

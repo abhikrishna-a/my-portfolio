@@ -19,7 +19,7 @@ const useInView = (options = {}) => {
           setIsInView(false);
         }
       }
-    }, { margin, ...memoizedOptions });
+    }, { rootMargin: margin, ...memoizedOptions });
 
     const currentRef = ref.current;
     if (currentRef) {

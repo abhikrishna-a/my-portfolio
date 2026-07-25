@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import useInView from '../../hooks/useInView';
 
 const AnimatedCounter = ({ from = 0, to, suffix = "", className, duration = 2000 }) => {

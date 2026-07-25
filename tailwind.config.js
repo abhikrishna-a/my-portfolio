@@ -87,6 +87,16 @@ export default {
           '0%': { transform: 'translateX(0%)' },
           '100%': { transform: 'translateX(-50%)' },
         },
+        shootingStar: {
+          '0%': { transform: 'translateX(-100%) translateY(0)', opacity: '0' },
+          '5%': { opacity: '1' },
+          '70%': { opacity: '1' },
+          '100%': { transform: 'translateX(200vw) translateY(40vh)', opacity: '0' },
+        },
+        signalBlink: {
+          '0%, 100%': { opacity: '1' },
+          '50%': { opacity: '0.3' },
+        },
       },
       animation: {
         revealUp: 'revealUp 0.6s cubic-bezier(0.215, 0.61, 0.355, 1) forwards',
@@ -102,6 +112,8 @@ export default {
         grainShift: 'grainShift 0.4s steps(2) infinite',
         streak: 'streak 1.4s linear infinite',
         comet: 'comet 25s linear infinite',
+        shootingStar: 'shootingStar 3s linear infinite',
+        signalBlink: 'signalBlink 2s ease-in-out infinite',
       },
     },
   },

@@ -11,7 +11,7 @@ export default function PostEffects() {
   return (
     <EffectComposer multisampling={0}>
       <Bloom
-        luminanceThreshold={0.75}
+        luminanceThreshold={0.6}
         luminanceSmoothing={0.4}
         intensity={0.7}
         mipmapBlur
@@ -22,7 +22,7 @@ export default function PostEffects() {
         blendFunction={BlendFunction.NORMAL}
       />
       <ChromaticAberration
-        offset={[0.0005, 0.0005]}
+        offset={[0.00015, 0.00015]}
         blendFunction={BlendFunction.NORMAL}
       />
     </EffectComposer>

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Home, Zap, User, Briefcase, MessageSquare } from 'lucide-react';
 
 const navItems = [
@@ -10,16 +10,24 @@ const navItems = [
 ];
 
 const Navbar = () => {
-  const [scrollProgress, setScrollProgress] = useState(0);
   const [isMounted, setIsMounted] = useState(false);
+  const progressRef = useRef(null);
 
   useEffect(() => {
     setIsMounted(true);
+    let ticking = false;
     const handleScroll = () => {
-      const scrollY = window.scrollY;
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = docHeight > 0 ? scrollY / docHeight : 0;
-      setScrollProgress(progress);
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const scrollY = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = docHeight > 0 ? scrollY / docHeight : 0;
+        if (progressRef.current) {
+          progressRef.current.style.transform = `scaleX(${progress})`;
+        }
+        ticking = false;
+      });
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
@@ -34,8 +42,9 @@ const Navbar = () => {
         }`}
       >
         <div
-          className="absolute bottom-0 left-0 right-0 h-[2px] bg-primary origin-left transition-transform duration-100 ease-out"
-          style={{ transform: `scaleX(${scrollProgress})` }}
+          ref={progressRef}
+          className="absolute bottom-0 left-0 right-0 h-[2px] bg-primary origin-left"
+          style={{ transform: 'scaleX(0)' }}
         />
 
         {navItems.map((item) => (

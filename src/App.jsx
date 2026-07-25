@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import Navbar from './components/layout/Navbar'
 import Hero from './components/sections/Hero'
 import RunningBadge from './components/ui/RunningBadge'

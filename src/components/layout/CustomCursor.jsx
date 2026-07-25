@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
 const CustomCursor = () => {
   const [isHovering, setIsHovering] = useState(false);
@@ -6,34 +6,35 @@ const CustomCursor = () => {
 
   const cursorDotRef = useRef(null);
   const cursorRingRef = useRef(null);
-  
+  const hoverRef = useRef(false);
   const mouse = useRef({ x: 0, y: 0 });
   const delayedMouse = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
+    const mq = window.matchMedia('(min-width: 1024px)');
+    if (!mq.matches) return;
+
+    setMounted(true);
+
     const handleMouseMove = (e) => {
       mouse.current = { x: e.clientX, y: e.clientY };
-      if (!mounted) setMounted(true);
     };
 
     const handleMouseOver = (e) => {
       const target = e.target;
-      if (
-        target.tagName === 'A' || 
-        target.tagName === 'BUTTON' || 
-        target.closest('button') || 
+      const hovering =
+        target.tagName === 'A' ||
+        target.tagName === 'BUTTON' ||
+        target.closest('button') ||
         target.closest('a') ||
-        target.getAttribute('data-cursor') === 'hover'
-      ) {
-        setIsHovering(true);
-      } else {
-        setIsHovering(false);
-      }
+        target.getAttribute('data-cursor') === 'hover';
+      hoverRef.current = hovering;
+      setIsHovering(hovering);
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('mouseover', handleMouseOver);
-    
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    window.addEventListener('mouseover', handleMouseOver, { passive: true });
+
     let animationFrameId;
 
     const lerp = (start, end, factor) => start + (end - start) * factor;
@@ -41,7 +42,7 @@ const CustomCursor = () => {
     const render = () => {
       delayedMouse.current = {
         x: lerp(delayedMouse.current.x, mouse.current.x, 0.15),
-        y: lerp(delayedMouse.current.y, mouse.current.y, 0.15)
+        y: lerp(delayedMouse.current.y, mouse.current.y, 0.15),
       };
 
       if (cursorDotRef.current) {
@@ -54,7 +55,7 @@ const CustomCursor = () => {
 
       animationFrameId = requestAnimationFrame(render);
     };
-    
+
     render();
 
     return () => {
@@ -62,27 +63,24 @@ const CustomCursor = () => {
       window.removeEventListener('mouseover', handleMouseOver);
       cancelAnimationFrame(animationFrameId);
     };
-  }, [mounted]);
+  }, []);
 
   if (!mounted) return null;
 
   return (
     <>
-      {/* Main Cursor Dot */}
       <div
         ref={cursorDotRef}
-        className="fixed top-0 left-0 w-4 h-4 bg-primary rounded-full pointer-events-none z-[999999] mix-blend-difference hidden lg:block"
+        className="fixed top-0 left-0 w-4 h-4 bg-primary rounded-full pointer-events-none z-[999999] mix-blend-difference"
         style={{ willChange: 'transform' }}
       />
-      
-      {/* Trailing Ring */}
       <div
         ref={cursorRingRef}
-        className="fixed top-0 left-0 w-8 h-8 border border-primary rounded-full pointer-events-none z-[999998] hidden lg:block transition-[opacity,scale] duration-300 ease-out"
+        className="fixed top-0 left-0 w-8 h-8 border border-primary rounded-full pointer-events-none z-[999998] transition-[opacity,scale] duration-300 ease-out"
         style={{
           scale: isHovering ? '2' : '1',
           opacity: isHovering ? 0.5 : 1,
-          willChange: 'transform, scale, opacity'
+          willChange: 'transform',
         }}
       />
     </>

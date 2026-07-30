@@ -1,28 +1,27 @@
-import { EffectComposer, Bloom, Vignette, ChromaticAberration } from '@react-three/postprocessing';
-import { BlendFunction } from 'postprocessing';
+import { EffectComposer, Bloom, Vignette, ChromaticAberration, ToneMapping } from '@react-three/postprocessing';
+import { BlendFunction, ToneMappingMode } from 'postprocessing';
 
 /* ================================================================
-   Post-processing stack — WebGL2 only via @react-three/postprocessing
-   Bloom, Vignette, subtle chromatic aberration
-   (Noise removed — mod289 shader error crashes GPU process)
+   PostEffectsSimple — cinematic post-processing for simple Three.js
+   Same effects as the GLSL version, tuned for particle-based scene
    ================================================================ */
 
-export default function PostEffects() {
+export default function PostEffectsSimple() {
   return (
     <EffectComposer multisampling={0}>
       <Bloom
         luminanceThreshold={0.92}
         luminanceSmoothing={0.15}
         intensity={0.5}
-        mipmapBlur={false}
       />
+      <ToneMapping mode={ToneMappingMode.ACES_FILMIC} />
       <Vignette
         offset={0.3}
         darkness={0.7}
         blendFunction={BlendFunction.NORMAL}
       />
       <ChromaticAberration
-        offset={[0.00015, 0.00015]}
+        offset={[0.0002, 0.0002]}
         blendFunction={BlendFunction.NORMAL}
       />
     </EffectComposer>

@@ -1,9 +1,13 @@
 import { useState, useEffect, useRef, useMemo, Suspense, Component } from 'react';
 import { Canvas } from '@react-three/fiber';
 import BackgroundScene from './BackgroundScene';
+import BackgroundSceneSimple from './BackgroundSceneSimple';
 import useReducedMotion from './useReducedMotion';
 
-/* ── CSS-only fallback — enhanced space scene ── */
+/* ================================================================
+   CSS-only fallback — enhanced space scene
+   Used when no WebGL is available at all
+   ================================================================ */
 function CSSFallback({ reduced }) {
   const nebulaRef = useRef(null);
   const outerGlowRef = useRef(null);
@@ -12,7 +16,6 @@ function CSSFallback({ reduced }) {
   const planetRef = useRef(null);
   const arcUpperRef = useRef(null);
   const arcLowerRef = useRef(null);
-  const starsRef = useRef(null);
 
   useEffect(() => {
     if (reduced) return;
@@ -26,7 +29,6 @@ function CSSFallback({ reduced }) {
     const planetEl = planetRef.current;
     const arcUpperEl = arcUpperRef.current;
     const arcLowerEl = arcLowerRef.current;
-    const starsEl = starsRef.current;
 
     function tick(now) {
       const t = (now - start) * 0.001;
@@ -94,7 +96,7 @@ function CSSFallback({ reduced }) {
 
   return (
     <div className="absolute inset-0" style={{ background: '#020202', overflow: 'hidden' }}>
-      <div ref={starsRef}>{stars}</div>
+      <div>{stars}</div>
 
       {[0, 1, 2].map((i) => {
         const top = 8 + i * 25;
@@ -221,23 +223,51 @@ function CSSFallback({ reduced }) {
   );
 }
 
-/* ── Error boundary ── */
+/* ================================================================
+   Error boundary — catches render errors, shows fallback
+   ================================================================ */
 class ErrorBoundary extends Component {
   state = { failed: false };
   static getDerivedStateFromError() { return { failed: true }; }
   componentDidCatch(e) {
-    console.warn('[BlackHole] render failed — falling back to CSS:', e);
+    console.warn('[BlackHole] render failed — falling back:', e);
   }
   render() {
     return this.state.failed ? this.props.fallback : this.props.children;
   }
 }
 
-/* ── Main orchestrator ── */
+/* ================================================================
+   Capability detection — proactive WebGL check
+   ================================================================ */
+function detectWebGL() {
+  try {
+    const c = document.createElement('canvas');
+    const gl = c.getContext('webgl2') || c.getContext('webgl');
+    if (!gl) return false;
+    const dbg = gl.getExtension('WEBGL_debug_renderer_info');
+    if (dbg) {
+      const renderer = gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL);
+      if (/SwiftShader|llvmpipe|Software|Google SwiftShader/i.test(renderer)) return false;
+    }
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+/* ================================================================
+   Main orchestrator — 3-tier progressive rendering
+   Tier 1: GLSL raymarcher (desktop WebGL2)
+   Tier 2: Simple Three.js (mobile/basic WebGL)
+   Tier 3: CSS fallback (no WebGL)
+   ================================================================ */
 function BlackHoleHeroInner() {
   const [visible, setVisible] = useState(false);
   const reduced = useReducedMotion();
   const containerRef = useRef(null);
+  const hasWebGL = useRef(detectWebGL());
+  const dpr = reduced ? 1 : Math.min(window.devicePixelRatio || 1, 1.5);
 
   useEffect(() => {
     const el = containerRef.current;
@@ -250,29 +280,54 @@ function BlackHoleHeroInner() {
     return () => io.disconnect();
   }, []);
 
-  const fallback = <CSSFallback reduced={reduced} />;
+  const cssFallback = <CSSFallback reduced={reduced} />;
+  const simpleFallback = (
+    <Canvas
+      dpr={dpr}
+      gl={{ antialias: false, alpha: false, powerPreference: 'high-performance' }}
+      camera={{ position: [0, 3, 7], fov: 55, near: 0.1, far: 200 }}
+      style={{ background: '#020202' }}
+    >
+      <Suspense fallback={null}>
+        <BackgroundSceneSimple reduced={reduced} />
+      </Suspense>
+    </Canvas>
+  );
+
+  /* no WebGL at all → CSS fallback */
+  if (!hasWebGL.current) {
+    return (
+      <div ref={containerRef} className="absolute inset-0">
+        {cssFallback}
+      </div>
+    );
+  }
 
   return (
     <div ref={containerRef} className="absolute inset-0">
       {visible ? (
-        <ErrorBoundary fallback={fallback}>
-          <Canvas
-            dpr={[1, 1.5]}
-            gl={{
-              antialias: false,
-              alpha: false,
-              powerPreference: 'high-performance',
-            }}
-            camera={{ position: [0, 0, 9.0], fov: 50, near: 0.1, far: 200 }}
-            style={{ background: '#020202' }}
-          >
-            <Suspense fallback={null}>
-              <BackgroundScene reduced={reduced} />
-            </Suspense>
-          </Canvas>
+        /* outer boundary: if simple Three.js also fails → CSS */
+        <ErrorBoundary fallback={cssFallback}>
+          {/* inner boundary: if GLSL raymarcher fails → simple Three.js */}
+          <ErrorBoundary fallback={simpleFallback}>
+            <Canvas
+              dpr={dpr}
+              gl={{
+                antialias: false,
+                alpha: false,
+                powerPreference: 'high-performance',
+              }}
+              camera={{ position: [0, 0, 9.0], fov: 50, near: 0.1, far: 200 }}
+              style={{ background: '#020202' }}
+            >
+              <Suspense fallback={null}>
+                <BackgroundScene reduced={reduced} />
+              </Suspense>
+            </Canvas>
+          </ErrorBoundary>
         </ErrorBoundary>
       ) : (
-        fallback
+        cssFallback
       )}
     </div>
   );

@@ -35,9 +35,9 @@ varying vec2 vUv;
    ================================================================ */
 #define M          0.5
 #define RS         1.0
-#define DISK_IN    3.0
+#define DISK_IN    1.8
 #define DISK_OUT   12.0
-#define MAX_STEPS  120
+#define MAX_STEPS  256
 #define PI         3.14159265
 
 /* ================================================================
@@ -132,8 +132,27 @@ void main() {
 
     minR = min(minR, length(pos));
 
-    /* event horizon */
-    if (length(pos) < RS) {
+    /* event horizon — analytic sphere test across the whole step segment,
+       not just the endpoint sample, so a ray whose curvature carries it
+       through RS and back out again within a single integration step is
+       still correctly caught as absorbed */
+    vec3 segDir = pos - prevPos;
+    float segLen = length(segDir);
+    bool horizonHit = false;
+    if (segLen > 0.0001) {
+      segDir /= segLen;
+      float b = dot(prevPos, segDir);
+      float c = dot(prevPos, prevPos) - RS * RS;
+      float disc = b * b - c;
+      if (disc >= 0.0) {
+        float t = -b - sqrt(disc);
+        if (t >= 0.0 && t <= segLen) {
+          horizonHit = true;
+        }
+      }
+    }
+
+    if (horizonHit || length(pos) < RS) {
       col = vec3(0.0);
       accAlpha = 1.0;
       absorbed = true;

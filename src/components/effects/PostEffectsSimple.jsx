@@ -6,11 +6,11 @@ import { BlendFunction, ToneMappingMode } from 'postprocessing';
    Same effects as the GLSL version, tuned for particle-based scene
    ================================================================ */
 
-export default function PostEffectsSimple() {
+export default function PostEffectsSimple({ resolutionScale = 1 }) {
   return (
-    <EffectComposer multisampling={0}>
+    <EffectComposer multisampling={0} resolutionScale={resolutionScale}>
       <Bloom
-        luminanceThreshold={0.92}
+        luminanceThreshold={0.8}
         luminanceSmoothing={0.15}
         intensity={0.5}
       />

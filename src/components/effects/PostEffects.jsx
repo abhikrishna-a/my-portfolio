@@ -5,15 +5,22 @@ import { BlendFunction } from 'postprocessing';
    Post-processing stack — WebGL2 only via @react-three/postprocessing
    Bloom, Vignette, subtle chromatic aberration
    (Noise removed — mod289 shader error crashes GPU process)
+
+   quality:
+     'full'    — Bloom + Vignette + ChromaticAberration (capable devices)
+     'reduced' — lighter Bloom + Vignette only (weak/mobile GPUs)
+   resolutionScale cheapens the whole post pass on weak devices.
    ================================================================ */
 
-export default function PostEffects() {
+export default function PostEffects({ quality = 'full', resolutionScale = 1 }) {
+  const reduced = quality === 'reduced';
   return (
-    <EffectComposer multisampling={0}>
+    <EffectComposer multisampling={0} resolutionScale={resolutionScale}>
       <Bloom
-        luminanceThreshold={0.92}
+        luminanceThreshold={0.65}
         luminanceSmoothing={0.15}
-        intensity={0.5}
+        intensity={0.24}
+        radius={0.45}
         mipmapBlur={false}
       />
       <Vignette
@@ -21,10 +28,12 @@ export default function PostEffects() {
         darkness={0.7}
         blendFunction={BlendFunction.NORMAL}
       />
-      <ChromaticAberration
-        offset={[0.00015, 0.00015]}
-        blendFunction={BlendFunction.NORMAL}
-      />
+      {!reduced && (
+        <ChromaticAberration
+          offset={[0.00004, 0.00004]}
+          blendFunction={BlendFunction.NORMAL}
+        />
+      )}
     </EffectComposer>
   );
 }

@@ -4,13 +4,15 @@ import * as THREE from 'three';
 import BlackHoleSimple from './BlackHoleSimple';
 import StarDome from './StarDome';
 import PostEffectsSimple from './PostEffectsSimple';
+import FrameGovernor from './FrameGovernor';
+import { RenderGuard } from './RenderControl';
 
 const CAM_DISTANCE = 7.0;
 const BASE_PITCH   = 0.35;
 const LOOK_AT = new THREE.Vector3(0, 0, 0);
 const UP = new THREE.Vector3(0, 1, 0);
 
-export default function BackgroundSceneSimple({ reduced }) {
+export default function BackgroundSceneSimple({ reduced, frameCap = false }) {
   const { size } = useThree();
   const startTime = useRef(performance.now());
 
@@ -51,9 +53,11 @@ export default function BackgroundSceneSimple({ reduced }) {
 
   return (
     <>
+      <RenderGuard />
+      {frameCap && <FrameGovernor fps={30} />}
       <BlackHoleSimple reduced={reduced} />
       <StarDome reduced={reduced} />
-      <PostEffectsSimple />
+      <PostEffectsSimple resolutionScale={0.75} />
     </>
   );
 }

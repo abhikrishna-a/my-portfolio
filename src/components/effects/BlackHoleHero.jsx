@@ -3,17 +3,18 @@ import { Canvas } from '@react-three/fiber';
 import BackgroundScene from './BackgroundScene';
 import BackgroundSceneSimple from './BackgroundSceneSimple';
 import useReducedMotion from './useReducedMotion';
+import { RenderContext } from './RenderControl';
 
 /* ================================================================
    CSS-only fallback — enhanced space scene
-   Used when no WebGL is available at all
+   Used when no WebGL is available at all, before the canvas mounts,
+   or while the WebGL context is lost
    ================================================================ */
 function CSSFallback({ reduced }) {
   const nebulaRef = useRef(null);
   const outerGlowRef = useRef(null);
   const horizonRef = useRef(null);
   const diskRef = useRef(null);
-  const planetRef = useRef(null);
   const arcUpperRef = useRef(null);
   const arcLowerRef = useRef(null);
 
@@ -26,7 +27,6 @@ function CSSFallback({ reduced }) {
     const outerEl = outerGlowRef.current;
     const horizonEl = horizonRef.current;
     const diskEl = diskRef.current;
-    const planetEl = planetRef.current;
     const arcUpperEl = arcUpperRef.current;
     const arcLowerEl = arcLowerRef.current;
 
@@ -43,21 +43,20 @@ function CSSFallback({ reduced }) {
       if (horizonEl) horizonEl.style.left = `calc(50% + ${drift}px)`;
       if (diskEl) {
         diskEl.style.transform = `translate(-50%, -50%) rotate(${drift * 0.15}deg)`;
-        diskEl.style.background = `linear-gradient(to right, transparent 0%, rgba(120,35,8,${0.5 * breathe}) 8%, rgba(200,80,20,${0.8 * breathe}) 18%, rgba(255,157,58,${0.95 * breathe}) 30%, rgba(255,200,100,${1.0 * breathe}) 42%, rgba(255,250,240,${1.0 * breathe}) 48%, transparent 50%, rgba(255,250,240,${1.0 * breathe}) 52%, rgba(255,200,100,${1.0 * breathe}) 58%, rgba(255,157,58,${0.95 * breathe}) 70%, rgba(200,80,20,${0.7 * breathe}) 82%, rgba(120,35,8,${0.4 * breathe}) 92%, transparent 100%)`;
-        diskEl.style.boxShadow = `0 0 8px 2px rgba(255,157,58,${0.3 * breathe}), 0 0 20px 4px rgba(255,120,30,${0.12 * breathe})`;
+        diskEl.style.background = `linear-gradient(to right, transparent 0%, rgba(120,35,8,${0.5 * breathe}) 6%, rgba(200,80,20,${0.7 * breathe}) 12%, rgba(255,157,58,${0.85 * breathe}) 17%, rgba(255,220,130,${0.95 * breathe}) 19%, rgba(255,236,180,${1.0 * breathe}) 20.3%, transparent 20.6%, transparent 79.4%, rgba(255,236,180,${1.0 * breathe}) 79.7%, rgba(255,220,130,${0.95 * breathe}) 81%, rgba(255,157,58,${0.85 * breathe}) 83%, rgba(200,80,20,${0.7 * breathe}) 88%, rgba(120,35,8,${0.5 * breathe}) 94%, transparent 100%)`;
+        diskEl.style.boxShadow = `0 0 8px 2px rgba(255,157,58,${0.32 * breathe}), 0 0 22px 5px rgba(255,120,30,${0.14 * breathe})`;
       }
-      if (planetEl) planetEl.style.left = `calc(22% + ${drift * 0.3}px)`;
       if (arcUpperEl) {
         arcUpperEl.style.left = `calc(50% + ${drift}px)`;
-        arcUpperEl.style.borderTopColor = `rgba(255,220,130,${0.85 * breathe})`;
-        arcUpperEl.style.borderLeftColor = `rgba(255,170,50,${0.45 * breathe})`;
-        arcUpperEl.style.borderRightColor = `rgba(255,170,50,${0.45 * breathe})`;
+        arcUpperEl.style.borderTopColor = `rgba(255,220,130,${0.7 * breathe})`;
+        arcUpperEl.style.borderLeftColor = `rgba(255,170,50,${0.5 * breathe})`;
+        arcUpperEl.style.borderRightColor = `rgba(255,170,50,${0.4 * breathe})`;
       }
       if (arcLowerEl) {
         arcLowerEl.style.left = `calc(50% + ${drift}px)`;
-        arcLowerEl.style.borderBottomColor = `rgba(255,157,58,${0.35 * breathe})`;
-        arcLowerEl.style.borderLeftColor = `rgba(200,80,20,${0.15 * breathe})`;
-        arcLowerEl.style.borderRightColor = `rgba(200,80,20,${0.15 * breathe})`;
+        arcLowerEl.style.borderBottomColor = `rgba(255,157,58,${0.4 * breathe})`;
+        arcLowerEl.style.borderLeftColor = `rgba(200,80,20,${0.25 * breathe})`;
+        arcLowerEl.style.borderRightColor = `rgba(200,80,20,${0.2 * breathe})`;
       }
 
       raf = requestAnimationFrame(tick);
@@ -109,14 +108,19 @@ function CSSFallback({ reduced }) {
             position: 'absolute',
             top: `${top}%`,
             left: `${left}%`,
-            width: '60px',
+            width: '90px',
             height: '1px',
-            background: 'linear-gradient(to right, rgba(255,255,255,0.9), transparent)',
-            borderRadius: '50%',
-            transform: `rotate(${rotate}deg)`,
-            animation: `shootingStar ${duration}s linear ${delay}s infinite`,
             opacity: 0,
-          }} />
+            animation: `shootingStar ${duration}s linear ${delay}s infinite`,
+          }}>
+            <span style={{
+              position: 'absolute',
+              inset: 0,
+              background: 'linear-gradient(to right, rgba(255,255,255,0.9), transparent)',
+              borderRadius: '50%',
+              transform: `rotate(${rotate}deg)`,
+            }} />
+          </div>
         );
       })}
 
@@ -147,11 +151,13 @@ function CSSFallback({ reduced }) {
         position: 'absolute',
         top: '50%',
         left: '50%',
-        width: 'min(28vmin, 195px)',
-        height: 'min(28vmin, 195px)',
+        width: 'min(38vmin, 264px)',
+        height: 'min(38vmin, 264px)',
         transform: 'translate(-50%, -50%)',
         borderRadius: '50%',
         background: '#000',
+        border: '1px solid rgba(255,200,120,0.55)',
+        boxShadow: '0 0 28px 6px rgba(255,140,40,0.2), inset 0 0 40px 12px rgba(0,0,0,0.9)',
         zIndex: 2,
       }} />
 
@@ -159,14 +165,14 @@ function CSSFallback({ reduced }) {
         position: 'absolute',
         top: '50%',
         left: '50%',
-        width: 'min(30vmin, 210px)',
-        height: 'min(30vmin, 210px)',
+        width: 'min(40vmin, 280px)',
+        height: 'min(40vmin, 280px)',
         transform: 'translate(-50%, -50%)',
         borderRadius: '50%',
         border: '2px solid transparent',
-        borderTopColor: 'rgba(255,220,130,0.85)',
-        borderLeftColor: 'rgba(255,170,50,0.45)',
-        borderRightColor: 'rgba(255,170,50,0.45)',
+        borderTopColor: 'rgba(255,220,130,0.7)',
+        borderLeftColor: 'rgba(255,170,50,0.5)',
+        borderRightColor: 'rgba(255,170,50,0.4)',
         borderBottomColor: 'transparent',
         zIndex: 3,
       }} />
@@ -175,14 +181,14 @@ function CSSFallback({ reduced }) {
         position: 'absolute',
         top: '50%',
         left: '50%',
-        width: 'min(30vmin, 210px)',
-        height: 'min(30vmin, 210px)',
+        width: 'min(40vmin, 280px)',
+        height: 'min(40vmin, 280px)',
         transform: 'translate(-50%, -50%)',
         borderRadius: '50%',
         border: '1.5px solid transparent',
-        borderBottomColor: 'rgba(255,157,58,0.35)',
-        borderLeftColor: 'rgba(200,80,20,0.15)',
-        borderRightColor: 'rgba(200,80,20,0.15)',
+        borderBottomColor: 'rgba(255,157,58,0.4)',
+        borderLeftColor: 'rgba(200,80,20,0.25)',
+        borderRightColor: 'rgba(200,80,20,0.2)',
         borderTopColor: 'transparent',
         zIndex: 3,
       }} />
@@ -191,23 +197,10 @@ function CSSFallback({ reduced }) {
         position: 'absolute',
         top: '50%',
         left: '50%',
-        width: 'min(68vmin, 480px)',
+        width: 'min(64vmin, 450px)',
         height: '3px',
         transform: 'translate(-50%, -50%) rotate(0deg)',
         zIndex: 4,
-      }} />
-
-      <div ref={planetRef} style={{
-        position: 'absolute',
-        top: 'calc(50% + 1px)',
-        left: '22%',
-        width: 'min(3.5vmin, 24px)',
-        height: 'min(3.5vmin, 24px)',
-        transform: 'translate(-50%, -50%)',
-        borderRadius: '50%',
-        background: 'radial-gradient(circle at 60% 40%, #151520 0%, #0a0a10 60%, #050508 100%)',
-        boxShadow: 'inset -2px -1px 4px rgba(0,0,0,0.8), 0 0 4px 1px rgba(0,0,0,0.5)',
-        zIndex: 5,
       }} />
 
       <div style={{
@@ -257,45 +250,214 @@ function detectWebGL() {
 }
 
 /* ================================================================
+   Auto-tier profile — pick the rendering tier from device class.
+
+   tier 'full'   → GLSL raymarcher (desktop + capable phones)
+   tier 'simple' → Three.js particle scene (mid/weak phones,
+                   reduced-motion users)
+   tier 'css'    → CSS-only fallback (no/software WebGL, ≤2 cores)
+   ================================================================ */
+function detectProfile(reduced) {
+  const forcedTier =
+    typeof location !== 'undefined'
+      ? new URLSearchParams(location.search).get('tier')
+      : null;
+  const mobile =
+    typeof navigator !== 'undefined' &&
+    'maxTouchPoints' in navigator &&
+    navigator.maxTouchPoints > 0;
+  const cores =
+    (typeof navigator !== 'undefined' && navigator.hardwareConcurrency) || 4;
+  const mem =
+    (typeof navigator !== 'undefined' && navigator.deviceMemory) || (mobile ? 2 : 8);
+
+  if (forcedTier === 'css' || forcedTier === 'simple' || forcedTier === 'full') {
+    return {
+      mobile,
+      cores,
+      mem,
+      weak: cores <= 4 && mem <= 4,
+      tier: forcedTier,
+      forced: true,
+    };
+  }
+
+  const hasGL = detectWebGL();
+
+  const profile = { mobile, cores, mem };
+
+  if (!hasGL) { profile.tier = 'css'; return profile; }
+  if (cores <= 2) { profile.tier = 'css'; return profile; }
+  if (reduced) { profile.tier = 'simple'; return profile; }
+  if (mobile) {
+    if (cores <= 4 || mem <= 4) { profile.tier = 'simple'; return profile; }
+    profile.tier = 'full';
+    profile.weak = false;
+    return profile;
+  }
+  profile.tier = 'full';
+  profile.weak = cores <= 4 && mem <= 4;
+  return profile;
+}
+
+/* per-profile render params — DPR, shader step ceiling, frame cap,
+   and post-processing quality/resolution for the active tier */
+function profileParams(profile, tier) {
+  const { mobile, weak } = profile;
+  if (tier === 'css') {
+    return { dpr: 1, maxSteps: 64, frameCap: false, postQuality: 'reduced', resolutionScale: 1 };
+  }
+  if (tier === 'simple') {
+    const dpr = mobile ? (profile.cores <= 3 ? 0.85 : 0.9) : 1.25;
+    return { dpr, maxSteps: 64, frameCap: true, postQuality: 'reduced', resolutionScale: 0.75 };
+  }
+  if (mobile) {
+    return { dpr: 1.0, maxSteps: 128, frameCap: false, postQuality: 'full', resolutionScale: 1 };
+  }
+  if (weak) {
+    return { dpr: 1.25, maxSteps: 128, frameCap: true, postQuality: 'full', resolutionScale: 0.75 };
+  }
+  return { dpr: 1.5, maxSteps: 256, frameCap: false, postQuality: 'full', resolutionScale: 1 };
+}
+
+/* ================================================================
    Main orchestrator — 3-tier progressive rendering
    Tier 1: GLSL raymarcher (desktop WebGL2)
    Tier 2: Simple Three.js (mobile/basic WebGL)
    Tier 3: CSS fallback (no WebGL)
+
+   Render-loop control is consolidated into a single boolean:
+     shouldRender = isIntersecting && !documentHidden && !contextLost
+   — driven through one setFrameloop call inside the canvas.
    ================================================================ */
 function BlackHoleHeroInner() {
-  const [visible, setVisible] = useState(false);
   const reduced = useReducedMotion();
   const containerRef = useRef(null);
-  const hasWebGL = useRef(detectWebGL());
-  const dpr = reduced ? 1 : Math.min(window.devicePixelRatio || 1, 1.5);
+
+  const [everMounted, setEverMounted] = useState(false);
+  const [isIntersecting, setIsIntersecting] = useState(false);
+  const [documentHidden, setDocumentHidden] = useState(false);
+  const [contextLost, setContextLost] = useState(false);
+  const [canvasKey, setCanvasKey] = useState(0);
+
+  const profile = useRef(detectProfile(reduced));
+  const [tier, setTier] = useState(() => profile.current.tier);
+  const downgradedRef = useRef(false);
+  const params = useMemo(() => profileParams(profile.current, tier), [tier]);
+
+  const debugMode = useMemo(() => {
+    if (typeof window === 'undefined') return 0;
+    const v = parseInt(new URLSearchParams(window.location.search).get('debug') || '0', 10);
+    return Number.isNaN(v) ? 0 : v;
+  }, []);
 
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
     const io = new IntersectionObserver(
-      ([entry]) => setVisible(entry.isIntersecting),
+      ([entry]) => {
+        setIsIntersecting(entry.isIntersecting);
+        if (entry.isIntersecting) setEverMounted(true);
+      },
       { threshold: 0.05 },
     );
     io.observe(el);
     return () => io.disconnect();
   }, []);
 
+  useEffect(() => {
+    const onVis = () => setDocumentHidden(document.hidden);
+    document.addEventListener('visibilitychange', onVis);
+    return () => document.removeEventListener('visibilitychange', onVis);
+  }, []);
+
+  /* WebGL context loss → pause + show CSS fallback;
+     restore → force full remount of the Canvas */
+  useEffect(() => {
+    const onLost = () => setContextLost(true);
+    const onRestored = () => {
+      setContextLost(false);
+      setCanvasKey((k) => k + 1);
+    };
+    window.addEventListener('bh:context-lost', onLost);
+    window.addEventListener('bh:context-restored', onRestored);
+    return () => {
+      window.removeEventListener('bh:context-lost', onLost);
+      window.removeEventListener('bh:context-restored', onRestored);
+    };
+  }, []);
+
+  /* Mobile Safari can lose the context and never fire
+     webglcontextrestored. If the context is still lost when the tab
+     becomes visible again, force the remount after 3s anyway. */
+  useEffect(() => {
+    if (!contextLost || documentHidden) return;
+    const timer = setTimeout(() => {
+      setContextLost(false);
+      setCanvasKey((k) => k + 1);
+    }, 3000);
+    return () => clearTimeout(timer);
+  }, [contextLost, documentHidden]);
+
+  /* Auto-tier downgrade — if the raymarcher watchdog reports it is
+     pinned at minimum quality and still too slow, drop to the simple
+     particle tier once instead of letting the page stay janky. */
+  useEffect(() => {
+    const onTooSlow = () => {
+      if (profile.current.tier !== 'full' || downgradedRef.current) return;
+      downgradedRef.current = true;
+      setTier('simple');
+    };
+    window.addEventListener('bh:too-slow', onTooSlow);
+    return () => window.removeEventListener('bh:too-slow', onTooSlow);
+  }, []);
+
+  const shouldRender = isIntersecting && !documentHidden && !contextLost;
+  const renderCtx = useMemo(() => ({ shouldRender }), [shouldRender]);
+  const dpr = reduced ? 1 : params.dpr;
+
   const cssFallback = <CSSFallback reduced={reduced} />;
   const simpleFallback = (
     <Canvas
+      key={`simple-${canvasKey}`}
       dpr={dpr}
-      gl={{ antialias: false, alpha: false, powerPreference: 'high-performance' }}
-      camera={{ position: [0, 3, 7], fov: 55, near: 0.1, far: 200 }}
+      gl={{ antialias: false, alpha: false, powerPreference: 'high-performance', toneMappingExposure: 1.2 }}
+      camera={{ position: [0, 2.6, 6.8], fov: 55, near: 0.1, far: 200 }}
       style={{ background: '#020202' }}
     >
       <Suspense fallback={null}>
-        <BackgroundSceneSimple reduced={reduced} />
+        <BackgroundSceneSimple reduced={reduced} frameCap={params.frameCap} />
+      </Suspense>
+    </Canvas>
+  );
+  const fullScene = (
+    <Canvas
+      key={`full-${canvasKey}`}
+      dpr={dpr}
+      gl={{
+        antialias: false,
+        alpha: false,
+        powerPreference: 'high-performance',
+      }}
+      camera={{ position: [0.7, 2.5, 3.7], fov: 55, near: 0.1, far: 200 }}
+      style={{ background: '#020202' }}
+    >
+      <Suspense fallback={null}>
+        <BackgroundScene
+          reduced={reduced}
+          mobile={profile.current.mobile}
+          maxSteps={params.maxSteps}
+          frameCap={params.frameCap}
+          postQuality={params.postQuality}
+          resolutionScale={params.resolutionScale}
+          debugMode={debugMode}
+        />
       </Suspense>
     </Canvas>
   );
 
-  /* no WebGL at all → CSS fallback */
-  if (!hasWebGL.current) {
+  /* tier 'css' → pure CSS fallback, zero GPU cost */
+  if (tier === 'css') {
     return (
       <div ref={containerRef} className="absolute inset-0">
         {cssFallback}
@@ -305,29 +467,32 @@ function BlackHoleHeroInner() {
 
   return (
     <div ref={containerRef} className="absolute inset-0">
-      {visible ? (
-        /* outer boundary: if simple Three.js also fails → CSS */
-        <ErrorBoundary fallback={cssFallback}>
-          {/* inner boundary: if GLSL raymarcher fails → simple Three.js */}
-          <ErrorBoundary fallback={simpleFallback}>
-            <Canvas
-              dpr={dpr}
-              gl={{
-                antialias: false,
-                alpha: false,
-                powerPreference: 'high-performance',
-              }}
-              camera={{ position: [0, 0, 9.0], fov: 50, near: 0.1, far: 200 }}
-              style={{ background: '#020202' }}
-            >
-              <Suspense fallback={null}>
-                <BackgroundScene reduced={reduced} />
-              </Suspense>
-            </Canvas>
-          </ErrorBoundary>
-        </ErrorBoundary>
-      ) : (
+      {!everMounted ? (
         cssFallback
+      ) : (
+        <>
+          {contextLost && (
+            <div className="absolute inset-0" style={{ zIndex: 10 }}>
+              {cssFallback}
+            </div>
+          )}
+          <RenderContext.Provider value={renderCtx}>
+            {tier === 'simple' ? (
+              /* simple tier (or runtime downgrade from full) → particles */
+              <ErrorBoundary fallback={cssFallback}>
+                {simpleFallback}
+              </ErrorBoundary>
+            ) : (
+              /* full tier → GLSL raymarcher */
+              <ErrorBoundary fallback={cssFallback}>
+                {/* inner boundary: if GLSL raymarcher fails → simple Three.js */}
+                <ErrorBoundary fallback={simpleFallback}>
+                  {fullScene}
+                </ErrorBoundary>
+              </ErrorBoundary>
+            )}
+          </RenderContext.Provider>
+        </>
       )}
     </div>
   );

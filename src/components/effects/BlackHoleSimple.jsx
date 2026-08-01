@@ -6,12 +6,59 @@ const INNER_COUNT = 800;
 const OUTER_COUNT = 400;
 const DUST_COUNT  = 200;
 
-const INNER_R_MIN = 1.15, INNER_R_MAX = 2.2;
-const OUTER_R_MIN = 5.0,  OUTER_R_MAX = 12.0;
-const DUST_R_MIN  = 8.0,  DUST_R_MAX  = 15.0;
-const INNER_SPEED = 0.12;
-const OUTER_SPEED = 0.04;
-const DUST_SPEED  = 0.015;
+/* Compact scale — the object now spans roughly the same screen size as
+   the full tier's shadow (~21% of viewport height) so it sits behind
+   the "ABHIKRISHNA" name, clear of the subtitle/status text. The solid
+   gradient ring (RING_IN→RING_OUT) hugging the black sphere (SPHERE)
+   reads as the disk; the particles add fibrous motion on top. */
+const SPHERE_RADIUS = 1.45;
+const RING_IN       = 1.5;
+const RING_OUT      = 2.3;
+const INNER_R_MIN   = 1.15, INNER_R_MAX = 1.6;
+const OUTER_R_MIN   = 1.55, OUTER_R_MAX = 2.1;
+const DUST_R_MIN    = 1.9,  DUST_R_MAX  = 2.4;
+const INNER_SPEED   = 0.12;
+const OUTER_SPEED   = 0.04;
+const DUST_SPEED    = 0.015;
+
+/* refRamp — JS twin of the full-tier shader's radial ramp so the simple
+   tier shares the same gold → rust → black color language */
+function smoothstep(edge0, edge1, x) {
+  const t = Math.min(1, Math.max(0, (x - edge0) / (edge1 - edge0)));
+  return t * t * (3 - 2 * t);
+}
+function refRamp(t, boost = 1) {
+  const gold = [0.95, 0.71, 0.40];
+  const rust = [0.14, 0.05, 0.03];
+  const black = [0, 0, 0];
+  const s1 = smoothstep(0.05, 0.425, t);
+  const s2 = smoothstep(0.425, 1.0, t);
+  const c = [
+    gold[0] + (rust[0] - gold[0]) * s1,
+    gold[1] + (rust[1] - gold[1]) * s1,
+    gold[2] + (rust[2] - gold[2]) * s1,
+  ];
+  return [
+    (c[0] + (black[0] - c[0]) * s2) * boost,
+    (c[1] + (black[1] - c[1]) * s2) * boost,
+    (c[2] + (black[2] - c[2]) * s2) * boost,
+  ];
+}
+function buildRingGeometry(inner, outer, boost) {
+  const geo = new THREE.RingGeometry(inner, outer, 96, 1);
+  const pos = geo.attributes.position;
+  const colors = new Float32Array(pos.count * 3);
+  for (let i = 0; i < pos.count; i++) {
+    const r = Math.hypot(pos.getX(i), pos.getY(i));
+    const t = (r - inner) / (outer - inner);
+    const c = refRamp(t, boost);
+    colors[i * 3] = c[0];
+    colors[i * 3 + 1] = c[1];
+    colors[i * 3 + 2] = c[2];
+  }
+  geo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+  return geo;
+}
 
 function createGlowTexture() {
   const c = document.createElement('canvas');
@@ -137,17 +184,17 @@ export default function BlackHoleSimple({ reduced }) {
 
   const innerDisk = useMemo(() => buildDisk(
     INNER_R_MIN, INNER_R_MAX, INNER_COUNT,
-    [1.0, 1.0, 1.0], [1.0, 0.75, 0.25], 0.15, INNER_SPEED
+    [1.0, 0.82, 0.48], [0.95, 0.55, 0.22], 0.12, INNER_SPEED
   ), []);
 
   const outerDisk = useMemo(() => buildDisk(
     OUTER_R_MIN, OUTER_R_MAX, OUTER_COUNT,
-    [1.0, 0.55, 0.1], [0.5, 0.1, 0.0], 0.25, OUTER_SPEED
+    [0.8, 0.4, 0.12], [0.3, 0.1, 0.05], 0.18, OUTER_SPEED
   ), []);
 
   const dustHalo = useMemo(() => buildDisk(
     DUST_R_MIN, DUST_R_MAX, DUST_COUNT,
-    [0.6, 0.15, 0.05], [0.2, 0.05, 0.02], 0.8, DUST_SPEED
+    [0.5, 0.12, 0.04], [0.15, 0.04, 0.02], 0.35, DUST_SPEED
   ), []);
 
   const diskTilt = useMemo(() => new THREE.Euler(0, 0, 0), []);
@@ -161,7 +208,7 @@ export default function BlackHoleSimple({ reduced }) {
 
     if (glowRef.current) {
       const pulse = 1.0 + Math.sin(elapsed * 0.5) * 0.08;
-      glowRef.current.scale.set(5 * pulse, 5 * pulse, 1);
+      glowRef.current.scale.set(2.2 * pulse, 2.2 * pulse, 1);
     }
   });
 
@@ -194,31 +241,20 @@ export default function BlackHoleSimple({ reduced }) {
     return geo;
   }, []);
 
+  const ringGeo = useMemo(() => buildRingGeometry(RING_IN, RING_OUT, 1.8), []);
+
   return (
-    <group>
+    <group rotation={[0, 0, 0.12]}>
       <mesh>
-        <sphereGeometry args={[1.0, 32, 32]} />
+        <sphereGeometry args={[SPHERE_RADIUS, 48, 32]} />
         <meshBasicMaterial color="#000000" />
       </mesh>
 
-      <mesh rotation={[Math.PI / 2, 0, 0]}>
-        <torusGeometry args={[1.5, 0.06, 16, 64]} />
+      <mesh geometry={ringGeo} rotation={[Math.PI / 2, 0, 0]}>
         <meshBasicMaterial
-          color="#ffe0a0"
+          vertexColors
           transparent
           opacity={0.9}
-          blending={THREE.AdditiveBlending}
-          depthWrite={false}
-          side={THREE.DoubleSide}
-        />
-      </mesh>
-
-      <mesh rotation={[Math.PI / 2, 0, 0]}>
-        <torusGeometry args={[1.8, 0.12, 16, 64]} />
-        <meshBasicMaterial
-          color="#cc6020"
-          transparent
-          opacity={0.3}
           blending={THREE.AdditiveBlending}
           depthWrite={false}
           side={THREE.DoubleSide}

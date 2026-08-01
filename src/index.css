@@ -70,6 +70,34 @@
   background: rgba(230,126,34,0.55);
 }
 
+@keyframes signalBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.25; }
+}
+
+@keyframes introReveal {
+  0% { opacity: 0; transform: translateY(24px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shootingStar {
+  0% { opacity: 0; transform: translate(-20px, -10px); }
+  8% { opacity: 0.9; }
+  55% { opacity: 0.9; }
+  100% { opacity: 0; transform: translate(110px, 55px); }
+}
+
+@keyframes cornerFlick {
+  0%, 100% { opacity: 0.95; }
+  50% { opacity: 0.3; }
+}
+
+@keyframes grainShift {
+  0% { transform: translate(0, 0); }
+  50% { transform: translate(-2%, -3%); }
+  100% { transform: translate(2%, 2%); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;

@@ -1,14 +1,18 @@
 import { useEffect, useState, useRef } from 'react';
 
+const IDLE_HIDE_MS = 1200;
+
 const CustomCursor = () => {
   const [isHovering, setIsHovering] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [visible, setVisible] = useState(true);
 
   const cursorDotRef = useRef(null);
   const cursorRingRef = useRef(null);
   const hoverRef = useRef(false);
   const mouse = useRef({ x: 0, y: 0 });
   const delayedMouse = useRef({ x: 0, y: 0 });
+  const idleTimerRef = useRef(null);
 
   useEffect(() => {
     const mq = window.matchMedia('(min-width: 1024px)');
@@ -18,6 +22,9 @@ const CustomCursor = () => {
 
     const handleMouseMove = (e) => {
       mouse.current = { x: e.clientX, y: e.clientY };
+      setVisible(true);
+      clearTimeout(idleTimerRef.current);
+      idleTimerRef.current = setTimeout(() => setVisible(false), IDLE_HIDE_MS);
     };
 
     const handleMouseOver = (e) => {
@@ -62,6 +69,7 @@ const CustomCursor = () => {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseover', handleMouseOver);
       cancelAnimationFrame(animationFrameId);
+      clearTimeout(idleTimerRef.current);
     };
   }, []);
 
@@ -71,15 +79,15 @@ const CustomCursor = () => {
     <>
       <div
         ref={cursorDotRef}
-        className="fixed top-0 left-0 w-4 h-4 bg-primary rounded-full pointer-events-none z-[999999] mix-blend-difference"
-        style={{ willChange: 'transform' }}
+        className="fixed top-0 left-0 w-4 h-4 bg-primary rounded-full pointer-events-none z-[999999] transition-opacity duration-300"
+        style={{ willChange: 'transform', opacity: visible ? 1 : 0 }}
       />
       <div
         ref={cursorRingRef}
         className="fixed top-0 left-0 w-8 h-8 border border-primary rounded-full pointer-events-none z-[999998] transition-[opacity,scale] duration-300 ease-out"
         style={{
           scale: isHovering ? '2' : '1',
-          opacity: isHovering ? 0.5 : 1,
+          opacity: visible ? (isHovering ? 0.5 : 1) : 0,
           willChange: 'transform',
         }}
       />

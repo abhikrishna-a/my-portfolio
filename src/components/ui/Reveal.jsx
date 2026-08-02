@@ -1,21 +1,33 @@
 import useInView from '../../hooks/useInView';
 
+const getHiddenTransform = (origin, distance, scale) => {
+  const dx = origin === 'left' ? -1 : origin === 'right' ? 1 : 0;
+  const dy = origin === 'top' ? -1 : origin === 'bottom' ? 1 : 0;
+  return `translate(${dx * distance}px, ${dy * distance}px) scale(${scale})`;
+};
+
 const Reveal = ({
   children,
   width = "fit-content",
-  delay = 0.2,
-  yOffset = 30,
-  duration = 0.6
+  delay = 0,
+  duration = 0.9,
+  origin = 'top',
+  distance = 30,
+  scale = 1,
+  reset = true,
+  clip = false,
 }) => {
-  const [ref, isInView] = useInView({ once: true, margin: "-100px" });
+  const [ref, isInView] = useInView({ once: !reset, margin: '-80px' });
 
   return (
-    <div ref={ref} style={{ position: "relative", width, overflow: "hidden" }}>
+    <div ref={ref} style={{ position: 'relative', width, overflow: clip ? 'hidden' : 'visible' }}>
       <div
-        className={`${isInView ? 'animate-revealUp' : 'opacity-0'}`}
         style={{
-          animationDelay: `${delay}s`,
-          animationDuration: `${duration}s`,
+          opacity: isInView ? 1 : 0,
+          transform: isInView ? 'none' : getHiddenTransform(origin, distance, scale),
+          transition: `opacity ${duration}s cubic-bezier(0.5, 0, 0, 1), transform ${duration}s cubic-bezier(0.5, 0, 0, 1)`,
+          transitionDelay: `${delay}s`,
+          willChange: 'transform, opacity',
         }}
       >
         {children}

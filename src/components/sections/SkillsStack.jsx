@@ -25,7 +25,7 @@ const skills = [
 const SkillsStack = () => {
   return (
     <section id="skills" className="py-20 px-6 max-w-7xl mx-auto flex flex-col gap-8 relative">
-      <Reveal>
+      <Reveal origin="bottom" scale={0.9} distance={30} clip>
         <div className="flex flex-col mb-12">
           <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-primary-dim mb-2">
             Capabilities
@@ -38,7 +38,7 @@ const SkillsStack = () => {
 
       <div className="flex flex-col gap-10 relative">
         {skills.map((skill, index) => (
-          <Reveal key={index} delay={index * 0.15} width="100%">
+          <Reveal key={index} delay={index * 0.15} width="100%" origin="bottom" scale={0.9} distance={30}>
             <div
               className="sticky-card rounded-4xl p-8 md:p-16 flex flex-col md:flex-row gap-8 items-start backdrop-blur-2xl backdrop-saturate-[140%] bg-black/70 border border-white/10 transition-all duration-500 hover:shadow-[0_0_12px_rgba(230,126,34,0.30)]"
               style={{ top: `${100 + index * 40}px`, zIndex: index + 1 }}

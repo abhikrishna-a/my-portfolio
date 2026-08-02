@@ -1,12 +1,11 @@
 import { useState, useRef, useEffect } from 'react';
 import { Copy, Linkedin, Github, Mail, Check } from 'lucide-react';
-import useInView from '../../hooks/useInView';
+import Reveal from '../ui/Reveal';
 import Magnetic from '../ui/Magnetic';
 
 const Footer = () => {
   const [copied, setCopied] = useState(false);
   const email = "abhikrishna616@gmail.com";
-  const [ref, inView] = useInView({ once: true, margin: "-100px" });
   const timerRef = useRef(null);
 
   useEffect(() => {
@@ -35,17 +34,16 @@ const Footer = () => {
       </div>
 
       <div className="max-w-7xl mx-auto flex flex-col items-center">
-        <div
-          ref={ref}
-          className={`text-center mb-16 transition-all duration-700 ease-out ${inView ? 'translate-y-0 opacity-100' : 'translate-y-5 opacity-0'}`}
-        >
-          <span className="font-mono text-[10px] tracking-[0.4em] uppercase text-primary mb-6 block">
-            Let's Connect
-          </span>
-          <h3 className="font-mono text-5xl md:text-8xl font-black tracking-tighter leading-none">
-            Ready to bring your <br /> ideas to life?
-          </h3>
-        </div>
+        <Reveal width="100%" origin="bottom" distance={30} scale={0.9}>
+          <div className="text-center mb-16">
+            <span className="font-mono text-[10px] tracking-[0.4em] uppercase text-primary mb-6 block">
+              Let's Connect
+            </span>
+            <h3 className="font-mono text-5xl md:text-8xl font-black tracking-tighter leading-none">
+              Ready to bring your <br /> ideas to life?
+            </h3>
+          </div>
+        </Reveal>
 
         <Magnetic>
           <div onClick={copyToClipboard} className="relative group cursor-pointer">

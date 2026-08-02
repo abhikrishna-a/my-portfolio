@@ -27,7 +27,7 @@ const projects = [
 
 const ProjectCard = ({ project, index, onClick }) => {
   return (
-    <Reveal delay={index * 0.1} yOffset={50}>
+    <Reveal delay={index * 0.1} origin="bottom" distance={30} scale={0.9} duration={0.8}>
       <button
         type="button"
         onClick={() => onClick(project)}
@@ -116,7 +116,7 @@ const PortfolioGrid = () => {
         <div className="max-w-6xl mx-auto">
           <div className="mb-14 grid gap-8 md:mb-16 md:grid-cols-[minmax(0,1.35fr)_minmax(260px,0.65fr)] md:items-end">
             <div className="max-w-3xl">
-              <Reveal>
+              <Reveal origin="left" distance={30} scale={0.9}>
                 <div className="flex items-center gap-4 mb-6">
                   <span className="h-px w-8 bg-primary/60" />
                   <span className="font-mono text-[10px] font-bold tracking-[0.4em] uppercase text-primary-dim">
@@ -124,14 +124,14 @@ const PortfolioGrid = () => {
                   </span>
                 </div>
               </Reveal>
-              <Reveal delay={0.2}>
+              <Reveal delay={0.2} origin="left" distance={30} scale={0.9}>
                 <h3 className="font-mono text-4xl md:text-6xl font-black tracking-tighter leading-[0.95] text-foreground">
                   PROJECTS THAT TURN <span className="text-primary italic">IDEAS</span> INTO EXPERIENCES
                 </h3>
               </Reveal>
             </div>
 
-            <Reveal delay={0.4}>
+            <Reveal delay={0.4} origin="right" distance={30} scale={0.9}>
               <div className="rounded-[1.5rem] p-5 backdrop-blur-2xl backdrop-saturate-[140%] bg-black/55 border border-white/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.09)]">
                 <p className="text-gray-500 text-base md:text-lg font-medium leading-relaxed">
                   A focused collection of products shaped around clarity, performance, and interfaces people can use without friction.

@@ -27,7 +27,7 @@ const AboutSection = () => {
 
         <div className="mt-12 flex flex-wrap justify-center gap-6">
           {stats.map((stat, index) => (
-            <Reveal key={stat.label} delay={0.6 + index * 0.1} yOffset={30}>
+            <Reveal key={stat.label} delay={0.6 + index * 0.1} origin="bottom" distance={30} scale={0.9}>
               <div className="px-8 py-4 rounded-2xl flex flex-col items-center backdrop-blur-2xl backdrop-saturate-[140%] bg-black/70 border border-white/10 transition-all duration-500 hover:shadow-[0_0_12px_rgba(230,126,34,0.30)]">
                 <AnimatedCounter
                   to={stat.to}

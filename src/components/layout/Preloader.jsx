@@ -26,36 +26,38 @@ const Preloader = () => {
 
   return (
     <div
-      className={`fixed inset-0 z-[99999] bg-black text-white flex flex-col items-center justify-center transition-all duration-800 ease-[cubic-bezier(0.76,0,0.24,1)] ${
-        isExiting ? '-translate-y-full opacity-0' : 'translate-y-0 opacity-100'
+      className={`fixed inset-0 z-[99999] bg-background text-foreground flex flex-col items-center justify-center transition-transform duration-800 ease-[cubic-bezier(0.76,0,0.24,1)] ${
+        isExiting ? '-translate-y-full' : 'translate-y-0'
       }`}
+      role="status"
+      aria-label="Loading"
     >
-      <span className="font-mono text-[10px] tracking-[0.5em] uppercase text-primary-dim mb-6">
-        Initializing
-      </span>
+      <div className="log-paper absolute inset-0" aria-hidden="true" />
 
-      <span className="font-mono text-6xl md:text-8xl font-black italic text-white/10 tabular-nums">
+      <span className="stamp stamp-red mb-8">Printing Log</span>
+
+      <span className="relative font-mono text-7xl md:text-8xl font-black text-foreground/15 tabular-nums">
         {progress}%
       </span>
 
-      <div className="mt-6 w-48 h-[2px] bg-white/10 rounded-full overflow-hidden relative">
+      <div className="relative mt-8 w-56 h-[3px] bg-foreground/15 overflow-hidden">
         <div
           className="absolute top-0 left-0 h-full bg-primary transition-all duration-75 ease-linear"
           style={{ width: `${progress}%` }}
         />
         {phase === 'loading' && (
           <div
-            className="absolute top-0 left-0 h-full w-14 animate-streak"
+            className="absolute top-0 left-0 h-full w-16 animate-streak"
             style={{
-              background: 'linear-gradient(90deg, transparent, #E67E22, transparent)',
+              background: 'linear-gradient(90deg, transparent, #2b4f9b, transparent)',
               opacity: 0.6,
             }}
           />
         )}
       </div>
 
-      <div className="mt-4 font-mono text-[10px] tracking-[0.3em] uppercase text-primary-dim">
-        {phase === 'loading' ? 'Loading Experience' : 'Ready'}
+      <div className="mt-5 font-mono text-[10px] tracking-[0.3em] uppercase text-muted">
+        {phase === 'loading' ? 'Inking Sheets' : 'Log Ready'}
       </div>
     </div>
   );

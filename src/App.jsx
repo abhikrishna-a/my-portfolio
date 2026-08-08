@@ -10,7 +10,7 @@ import Footer from './components/layout/Footer'
 import useSmoothScroll from './hooks/useSmoothScroll'
 import CustomCursor from './components/layout/CustomCursor'
 import Preloader from './components/layout/Preloader'
-import Starfield from './components/effects/Starfield'
+import LogbookPaper from './components/effects/LogbookPaper'
 
 function App() {
   useEffect(() => {
@@ -22,17 +22,16 @@ function App() {
 
   useSmoothScroll();
   return (
-    <main className="min-h-screen bg-background text-foreground overflow-x-hidden selection:bg-primary selection:text-white transition-colors duration-500">
+    <main className="relative min-h-screen bg-background text-foreground overflow-x-hidden">
+      {/* Direction contract lives as an HTML comment in index.html (seed key 3fc37d6d). */}
       <Preloader />
       <CustomCursor />
+      <LogbookPaper />
       <Navbar />
       <Hero />
-      <Starfield />
       <RunningBadge />
       <Marquee />
-      <div className="transition-colors duration-500">
-        <SkillsStack />
-      </div>
+      <SkillsStack />
       <PortfolioGrid />
       <AboutSection />
       <Footer />

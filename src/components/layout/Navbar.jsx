@@ -1,12 +1,12 @@
 import { useState, useEffect, useRef } from 'react';
-import { Home, Zap, User, Briefcase, MessageSquare } from 'lucide-react';
+import { Home, Zap, Briefcase, User, MessageSquare } from 'lucide-react';
 
 const navItems = [
-  { icon: <Home size={20} />, label: 'Home', href: '#home' },
-  { icon: <Zap size={20} />, label: 'Skills', href: '#skills' },
-  { icon: <Briefcase size={20} />, label: 'Portfolio', href: '#portfolio' },
-  { icon: <User size={20} />, label: 'About', href: '#about' },
-  { icon: <MessageSquare size={20} />, label: 'Contact', href: '#contact' },
+  { icon: <Home size={18} />, label: 'Home', href: '#home', index: '01' },
+  { icon: <Zap size={18} />, label: 'Skills', href: '#skills', index: '02' },
+  { icon: <Briefcase size={18} />, label: 'Portfolio', href: '#portfolio', index: '03' },
+  { icon: <User size={18} />, label: 'About', href: '#about', index: '04' },
+  { icon: <MessageSquare size={18} />, label: 'Contact', href: '#contact', index: '05' },
 ];
 
 const Navbar = () => {
@@ -52,19 +52,19 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav className="fixed bottom-8 left-1/2 -translate-x-1/2 z-[100]">
+    <nav className="fixed bottom-6 md:bottom-8 left-1/2 -translate-x-1/2 z-[100]">
       <div
-        className={`flex items-center gap-2 px-3 py-2 rounded-full overflow-hidden relative backdrop-blur-2xl backdrop-saturate-[140%] bg-black/70 border border-white/10 transition-all duration-700 ease-[cubic-bezier(0.175,0.885,0.32,1.275)] ${
+        className={`flex items-center gap-1 px-2 py-2 rounded-lg border border-foreground/20 bg-card/90 backdrop-blur-md transition-all duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
           isMounted ? 'translate-y-0 opacity-100' : 'translate-y-[100px] opacity-0'
         } ${
           isScrolled
-            ? 'shadow-[0_10px_40px_-10px_rgba(230,126,34,0.35)] border-primary/20'
+            ? 'shadow-[0_10px_30px_-18px_rgba(27,35,51,0.45)] border-primary/30'
             : 'shadow-none'
         }`}
       >
         <div
           ref={progressRef}
-          className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-primary to-accent origin-left"
+          className="absolute top-0 left-0 right-0 h-[2px] bg-primary origin-left"
           style={{ transform: 'scaleX(0)' }}
         />
 
@@ -74,14 +74,22 @@ const Navbar = () => {
             <a
               key={item.label}
               href={item.href}
-              className={`group relative flex items-center justify-center p-3 rounded-full transition-all duration-300 ${
-                isActive ? 'bg-primary/15' : 'hover:bg-white/10'
+              aria-label={item.label}
+              aria-current={isActive ? 'page' : undefined}
+              className={`group relative flex items-center gap-2 px-3 py-2 rounded-md transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 focus-visible:ring-offset-2 ${
+                isActive ? 'bg-primary text-background' : 'text-foreground/70 hover:text-primary'
               }`}
             >
-              <span className={`transition-colors duration-300 ${isActive ? 'text-primary' : 'text-white group-hover:text-primary'}`}>
+              <span className="hidden md:inline font-mono text-[9px] font-bold tracking-widest opacity-60">
+                {item.index}
+              </span>
+              <span className={`transition-colors duration-300 ${isActive ? 'text-background' : ''}`}>
                 {item.icon}
               </span>
-              <span className="absolute -top-12 left-1/2 -translate-x-1/2 px-3 py-1 bg-black/90 text-primary text-[10px] font-mono tracking-[0.18em] uppercase rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap border border-primary-hair">
+              <span className="hidden lg:inline font-mono text-[10px] font-bold uppercase tracking-[0.18em]">
+                {item.label}
+              </span>
+              <span className="absolute -top-11 left-1/2 -translate-x-1/2 px-3 py-1 bg-foreground text-background text-[10px] font-mono tracking-[0.18em] uppercase rounded-md opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap">
                 {item.label}
               </span>
             </a>

@@ -12,15 +12,13 @@ const RunningBadge = () => {
   const repeated = useMemo(() => repeatedItems, []);
 
   return (
-    <div className="relative w-full py-3 overflow-hidden border-y border-white/5">
+    <div className="relative w-full py-3 overflow-hidden border-y border-foreground/10 bg-secondary">
       <div className="flex whitespace-nowrap">
-        <div
-          className="flex items-center gap-4 font-mono text-[10px] font-bold uppercase tracking-[0.3em] text-primary-dim animate-comet"
-        >
+        <div className="flex items-center gap-6 font-mono text-[10px] font-bold uppercase tracking-[0.28em] text-primary-dim animate-marquee">
           {repeated.map((item, i) => (
-            <span key={i} className="flex items-center gap-4">
+            <span key={i} className="flex items-center gap-6">
               <span>{item}</span>
-              <span className="text-primary/30">•</span>
+              <span className="text-amber/60">•</span>
             </span>
           ))}
         </div>

@@ -1,7 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { ArrowRight, MessageSquare } from 'lucide-react';
-import HeroBackground from '../effects/HeroBackground';
-import HudOverlay from '../ui/HudOverlay';
+import AnimatedCounter from '../ui/AnimatedCounter';
 import Magnetic from '../ui/Magnetic';
 import useHeroCollapse from '../../hooks/useHeroCollapse';
 import useReducedMotion from '../effects/useReducedMotion';
@@ -17,6 +16,12 @@ const collapseConfig = [
 
 const NAME = 'ABHIKRISHNA';
 const CHIPS = ['React', 'Django REST', 'REST APIs'];
+
+const measurements = [
+  { to: 20, suffix: '+', label: 'Projects' },
+  { to: 100, suffix: '+', label: 'Problems Solved' },
+  { to: 1, suffix: '', label: 'Goal — Build & Ship' },
+];
 
 const clamp = (v, min, max) => Math.min(max, Math.max(min, v));
 
@@ -59,8 +64,7 @@ const Hero = () => {
     const apply = () => {
       const sr = section.getBoundingClientRect();
       const p = clamp(-sr.top / sr.height, 0, 1);
-      el.style.transform = `scale(${(1 + p * 0.15).toFixed(3)})`;
-      el.style.filter = `blur(${(p * 8).toFixed(2)}px)`;
+      el.style.transform = `scale(${(1 + p * 0.02).toFixed(3)})`;
     };
     const onScroll = () => {
       cancelAnimationFrame(raf);
@@ -80,47 +84,47 @@ const Hero = () => {
     <section
       ref={sectionRef}
       id="home"
-      className="relative z-10 min-h-screen flex flex-col items-center justify-center overflow-hidden bg-background"
+      className="relative z-10 min-h-screen flex flex-col items-center justify-center overflow-hidden"
     >
-      <div
-        ref={bgRef}
-        className="absolute inset-0 will-change-transform"
-        style={{ transformOrigin: 'center center' }}
-      >
-        <HeroBackground />
+      <div ref={bgRef} className="absolute inset-0 will-change-transform" style={{ transformOrigin: 'center center' }} />
+
+      {/* Page header row */}
+      <header className="absolute top-6 inset-x-6 md:inset-x-10 flex items-center justify-between gap-4 font-mono text-[9px] md:text-[10px] uppercase tracking-[0.3em] text-muted">
+        <span>Field Log — No. 001</span>
+        <span className="hidden sm:inline">Systems Engineering</span>
+        <span>Sheet 01 / 05</span>
+      </header>
+
+      {/* Margin annotation */}
+      <div className="hidden lg:flex absolute right-10 top-1/2 -translate-y-1/2 items-center gap-3 pointer-events-none">
+        <div className="h-px w-14 bg-primary/50" />
+        <span className="margin-note">see the builds</span>
       </div>
-      <HudOverlay />
 
       <div ref={wrapperRef} className="relative z-20" style={{ transform: 'translateY(0)' }}>
-        <div
-          className="absolute -inset-x-10 -inset-y-8 -z-10 pointer-events-none"
-          style={{
-            background:
-              'radial-gradient(ellipse 60% 55% at 50% 50%, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.25) 55%, rgba(0,0,0,0) 75%)',
-            backdropFilter: 'blur(2px)',
-            WebkitBackdropFilter: 'blur(2px)',
-            borderRadius: '24px',
-          }}
-        />
-        <div className="flex flex-col items-center text-center px-6 pointer-events-none max-w-[min(52vw,760px)]">
+        <div className="flex flex-col items-center text-center px-6 pointer-events-none max-w-[min(56rem,88vw)]">
           <Stagger delay={0.1}>
-            <span className="font-mono text-[10px] tracking-[0.5em] uppercase mb-4 text-primary">
-              Portfolio Transmission
+            <span ref={refs.status} className="stamp stamp-red mb-10" style={{ animation: 'revealUp 0.8s both' }}>
+              <span
+                className="w-2 h-2 rounded-full bg-current"
+                style={{ animation: 'signalBlink 2s ease-in-out infinite' }}
+              />
+              Open to Opportunities
             </span>
           </Stagger>
 
           <h1
             ref={refs.name}
-            className="relative font-display text-5xl md:text-7xl lg:text-8xl font-bold tracking-[0.06em] uppercase text-white"
+            className="relative font-display text-5xl md:text-7xl lg:text-8xl font-black tracking-[-0.02em] uppercase text-foreground"
             style={{
-              textShadow: '0 0 40px rgba(230,126,34,0.4), 0 0 80px rgba(230,126,34,0.15), 0 0 120px rgba(230,126,34,0.05), 0 0 140px rgba(56,189,248,0.08)',
+              textShadow: '0 3px 0 rgba(27,35,51,0.06), 1px 4px 0 rgba(27,35,51,0.04)',
             }}
           >
             <span
               aria-hidden="true"
               className="absolute inset-0 select-none"
               style={{
-                WebkitTextStroke: '1px rgba(56,189,248,0.22)',
+                WebkitTextStroke: '1px rgba(43,79,155,0.14)',
                 color: 'transparent',
                 transform: 'translate(-0.045em, 0.045em)',
               }}
@@ -130,31 +134,10 @@ const Hero = () => {
             <span className="relative inline-block">
               <Letters text={NAME} />
             </span>
-
-            {/* Rotating role ring */}
-            <span className="hidden lg:block absolute -right-44 top-1/2 -translate-y-1/2 w-44 h-44 pointer-events-none">
-              <svg
-                viewBox="0 0 200 200"
-                className="w-full h-full"
-                style={{ animation: 'spinSlow 22s linear infinite' }}
-                aria-hidden="true"
-              >
-                <defs>
-                  <path
-                    id="heroRingPath"
-                    d="M100,100 m-78,0 a78,78 0 1,1 156,0 a78,78 0 1,1 -156,0"
-                    fill="none"
-                  />
-                </defs>
-                <text className="font-mono" fill="rgba(255,157,58,0.55)" fontSize="11.5" letterSpacing="3">
-                  <textPath href="#heroRingPath">FULL STACK DEVELOPER • OPEN TO WORK •</textPath>
-                </text>
-              </svg>
-            </span>
           </h1>
 
           <Stagger delay={0.55}>
-            <p ref={refs.subtitle} className="mt-6 font-mono text-xs md:text-sm tracking-[0.05em] max-w-[440px] leading-relaxed text-white">
+            <p ref={refs.subtitle} className="mt-6 font-mono text-xs md:text-sm tracking-[0.05em] max-w-[460px] leading-relaxed text-foreground/80">
               Engineering interfaces that feel alive, from the database to the pixel that bends light
             </p>
           </Stagger>
@@ -164,7 +147,7 @@ const Hero = () => {
               {CHIPS.map((chip) => (
                 <span
                   key={chip}
-                  className="rounded-full border border-primary-hair px-4 py-1.5 font-mono text-[10px] font-bold uppercase tracking-widest text-primary"
+                  className="rounded-[4px] border border-primary/45 px-4 py-1.5 font-mono text-[10px] font-bold uppercase tracking-widest text-primary"
                 >
                   {chip}
                 </span>
@@ -172,56 +155,68 @@ const Hero = () => {
             </div>
           </Stagger>
 
+          {/* Measurements row */}
           <Stagger delay={0.7}>
-            <div ref={refs.ctas} className="mt-9 flex flex-wrap items-center justify-center gap-4 pointer-events-auto">
+            <div ref={refs.radec} className="mt-10 w-full max-w-xl">
+              <div className="grid grid-cols-3 gap-px border-y border-foreground/20 py-4">
+                {measurements.map((m) => (
+                  <div key={m.label} className="flex flex-col items-center gap-1 px-2">
+                    <AnimatedCounter
+                      to={m.to}
+                      suffix={m.suffix}
+                      className="font-mono text-2xl md:text-3xl font-black text-primary tabular-nums"
+                    />
+                    <span className="font-mono text-[8px] md:text-[9px] font-bold uppercase tracking-[0.22em] text-muted">
+                      {m.label}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </Stagger>
+
+          <Stagger delay={0.78}>
+            <div ref={refs.ctas} className="mt-10 flex flex-wrap items-center justify-center gap-4 pointer-events-auto">
               <Magnetic>
                 <a
                   href="#portfolio"
-                  className="group inline-flex items-center gap-2 rounded-full bg-primary px-8 py-3.5 text-xs font-bold uppercase tracking-[0.25em] text-white shadow-[0_0_30px_-6px_rgba(230,126,34,0.55)] transition-all duration-300 hover:brightness-110 hover:shadow-[0_0_44px_-4px_rgba(230,126,34,0.85)]"
+                  className="group inline-flex items-center gap-2 rounded-md bg-primary px-8 py-3.5 text-xs font-bold uppercase tracking-[0.25em] text-background transition-all duration-300 hover:bg-primary-dim motion-safe:active:translate-y-0.5"
                 >
-                  View Work
+                  View the Builds
                   <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-0.5" />
                 </a>
               </Magnetic>
               <Magnetic>
                 <a
                   href="#contact"
-                  className="glow-border inline-flex items-center gap-2 rounded-full border border-primary-hair px-8 py-3.5 text-xs font-bold uppercase tracking-[0.25em] text-primary transition-all duration-300 hover:border-accent/60 hover:bg-accent/10 hover:text-accent"
+                  className="inline-flex items-center gap-2 rounded-md border-[1.5px] border-foreground/70 px-8 py-3.5 text-xs font-bold uppercase tracking-[0.25em] text-foreground transition-all duration-300 hover:border-primary hover:text-primary"
                 >
-                  Get in Touch
+                  Reach Out
                   <MessageSquare size={15} />
                 </a>
               </Magnetic>
             </div>
           </Stagger>
 
-          <Stagger delay={0.78}>
-            <div ref={refs.status} className="mt-8 flex items-center gap-2">
-              <span
-                className="w-[6px] h-[6px] rounded-full bg-accent"
-                style={{ animation: 'signalBlink 2s ease-in-out infinite' }}
-              />
-              <span className="font-mono text-[9px] tracking-[0.4em] uppercase text-accent">
-                Signal Active
-              </span>
+          <Stagger delay={0.86}>
+            <div className="mt-12 flex items-center gap-3 font-mono text-[9px] uppercase tracking-[0.3em] text-muted">
+              <span className="h-px w-10 bg-foreground/30" />
+              <span>Full Stack Engineer</span>
+              <span className="h-px w-10 bg-foreground/30" />
             </div>
-          </Stagger>
-
-          <Stagger delay={0.84}>
-            <p ref={refs.radec} className="mt-3 font-mono text-[9px] tracking-[0.15em] text-white">
-              RA 17h 45m 40.0s / DEC -29&deg; 00&prime; 28.1&Prime;
-            </p>
           </Stagger>
         </div>
       </div>
 
       {/* Scroll cue */}
-      <div className="absolute bottom-24 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-2">
-        <span className="font-mono text-[9px] tracking-[0.4em] uppercase text-amber/50">
+      <div className="absolute bottom-24 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-3">
+        <span className="font-mono text-[9px] tracking-[0.4em] uppercase text-muted">
           Scroll
         </span>
-        <div className="w-5 h-9 rounded-full border border-amber/30 flex justify-center pt-1.5">
-          <span className="w-1 h-2 rounded-full bg-amber/70 animate-scrollDot" />
+        <div className="flex flex-col items-center gap-1.5">
+          <div className="h-9 w-px bg-foreground/25 relative overflow-hidden">
+            <span className="absolute top-0 left-0 h-3 w-px bg-primary animate-scrollDot" />
+          </div>
         </div>
       </div>
     </section>

@@ -1,22 +1,21 @@
 const stats = [
-  "10+ HOURS OF CODING •",
-  "100+ PROBLEMS SOLVED •",
-  "REST API & BACKEND SYSTEMS •",
-  "FULLSTACK DEVELOPMENT •",
-  "DATABASE DESIGN & OPTIMIZATION •",
-  "CLEAN CODE & BEST PRACTICES •"
+  "Full Stack Development",
+  "REST API & Backend Systems",
+  "Database Design & Optimization",
+  "Clean Code & Best Practices",
+  "UI Engineering",
+  "React & Django",
 ];
 
 const Marquee = () => {
   return (
-    <div className="relative w-full py-12 md:py-20 text-white overflow-hidden transform skew-y-1 translate-y-[-2rem] z-20">
+    <div className="relative w-full py-12 md:py-16 text-primary overflow-hidden border-y border-foreground/10 bg-background">
       <div className="flex whitespace-nowrap">
-        <div
-          className="flex items-center gap-8 font-mono text-3xl md:text-5xl font-black uppercase tracking-[0.24em] animate-marquee"
-        >
+        <div className="flex items-center gap-10 w-max pr-10 whitespace-nowrap font-mono text-2xl md:text-4xl font-black uppercase tracking-[0.18em] animate-marquee">
           {[...stats, ...stats].map((stat, index) => (
-            <span key={index} className={index % 2 === 0 ? 'text-primary' : 'text-accent'}>
-              {stat}
+            <span key={index} className="shrink-0 flex items-center gap-10">
+              <span className="text-primary-dim">{stat}</span>
+              <span className="text-amber/50 text-base md:text-xl">●</span>
             </span>
           ))}
         </div>

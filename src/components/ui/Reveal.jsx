@@ -1,4 +1,5 @@
 import useInView from '../../hooks/useInView';
+import useReducedMotion from '../effects/useReducedMotion';
 
 const getHiddenTransform = (origin, distance, scale) => {
   const dx = origin === 'left' ? -1 : origin === 'right' ? 1 : 0;
@@ -6,27 +7,32 @@ const getHiddenTransform = (origin, distance, scale) => {
   return `translate(${dx * distance}px, ${dy * distance}px) scale(${scale})`;
 };
 
+const EASE_OUT = 'cubic-bezier(0.22, 1, 0.36, 1)';
+
 const Reveal = ({
   children,
   width = "fit-content",
   delay = 0,
-  duration = 0.9,
+  duration = 0.6,
   origin = 'top',
   distance = 30,
   scale = 1,
-  reset = true,
+  reset = false,
   clip = false,
 }) => {
+  const reduced = useReducedMotion();
   const [ref, isInView] = useInView({ once: !reset, margin: '-80px' });
+
+  const visible = reduced || isInView;
 
   return (
     <div ref={ref} style={{ position: 'relative', width, overflow: clip ? 'hidden' : 'visible' }}>
       <div
         style={{
-          opacity: isInView ? 1 : 0,
-          transform: isInView ? 'none' : getHiddenTransform(origin, distance, scale),
-          transition: `opacity ${duration}s cubic-bezier(0.5, 0, 0, 1), transform ${duration}s cubic-bezier(0.5, 0, 0, 1)`,
-          transitionDelay: `${delay}s`,
+          opacity: visible ? 1 : 0,
+          transform: visible ? 'none' : getHiddenTransform(origin, distance, scale),
+          transition: `opacity ${duration}s ${EASE_OUT}, transform ${duration}s ${EASE_OUT}`,
+          transitionDelay: reduced ? '0s' : `${delay}s`,
           willChange: 'transform, opacity',
         }}
       >

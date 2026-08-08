@@ -22,64 +22,64 @@ const Footer = () => {
   };
 
   return (
-    <footer
-      id="contact"
-      className="text-white py-20 px-6 rounded-t-[5rem] mt-[-5rem] relative z-30"
-    >
-      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-        <div className="absolute top-[22px] left-[22px] w-[34px] h-[34px] border border-primary-hair border-r-0 border-b-0 animate-cornerFlick" />
-        <div className="absolute top-[22px] right-[22px] w-[34px] h-[34px] border border-primary-hair border-l-0 border-b-0 animate-cornerFlick" />
-        <div className="absolute bottom-[22px] left-[22px] w-[34px] h-[34px] border border-primary-hair border-r-0 border-t-0 animate-cornerFlick" />
-        <div className="absolute bottom-[22px] right-[22px] w-[34px] h-[34px] border border-primary-hair border-l-0 border-t-0 animate-cornerFlick" />
-      </div>
+    <footer id="contact" className="relative text-foreground py-20 px-6">
+      {/* Corner marks */}
+      <div className="absolute top-6 left-6 w-7 h-7 border border-foreground/30 border-r-0 border-b-0" aria-hidden="true" />
+      <div className="absolute top-6 right-6 w-7 h-7 border border-foreground/30 border-l-0 border-b-0" aria-hidden="true" />
+      <div className="absolute bottom-6 left-6 w-7 h-7 border border-foreground/30 border-r-0 border-t-0" aria-hidden="true" />
+      <div className="absolute bottom-6 right-6 w-7 h-7 border border-foreground/30 border-l-0 border-t-0" aria-hidden="true" />
 
       <div className="max-w-7xl mx-auto flex flex-col items-center">
-        <Reveal width="100%" origin="bottom" distance={30} scale={0.9}>
+        <Reveal width="100%" origin="bottom" distance={24} scale={0.98}>
           <div className="text-center mb-16">
-            <span className="font-mono text-[10px] tracking-[0.4em] uppercase text-primary mb-6 block">
-              Let's Connect
-            </span>
-            <h3 className="font-display text-5xl md:text-8xl font-black tracking-tighter leading-none text-gradient">
-              Ready to bring your <br /> ideas to life?
-            </h3>
+            <span className="stamp mb-10">Let's Connect</span>
+            <h2 className="ledger-head font-display text-4xl md:text-7xl font-black tracking-tighter uppercase text-foreground">
+              Ready to bring your
+              <br />
+              ideas to life?
+            </h2>
           </div>
         </Reveal>
 
-        <Magnetic>
-          <div onClick={copyToClipboard} className="relative group cursor-pointer">
-            <div className="px-12 py-10 rounded-full backdrop-blur-sm border border-white/20 bg-white/5 group-hover:border-primary group-hover:bg-primary/10 group-hover:shadow-[0_0_24px_-6px_rgba(56,189,248,0.45)] transition-all duration-300 flex items-center gap-4 card-shine">
-              <span className="font-mono text-2xl md:text-4xl font-bold tracking-tight">
-                {email}
-              </span>
-              <div className="p-3 bg-primary rounded-full text-black">
-                {copied ? <Check size={24} /> : <Copy size={24} />}
+        <Reveal delay={0.2} origin="bottom" distance={24} scale={0.98}>
+          <Magnetic>
+            <div onClick={copyToClipboard} className="relative group cursor-pointer" role="button" tabIndex={0} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); copyToClipboard(); } }} aria-label="Copy email to clipboard">
+              <div className="px-8 py-6 rounded-lg border-[1.5px] border-foreground/30 bg-card transition-all duration-300 group-hover:border-primary flex items-center gap-4 card-shine">
+                <span className="font-mono text-lg md:text-2xl font-bold tracking-tight">
+                  {email}
+                </span>
+                <div className="p-2.5 bg-primary rounded-md text-background">
+                  {copied ? <Check size={20} /> : <Copy size={20} />}
+                </div>
               </div>
+              {copied && (
+                <span className="absolute -bottom-10 left-1/2 -translate-x-1/2 text-primary font-mono font-bold uppercase text-xs tracking-widest animate-revealUp">
+                  Copied to clipboard!
+                </span>
+              )}
             </div>
-            {copied && (
-              <span className="absolute -bottom-10 left-1/2 -translate-x-1/2 text-primary font-mono font-bold uppercase text-xs tracking-widest animate-revealUp">
-                Copied to clipboard!
-              </span>
-            )}
-          </div>
-        </Magnetic>
+          </Magnetic>
+        </Reveal>
 
-        <div className="mt-32 w-full flex flex-col md:flex-row justify-between items-center gap-10 border-t border-white/10 pt-16">
-          <div className="flex gap-8">
-            <a href="https://www.linkedin.com/in/abhikrishna22" target="_blank" rel="noopener noreferrer" className="text-white hover:text-primary transition-colors duration-300 transform hover:scale-110">
-              <Linkedin size={24} />
+        <div className="mt-28 w-full flex flex-col md:flex-row justify-between items-center gap-10 border-t border-foreground/12 pt-12">
+          <div className="flex gap-6">
+            <a href="https://www.linkedin.com/in/abhikrishna22" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="inline-flex h-11 w-11 items-center justify-center rounded-md border-[1.5px] border-foreground/25 text-foreground hover:text-background hover:bg-primary hover:border-primary transition-all duration-300">
+              <Linkedin size={18} />
             </a>
-            <a href="https://github.com/abhikrishna-a" target="_blank" rel="noopener noreferrer" className="text-white hover:text-primary transition-colors duration-300 transform hover:scale-110">
-              <Github size={24} />
+            <a href="https://github.com/abhikrishna-a" target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="inline-flex h-11 w-11 items-center justify-center rounded-md border-[1.5px] border-foreground/25 text-foreground hover:text-background hover:bg-primary hover:border-primary transition-all duration-300">
+              <Github size={18} />
             </a>
-            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=abhikrishna616@gmail.com" target="_blank" rel="noopener noreferrer" className="text-white hover:text-primary transition-colors duration-300 transform hover:scale-110">
-              <Mail size={24} />
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=abhikrishna616@gmail.com" target="_blank" rel="noopener noreferrer" aria-label="Email" className="inline-flex h-11 w-11 items-center justify-center rounded-md border-[1.5px] border-foreground/25 text-foreground hover:text-background hover:bg-primary hover:border-primary transition-all duration-300">
+              <Mail size={18} />
             </a>
           </div>
 
-          <div className="font-mono text-white font-bold uppercase text-xs tracking-widest flex items-center gap-4">
+          <div className="font-mono text-foreground/70 font-bold uppercase text-xs tracking-widest flex items-center gap-4">
             <span>©Portfolio</span>
-            <span className="w-1 h-1 bg-primary-hair rounded-full" />
-            <span>Abhikrishna.</span>
+            <span className="w-1 h-1 bg-amber/70 rounded-full" />
+            <span className="text-primary-dim">Abhikrishna.</span>
+            <span className="w-1 h-1 bg-amber/70 rounded-full" />
+            <span className="stamp-red">Signed</span>
           </div>
         </div>
       </div>

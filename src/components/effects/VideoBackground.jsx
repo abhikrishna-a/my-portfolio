@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useRef } from 'react';
 import useReducedMotion from './useReducedMotion';
 
 /* ================================================================
@@ -9,6 +9,9 @@ import useReducedMotion from './useReducedMotion';
    Sources are layered: capable desktops get 4K (3840×2160); mobile,
    weak, or low-memory devices fall back to 1080p; reduced-motion and
    no-<video> environments show a static poster instead of playback.
+
+   The source orbit is 15s; playback runs at 0.5× so the loop takes
+   ~30s of wall-clock time with a perfect seam (constant rate).
    ================================================================ */
 
 const VIDEO_4K = '/videos/blackhole-4k.mp4';
@@ -32,6 +35,11 @@ function canPlayMp4() {
 export default function VideoBackground() {
   const reduced = useReducedMotion();
   const weak = useMemo(() => isWeakDevice(), []);
+  const videoRef = useRef(null);
+
+  const slowDown = () => {
+    if (videoRef.current) videoRef.current.playbackRate = 0.5;
+  };
 
   if (reduced || !canPlayMp4()) {
     return (
@@ -46,6 +54,7 @@ export default function VideoBackground() {
   return (
     <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
       <video
+        ref={videoRef}
         className="absolute inset-0 h-full w-full object-cover"
         autoPlay
         muted
@@ -53,6 +62,7 @@ export default function VideoBackground() {
         playsInline
         preload="metadata"
         poster={POSTER}
+        onLoadedMetadata={slowDown}
         disablePictureInPicture
         disableRemotePlayback
       >

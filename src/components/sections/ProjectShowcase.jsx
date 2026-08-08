@@ -23,10 +23,10 @@ const ProjectShowcase = ({ project, onClose }) => {
         <div className="sticky top-0 z-50 w-full border-b border-black/5 bg-white/65 backdrop-blur-xl dark:border-white/10 dark:bg-black/30">
           <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-5">
             <div>
-              <span className="mb-1 block text-[10px] font-bold uppercase tracking-[0.35em] text-gray-500">
+              <span className="mb-1 block text-[10px] font-bold uppercase tracking-[0.35em] text-foreground">
                 Project View
               </span>
-              <h2 className="text-xl font-black tracking-tight md:text-2xl">{project.title}</h2>
+              <h2 className="font-display text-xl font-black tracking-tight md:text-2xl text-gradient">{project.title}</h2>
             </div>
             <button
               onClick={onClose}
@@ -45,7 +45,7 @@ const ProjectShowcase = ({ project, onClose }) => {
                 <span className="mb-4 inline-flex rounded-full border border-primary/20 bg-primary/10 px-4 py-2 text-[11px] font-bold uppercase tracking-[0.28em] text-primary">
                   {project.category}
                 </span>
-                <h1 className="mb-5 text-5xl font-black leading-none tracking-tighter md:text-7xl">
+                <h1 className="font-display mb-5 text-5xl font-black leading-none tracking-tighter md:text-7xl text-gradient">
                   {project.title}
                 </h1>
                 <p className="text-base font-medium leading-relaxed text-foreground/80 md:text-xl">
@@ -63,7 +63,7 @@ const ProjectShowcase = ({ project, onClose }) => {
 
               <div className="flex flex-col justify-between gap-6 rounded-[1.6rem] border border-black/5 bg-[linear-gradient(180deg,rgba(230,126,34,0.10),rgba(230,126,34,0.02))] p-5 dark:border-white/10 dark:bg-[linear-gradient(180deg,rgba(230,126,34,0.10),rgba(255,255,255,0.02))]">
                 <div>
-                  <span className="mb-3 block text-[10px] font-bold uppercase tracking-[0.32em] text-gray-500">
+                  <span className="mb-3 block text-[10px] font-bold uppercase tracking-[0.32em] text-foreground">
                     Project Access
                   </span>
                   <p className="text-sm font-medium leading-relaxed text-foreground/70">
@@ -99,31 +99,40 @@ const ProjectShowcase = ({ project, onClose }) => {
 
           <div className="flex flex-col gap-5 md:gap-8">
             <div>
-              <span className="mb-2 block text-[10px] font-bold uppercase tracking-[0.35em] text-gray-500">
+              <span className="mb-2 block text-[10px] font-bold uppercase tracking-[0.35em] text-foreground">
                 Interface Preview
               </span>
-              <h3 className="text-2xl font-black tracking-tight md:text-3xl">Project Screens & Flow</h3>
+              <h3 className="font-display text-2xl font-black tracking-tight md:text-3xl text-gradient">Project Screens & Flow</h3>
             </div>
 
-            <div className="grid gap-6">
-              {project.screenshots && project.screenshots.length > 0 ? (
-                project.screenshots.map((screenshot, idx) => (
-                  <div
-                    key={idx}
-                    className={`overflow-hidden rounded-[2rem] border border-black/5 bg-white/80 shadow-[0_24px_80px_-44px_rgba(0,0,0,0.32)] backdrop-blur-sm dark:border-white/10 dark:bg-[#111]/85 ${project.screenshotFrameClass || ''}`}
-                  >
-                    <div className="mb-3 flex items-center justify-between px-2 pt-1 text-[10px] font-bold uppercase tracking-[0.28em] text-gray-500 md:px-3">
-                      <span>{project.title}</span>
-                      <span>Screen {idx + 1}</span>
-                    </div>
+            {project.screenshots && project.screenshots.length > 0 ? (
+              <div
+                className={`overflow-hidden rounded-[2rem] border border-black/5 bg-white/80 shadow-[0_24px_80px_-44px_rgba(0,0,0,0.32)] backdrop-blur-sm dark:border-white/10 dark:bg-[#111]/85 ${project.screenshotFrameClass || ''}`}
+              >
+                <div className="flex items-center justify-between gap-4 px-4 pt-3 md:px-5">
+                  <span className="flex gap-1.5">
+                    <span className="h-3 w-3 rounded-full bg-[#FF5F57]" />
+                    <span className="h-3 w-3 rounded-full bg-[#FEBC2E]" />
+                    <span className="h-3 w-3 rounded-full bg-[#28C840]" />
+                  </span>
+                  <span className="flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.28em] text-foreground">
+                    <span>{project.title}</span>
+                    <span>Flow</span>
+                  </span>
+                  <span className="hidden md:block font-mono text-[9px] tracking-[0.2em] text-foreground/40">window.tsx</span>
+                </div>
+                <div className="no-scrollbar max-h-[72vh] overflow-y-auto overscroll-contain">
+                  {project.screenshots.map((screenshot, idx) => (
                     <img
+                      key={idx}
                       src={screenshot}
                       alt={`${project.title} screenshot ${idx + 1}`}
-                      className={project.screenshotClass || 'w-full h-auto object-cover'}
+                      className={`block w-full h-auto object-cover ${project.screenshotClass || ''}`}
                     />
-                  </div>
-                ))
-              ) : (
+                  ))}
+                </div>
+              </div>
+            ) : (
                 <div className="aspect-video overflow-hidden rounded-[2rem] border border-black/5 bg-white/80 shadow-[0_24px_80px_-44px_rgba(0,0,0,0.32)] dark:border-white/10 dark:bg-[#111]/85">
                   <img
                     src={project.image}
@@ -132,7 +141,6 @@ const ProjectShowcase = ({ project, onClose }) => {
                   />
                 </div>
               )}
-            </div>
           </div>
         </div>
       </div>

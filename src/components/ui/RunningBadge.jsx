@@ -12,7 +12,7 @@ const RunningBadge = () => {
   const repeated = useMemo(() => repeatedItems, []);
 
   return (
-    <div className="relative w-full py-3 bg-black overflow-hidden border-y border-white/5">
+    <div className="relative w-full py-3 overflow-hidden border-y border-white/5">
       <div className="flex whitespace-nowrap">
         <div
           className="flex items-center gap-4 font-mono text-[10px] font-bold uppercase tracking-[0.3em] text-primary-dim animate-comet"

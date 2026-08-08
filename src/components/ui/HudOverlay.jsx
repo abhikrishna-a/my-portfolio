@@ -98,7 +98,18 @@ export default function HudOverlay() {
       {/* ── Telemetry: bottom-right ── */}
       <div className="absolute bottom-[64px] right-[24px] hidden md:block text-right">
         <p className="font-mono text-[9px] tracking-[0.15em] text-amber/50">
-          SIGNAL <span className="text-primary">{'\u2588'.repeat(8)}</span>{'\u2591'.repeat(2)} 82%
+          SIGNAL <span className="text-accent">{'\u2588'.repeat(8)}</span>{'\u2591'.repeat(2)} 82%
+        </p>
+      </div>
+
+      {/* ── Telemetry: REC indicator ── */}
+      <div className="absolute bottom-[88px] right-[24px] hidden md:block text-right">
+        <p className="font-mono text-[9px] tracking-[0.15em] text-amber/50 flex items-center justify-end gap-2">
+          <span
+            className="w-[6px] h-[6px] rounded-full bg-accent"
+            style={{ animation: 'signalBlink 1.4s ease-in-out infinite' }}
+          />
+          REC
         </p>
       </div>
     </div>

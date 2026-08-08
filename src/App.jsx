@@ -10,6 +10,7 @@ import Footer from './components/layout/Footer'
 import useSmoothScroll from './hooks/useSmoothScroll'
 import CustomCursor from './components/layout/CustomCursor'
 import Preloader from './components/layout/Preloader'
+import Starfield from './components/effects/Starfield'
 
 function App() {
   useEffect(() => {
@@ -26,9 +27,10 @@ function App() {
       <CustomCursor />
       <Navbar />
       <Hero />
+      <Starfield />
       <RunningBadge />
       <Marquee />
-      <div className="bg-background transition-colors duration-500">
+      <div className="transition-colors duration-500">
         <SkillsStack />
       </div>
       <PortfolioGrid />

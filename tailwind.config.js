@@ -13,6 +13,9 @@ export default {
         primary: "var(--primary)",
         "primary-dim": "rgba(230,126,34,0.45)",
         "primary-hair": "rgba(230,126,34,0.28)",
+        accent: "var(--accent)",
+        "accent-dim": "rgba(56,189,248,0.45)",
+        "accent-hair": "rgba(56,189,248,0.28)",
         secondary: "var(--secondary)",
         card: "var(--card)",
         muted: "var(--muted)",
@@ -21,6 +24,7 @@ export default {
       },
       fontFamily: {
         sans: ['Inter', 'sans-serif'],
+        display: ['"Space Grotesk"', 'Inter', 'sans-serif'],
         mono: ['"JetBrains Mono"', '"SF Mono"', 'ui-monospace', 'Menlo', 'Consolas', 'monospace'],
       },
       borderRadius: {

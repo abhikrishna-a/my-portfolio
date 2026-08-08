@@ -30,7 +30,7 @@ const SkillsStack = () => {
           <span className="font-mono text-[10px] tracking-[0.3em] uppercase text-primary-dim mb-2">
             Capabilities
           </span>
-          <h3 className="font-mono text-5xl md:text-7xl font-black tracking-tighter">
+          <h3 className="font-display text-5xl md:text-7xl font-black tracking-tighter text-gradient">
             What I do best
           </h3>
         </div>
@@ -40,15 +40,15 @@ const SkillsStack = () => {
         {skills.map((skill, index) => (
           <Reveal key={index} delay={index * 0.15} width="100%" origin="bottom" scale={0.9} distance={30}>
             <div
-              className="sticky-card rounded-4xl p-8 md:p-16 flex flex-col md:flex-row gap-8 items-start backdrop-blur-2xl backdrop-saturate-[140%] bg-black/70 border border-white/10 transition-all duration-500 hover:shadow-[0_0_12px_rgba(230,126,34,0.30)]"
+              className="sticky-card rounded-4xl p-8 md:p-16 flex flex-col md:flex-row gap-8 items-start backdrop-blur-2xl backdrop-saturate-[140%] bg-black/70 border border-white/10 transition-all duration-500 hover:shadow-[0_0_12px_rgba(230,126,34,0.30)] card-shine glow-border"
               style={{ top: `${100 + index * 40}px`, zIndex: index + 1 }}
             >
               <div className="w-full md:w-1/3">
                 <div className="mb-6">{skill.icon}</div>
-                <h4 className="font-mono text-3xl md:text-4xl font-bold mb-4 tracking-tight">
+                <h4 className="font-display text-3xl md:text-4xl font-bold mb-4 tracking-tight">
                   {skill.title}
                 </h4>
-                <p className="text-gray-500 text-lg leading-relaxed">
+                <p className="text-white text-lg leading-relaxed">
                   {skill.description}
                 </p>
               </div>

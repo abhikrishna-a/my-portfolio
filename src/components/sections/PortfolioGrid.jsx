@@ -31,7 +31,7 @@ const ProjectCard = ({ project, index, onClick }) => {
       <button
         type="button"
         onClick={() => onClick(project)}
-        className="group relative w-full overflow-hidden rounded-[2rem] text-left transition-all duration-700 hover:-translate-y-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 focus-visible:ring-offset-4 backdrop-blur-2xl bg-black/70 border border-white/10"
+        className="group relative w-full overflow-hidden rounded-[2rem] text-left transition-all duration-700 hover:-translate-y-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/70 focus-visible:ring-offset-4 backdrop-blur-2xl bg-black/70 border border-white/10 card-shine"
         aria-label={`Open ${project.title} project`}
       >
         {/* Hover glow */}
@@ -44,10 +44,17 @@ const ProjectCard = ({ project, index, onClick }) => {
         />
 
         <div className="relative flex items-center justify-between border-b border-white/10 px-6 py-5">
-          <span className="font-mono text-[10px] font-bold uppercase tracking-[0.34em] text-gray-500">
-            {project.category}
+          <span className="flex items-center gap-2">
+            <span className="flex gap-1.5">
+              <span className="h-3 w-3 rounded-full bg-[#FF5F57]" />
+              <span className="h-3 w-3 rounded-full bg-[#FEBC2E]" />
+              <span className="h-3 w-3 rounded-full bg-[#28C840]" />
+            </span>
+            <span className="ml-2 font-mono text-[10px] font-bold uppercase tracking-[0.34em] text-white">
+              {project.category}
+            </span>
           </span>
-          <span className="font-mono text-[10px] font-bold uppercase tracking-[0.34em] text-gray-500 transition-colors duration-300 group-hover:text-primary">
+          <span className="font-mono text-[10px] font-bold uppercase tracking-[0.34em] text-white transition-colors duration-300 group-hover:text-primary">
             Selected Project
           </span>
         </div>
@@ -58,7 +65,7 @@ const ProjectCard = ({ project, index, onClick }) => {
             <img
               src={project.image}
               alt={project.title}
-              className="h-full w-full object-contain p-4 md:p-5 transition-transform duration-700 group-hover:scale-[1.06]"
+              className="h-full w-full object-contain p-4 md:p-5 transition-all duration-700 group-hover:scale-[1.06] group-hover:grayscale"
             />
           </div>
         </div>
@@ -66,7 +73,7 @@ const ProjectCard = ({ project, index, onClick }) => {
         <div className="relative p-6 md:p-7">
           <div className="mb-4 flex items-start justify-between gap-4">
             <div>
-              <h3 className="font-mono text-2xl md:text-[2rem] font-black tracking-tight leading-none">
+              <h3 className="font-display text-2xl md:text-[2rem] font-black tracking-tight leading-none text-gradient">
                 {project.title}
               </h3>
               {project.description && (
@@ -91,7 +98,7 @@ const ProjectCard = ({ project, index, onClick }) => {
             ))}
           </div>
 
-          <div className="mt-6 flex items-center justify-between border-t border-white/10 pt-4 text-xs font-mono font-bold uppercase tracking-[0.24em] text-gray-500 transition-all duration-500 group-hover:border-primary/20">
+          <div className="mt-6 flex items-center justify-between border-t border-white/10 pt-4 text-xs font-mono font-bold uppercase tracking-[0.24em] text-white transition-all duration-500 group-hover:border-primary/20">
             <span className="inline-flex items-center gap-2 transition-all duration-500 group-hover:text-primary group-hover:translate-x-1">
               Open Project
               <span className="block h-px w-0 bg-primary transition-all duration-500 group-hover:w-8" />
@@ -112,7 +119,7 @@ const PortfolioGrid = () => {
 
   return (
     <>
-      <section id="portfolio" className="py-24 md:py-28 px-6 bg-background transition-colors duration-500">
+      <section id="portfolio" className="relative z-10 py-24 md:py-28 px-6 transition-colors duration-500">
         <div className="max-w-6xl mx-auto">
           <div className="mb-14 grid gap-8 md:mb-16 md:grid-cols-[minmax(0,1.35fr)_minmax(260px,0.65fr)] md:items-end">
             <div className="max-w-3xl">
@@ -125,15 +132,15 @@ const PortfolioGrid = () => {
                 </div>
               </Reveal>
               <Reveal delay={0.2} origin="left" distance={30} scale={0.9}>
-                <h3 className="font-mono text-4xl md:text-6xl font-black tracking-tighter leading-[0.95] text-foreground">
-                  PROJECTS THAT TURN <span className="text-primary italic">IDEAS</span> INTO EXPERIENCES
+                <h3 className="font-display text-4xl md:text-6xl font-black tracking-tighter leading-[0.95] text-foreground">
+                  PROJECTS THAT TURN <span className="text-gradient italic">IDEAS</span> INTO EXPERIENCES
                 </h3>
               </Reveal>
             </div>
 
             <Reveal delay={0.4} origin="right" distance={30} scale={0.9}>
               <div className="rounded-[1.5rem] p-5 backdrop-blur-2xl backdrop-saturate-[140%] bg-black/55 border border-white/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.09)]">
-                <p className="text-gray-500 text-base md:text-lg font-medium leading-relaxed">
+                <p className="text-white text-base md:text-lg font-medium leading-relaxed">
                   A focused collection of products shaped around clarity, performance, and interfaces people can use without friction.
                 </p>
               </div>

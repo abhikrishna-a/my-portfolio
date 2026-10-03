@@ -27,11 +27,12 @@ Single-page site: Home → Skills → Portfolio → About → Résumé → Conta
 - Stack: React 18, Vite 5, Tailwind CSS 3 (class-based dark mode), Three.js + React Three Fiber + postprocessing, Lucide icons.
 - Static build deployed on Vercel at https://abhikrishna-portfolio.vercel.app/.
 - Reduced-motion support: global `prefers-reduced-motion` reduction plus a `useReducedMotion` hook.
-- Projects (3), each with an 8-10 entry dossier in place of the old Problem/Solution block:
+- Projects (3), each with a dossier in place of the old Problem/Solution block:
   - EduSphere — Django monolith (server-rendered templates), PostgreSQL/SQLite, Cloudinary, WhiteNoise; live on Vercel at student-management-eight-rho.vercel.app.
-  - Sprint.X — React 19 + Vite + Tailwind + React Router SPA with json-server product data. No live deployment, so it renders no call-to-action.
+  - Sprint.X — full-stack storefront: React 19 + Vite + Material UI + Tailwind over a Django REST Framework API (4 apps, 16 endpoints) with PostgreSQL, JWT auth, admin console and an analytics endpoint. 14 client routes. No live deployment, so it renders no call-to-action.
   - Skyrict — FastAPI/Python multi-tenant ERP with Next.js, PostgreSQL RLS, Redis, JWT RS256, MFA, Docker; live at skyrict.in.
-- Dossier content is written from each project's source code. Where the old card copy disagreed with the code (EduSphere's "React + DRF", Sprint.X's "checkout steps 3", "40+ products", "Django"), the code won and the claims were corrected or dropped.
+- Dossier content is written from each project's source code. Where the old card copy disagreed with the code, the code won and the claims were corrected or dropped. Corrections so far: EduSphere was labelled "React + DRF" but is a Django monolith; Sprint.X claimed "40+ products" (there are 14) and a "three-step checkout" (checkout is a single-page form, not a wizard).
+- Source-of-truth warning: `D:\Program Files\track\Ecommerce\TrackField` is a DIFFERENT, non-functional project — it does not boot, has no backend, and is not the repo the portfolio links to. Sprint.X is `github.com/abhikrishna-a/Ecommerce_online` (Backend/ + Frontend/). Never write Sprint.X copy from TrackField.
 - Self-reported stats "20+ Projects" and "100+ Problems Solved" are confirmed. The former "10+ Hours Coding" stat is replaced by a goal-themed card (decision: not a counted number).
 - README's claimed dark/light theme toggle is stale: the code defines identical themes and no toggle exists; dark is the single theme.
 

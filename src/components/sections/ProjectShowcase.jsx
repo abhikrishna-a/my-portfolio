@@ -87,7 +87,7 @@ const ProjectShowcase = ({ project, onClose }) => {
               ref={closeRef}
               onClick={onClose}
               aria-label={`Close ${project.title}`}
-              className="flex items-center gap-2 rounded-md border-[1.5px] border-foreground/30 px-4 py-2 text-sm font-bold uppercase tracking-[0.2em] text-foreground transition-colors hover:bg-primary hover:text-background hover:border-primary md:px-6 md:py-3"
+              className="flex items-center gap-2 rounded-md border-[1.5px] border-foreground/30 px-4 py-2 text-sm font-bold uppercase tracking-[0.2em] text-foreground transition-colors hover:bg-primary hover:text-background hover:border-primary md:px-6 md:py-3 active:bg-primary focus-visible:bg-primary active:text-background focus-visible:text-background active:border-primary focus-visible:border-primary"
             >
               <X size={20} />
               <span className="hidden md:inline">Close</span>
@@ -172,7 +172,7 @@ const ProjectShowcase = ({ project, onClose }) => {
                       href={project.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex w-full items-center justify-center gap-2 rounded-md bg-primary px-6 py-4 text-sm font-bold uppercase tracking-[0.2em] text-background transition-colors hover:bg-primary-dim"
+                      className="flex w-full items-center justify-center gap-2 rounded-md bg-primary px-6 py-4 text-sm font-bold uppercase tracking-[0.2em] text-background transition-colors hover:bg-primary-dim active:bg-primary-dim focus-visible:bg-primary-dim"
                     >
                       Visit Site <ExternalLink size={18} />
                     </a>
@@ -182,7 +182,7 @@ const ProjectShowcase = ({ project, onClose }) => {
                       href={project.github}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex w-full items-center justify-center gap-2 rounded-md border-[1.5px] border-foreground/30 px-6 py-4 text-sm font-bold uppercase tracking-[0.2em] text-foreground transition-colors hover:bg-primary hover:text-background hover:border-primary"
+                      className="flex w-full items-center justify-center gap-2 rounded-md border-[1.5px] border-foreground/30 px-6 py-4 text-sm font-bold uppercase tracking-[0.2em] text-foreground transition-colors hover:bg-primary hover:text-background hover:border-primary active:bg-primary focus-visible:bg-primary active:text-background focus-visible:text-background active:border-primary focus-visible:border-primary"
                     >
                       Source Code <Github size={18} />
                     </a>
@@ -258,7 +258,7 @@ const ProjectShowcase = ({ project, onClose }) => {
                   href={project.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 rounded-md bg-primary px-7 py-4 text-sm font-bold uppercase tracking-[0.2em] text-background transition-colors hover:bg-primary-dim focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 focus-visible:ring-offset-2 focus-visible:ring-offset-card"
+                  className="inline-flex items-center justify-center gap-2 rounded-md bg-primary px-7 py-4 text-sm font-bold uppercase tracking-[0.2em] text-background transition-colors hover:bg-primary-dim focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 focus-visible:ring-offset-2 focus-visible:ring-offset-card active:bg-primary-dim focus-visible:bg-primary-dim"
                 >
                   Live Site <ExternalLink size={18} />
                 </a>

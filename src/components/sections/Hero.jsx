@@ -88,11 +88,17 @@ const Hero = () => {
     >
       <div ref={bgRef} className="absolute inset-0 will-change-transform" style={{ transformOrigin: 'center center' }} />
 
-      {/* Page header row */}
-      <header className="absolute top-6 inset-x-6 md:inset-x-10 flex items-center justify-between gap-4 font-mono text-[9px] md:text-[10px] uppercase tracking-[0.3em] text-muted">
-        <span>Field Log — No. 001</span>
-        <span className="hidden sm:inline">Systems Engineering</span>
-        <span>Sheet 01 / 05</span>
+      {/* Page header row. At <640px the three annotations do not fit on one
+          line, and this one used to be display:none there. It now moves to its
+          own centred line instead, so nothing is hidden on mobile. At >=sm the
+          markup below renders exactly the single row it always did. */}
+      <header className="absolute top-6 inset-x-6 md:inset-x-10 font-mono text-[9px] md:text-[10px] uppercase tracking-[0.3em] text-muted">
+        <div className="flex items-center justify-between gap-4">
+          <span>Field Log — No. 001</span>
+          <span className="hidden sm:inline">Systems Engineering</span>
+          <span>Sheet 01 / 05</span>
+        </div>
+        <span className="mt-1.5 block text-center sm:hidden">Systems Engineering</span>
       </header>
 
       {/* Margin annotation */}
@@ -180,16 +186,16 @@ const Hero = () => {
               <Magnetic>
                 <a
                   href="#portfolio"
-                  className="group inline-flex items-center gap-2 rounded-md bg-primary px-8 py-3.5 text-xs font-bold uppercase tracking-[0.25em] text-background transition-all duration-300 hover:bg-primary-dim motion-safe:active:translate-y-0.5"
+                  className="group inline-flex items-center gap-2 rounded-md bg-primary px-8 py-3.5 text-xs font-bold uppercase tracking-[0.25em] text-background transition-all duration-300 hover:bg-primary-dim motion-safe:active:translate-y-0.5 active:bg-primary-dim focus-visible:bg-primary-dim"
                 >
                   View the Builds
-                  <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-0.5" />
+                  <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-0.5 group-active:translate-x-0.5 group-focus-within:translate-x-0.5" />
                 </a>
               </Magnetic>
               <Magnetic>
                 <a
                   href="#contact"
-                  className="inline-flex items-center gap-2 rounded-md border-[1.5px] border-foreground/70 px-8 py-3.5 text-xs font-bold uppercase tracking-[0.25em] text-foreground transition-all duration-300 hover:border-primary hover:text-primary"
+                  className="inline-flex items-center gap-2 rounded-md border-[1.5px] border-foreground/70 px-8 py-3.5 text-xs font-bold uppercase tracking-[0.25em] text-foreground transition-all duration-300 hover:border-primary hover:text-primary active:border-primary focus-visible:border-primary active:text-primary focus-visible:text-primary motion-safe:active:translate-y-0.5"
                 >
                   Reach Out
                   <MessageSquare size={15} />

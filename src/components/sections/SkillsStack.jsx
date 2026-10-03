@@ -42,7 +42,7 @@ const SkillsStack = () => {
           {skills.map((skill, index) => (
             <Reveal key={skill.spec} delay={index * 0.1} width="100%" origin="bottom" scale={0.98} distance={24}>
               <div
-                className="sticky-card rounded-[0.9rem] p-8 md:p-12 flex flex-col md:flex-row gap-8 items-start bg-card border border-foreground/15 transition-all duration-500 motion-safe:hover:-translate-y-1 hover:border-primary/45 card-shine"
+                className="sticky-card rounded-[0.9rem] p-8 md:p-12 flex flex-col md:flex-row gap-8 items-start bg-card border border-foreground/15 transition-all duration-500 motion-safe:hover:-translate-y-1 motion-safe:active:-translate-y-1 hover:border-primary/45 card-shine active:border-primary/45 focus-visible:border-primary/45"
                 style={{ top: `${100 + index * 40}px`, zIndex: index + 1 }}
               >
                 <div className="w-full md:w-1/3">
@@ -66,7 +66,7 @@ const SkillsStack = () => {
                   {skill.tags.map(tag => (
                     <span
                       key={tag}
-                      className="tag-sweep px-4 py-2 text-xs font-mono font-bold tracking-wider uppercase rounded-[4px] border border-primary/40 text-primary transition-colors duration-300 hover:bg-primary/10"
+                      className="tag-sweep px-4 py-2 text-xs font-mono font-bold tracking-wider uppercase rounded-[4px] border border-primary/40 text-primary transition-colors duration-300 hover:bg-primary/10 active:bg-primary/10 focus-visible:bg-primary/10"
                     >
                       {tag}
                     </span>

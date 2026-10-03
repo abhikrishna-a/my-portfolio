@@ -32,18 +32,12 @@
     scroll-behavior: smooth;
     scrollbar-width: thin;
     scrollbar-color: rgba(43, 79, 155, 0.4) transparent;
-    /* The nav dock is fixed at the bottom. Without this, an anchor jump or a
-       #hash landing puts the last line of the target section underneath the
-       dock and there is no way to read it. */
-    scroll-padding-bottom: 6.5rem;
-  }
-
-  /* Anchors under the bottom dock need the same clearance when the page is
-     viewed with the browser chrome collapsed on a phone. */
-  @media (max-width: 767px) {
-    html {
-      scroll-padding-bottom: 7.5rem;
-    }
+    /* The nav dock is fixed at the bottom, ~72px tall plus a 24-32px offset.
+       Without this, an anchor jump puts the last line of the target section
+       underneath the dock and there is no way to read it. Measured at 320px
+       the dock was covering text 29px past its own top edge, so this is set
+       well above the dock height rather than to match it. */
+    scroll-padding-bottom: 11rem;
   }
 
   /* Safe-area padding for notched / gesture-bar devices. The dock is fixed to
@@ -219,7 +213,11 @@
   pointer-events: none;
   z-index: 1;
 }
-.card-shine:hover::before {
+/* :active and :focus-visible carry the same reveal, so the shine is not a
+   hover-only effect that a finger or a keyboard can never trigger. */
+.card-shine:hover::before,
+.card-shine:active::before,
+.card-shine:focus-visible::before {
   left: 100%;
 }
 
@@ -257,7 +255,9 @@
   transition: opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.tag-sweep:hover::before {
+.tag-sweep:hover::before,
+.tag-sweep:active::before,
+.tag-sweep:focus-visible::before {
   opacity: 1;
   animation: tag-sweep 1.8s linear infinite;
 }
@@ -283,7 +283,9 @@
   transform-origin: left;
   transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.link-underline:hover::after {
+.link-underline:hover::after,
+.link-underline:active::after,
+.link-underline:focus-visible::after {
   transform: scaleX(1);
 }
 
@@ -294,7 +296,9 @@
   transition: background-size 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   background-position: left center;
 }
-.text-highlight:hover {
+.text-highlight:hover,
+.text-highlight:active,
+.text-highlight:focus-visible {
   background-size: 100% 100%;
 }
 

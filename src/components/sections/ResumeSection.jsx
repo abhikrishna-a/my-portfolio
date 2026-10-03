@@ -30,7 +30,7 @@ const ResumeSection = () => {
               <a
                 href="/abhikrishna-resume.pdf"
                 download="Abhikrishna(Full Stack developer).pdf"
-                className="inline-flex shrink-0 items-center justify-center gap-2 rounded-md bg-primary px-7 py-4 text-sm font-bold uppercase tracking-[0.2em] text-background transition-colors hover:bg-primary-dim focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 focus-visible:ring-offset-2 focus-visible:ring-offset-card"
+                className="inline-flex shrink-0 items-center justify-center gap-2 rounded-md bg-primary px-7 py-4 text-sm font-bold uppercase tracking-[0.2em] text-background transition-colors hover:bg-primary-dim focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 focus-visible:ring-offset-2 focus-visible:ring-offset-card active:bg-primary-dim focus-visible:bg-primary-dim"
               >
                 <Download size={18} />
                 Download PDF

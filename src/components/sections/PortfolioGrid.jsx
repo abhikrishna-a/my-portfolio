@@ -252,7 +252,7 @@ const ProjectCard = ({ project, index, onClick }) => {
       <button
         type="button"
         onClick={() => onClick(project)}
-        className="group relative w-full overflow-hidden rounded-[0.9rem] bg-card text-left transition-all duration-700 motion-safe:hover:-translate-y-1 hover:border-primary/45 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 focus-visible:ring-offset-2 focus-visible:ring-offset-background border border-foreground/15 card-shine"
+        className="group relative w-full overflow-hidden rounded-[0.9rem] bg-card text-left transition-all duration-700 motion-safe:hover:-translate-y-1 motion-safe:active:-translate-y-1 hover:border-primary/45 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 focus-visible:ring-offset-2 focus-visible:ring-offset-background border border-foreground/15 card-shine active:border-primary/45 focus-visible:border-primary/45"
         aria-label={`Open ${project.title} project`}
       >
         <div className="relative flex items-center justify-between border-b border-foreground/12 px-5 py-3">
@@ -261,7 +261,7 @@ const ProjectCard = ({ project, index, onClick }) => {
               Project File — {project.fileNo}
             </span>
           </span>
-          <span className="font-mono text-[9px] font-bold uppercase tracking-[0.3em] text-primary-dim transition-colors duration-300 group-hover:text-primary">
+          <span className="font-mono text-[9px] font-bold uppercase tracking-[0.3em] text-primary-dim transition-colors duration-300 group-hover:text-primary group-active:text-primary group-focus-within:text-primary">
             {project.category}
           </span>
         </div>
@@ -270,7 +270,7 @@ const ProjectCard = ({ project, index, onClick }) => {
           <div className="absolute inset-x-4 top-3 bottom-3 rounded-lg border border-foreground/12 bg-background" />
           <div className="absolute top-3 left-10 w-20 h-5 tape -rotate-2 opacity-90" aria-hidden="true" />
           <div className="absolute bottom-3 right-8 w-16 h-5 tape rotate-2 opacity-90" aria-hidden="true" />
-          <div className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-md border border-foreground/12 bg-background transition-all duration-700 group-hover:border-primary/30">
+          <div className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-md border border-foreground/12 bg-background transition-all duration-700 group-hover:border-primary/30 group-active:border-primary/30 group-focus-within:border-primary/30">
             <span className="absolute inset-0 flex items-center justify-center font-display text-4xl md:text-6xl font-black uppercase text-primary/[0.05] select-none">
               {project.title.split(' ')[0]}
             </span>
@@ -295,7 +295,7 @@ const ProjectCard = ({ project, index, onClick }) => {
                 </p>
               )}
             </div>
-            <span className="mt-1 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-md border-[1.5px] border-foreground/25 text-foreground transition-all duration-300 group-hover:-translate-y-0.5 group-hover:border-primary group-hover:bg-primary group-hover:text-background">
+            <span className="mt-1 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-md border-[1.5px] border-foreground/25 text-foreground transition-all duration-300 group-hover:-translate-y-0.5 group-hover:border-primary group-hover:bg-primary group-hover:text-background group-active:-translate-y-0.5 group-focus-within:-translate-y-0.5 group-active:border-primary group-focus-within:border-primary group-active:bg-primary group-focus-within:bg-primary group-active:text-background group-focus-within:text-background">
               <ArrowUpRight size={16} />
             </span>
           </div>
@@ -331,21 +331,21 @@ const ProjectCard = ({ project, index, onClick }) => {
             {project.tags.map(tag => (
               <span
                 key={tag}
-                className="tag-sweep rounded-[4px] border border-primary/40 px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-widest text-primary transition-colors duration-500 group-hover:border-primary/70 group-hover:bg-primary/10"
+                className="tag-sweep rounded-[4px] border border-primary/40 px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-widest text-primary transition-colors duration-500 group-hover:border-primary/70 group-hover:bg-primary/10 group-active:border-primary/70 group-focus-within:border-primary/70 group-active:bg-primary/10 group-focus-within:bg-primary/10"
               >
                 {tag}
               </span>
             ))}
           </div>
 
-          <div className="mt-4 flex items-center justify-between border-t border-foreground/12 pt-3.5 text-xs font-mono font-bold uppercase tracking-[0.2em] text-foreground/70 transition-colors duration-500 group-hover:border-primary/25">
-            <span className="inline-flex items-center gap-2 transition-all duration-500 group-hover:text-primary group-hover:translate-x-1">
+          <div className="mt-4 flex items-center justify-between border-t border-foreground/12 pt-3.5 text-xs font-mono font-bold uppercase tracking-[0.2em] text-foreground/70 transition-colors duration-500 group-hover:border-primary/25 group-active:border-primary/25 group-focus-within:border-primary/25">
+            <span className="inline-flex items-center gap-2 transition-all duration-500 group-hover:text-primary group-hover:translate-x-1 group-active:text-primary group-focus-within:text-primary group-active:translate-x-1 group-focus-within:translate-x-1">
               Open Project
-              <span className="block h-px w-8 origin-left bg-primary scale-x-0 transition-transform duration-500 group-hover:scale-x-100" />
+              <span className="block h-px w-8 origin-left bg-primary scale-x-0 transition-transform duration-500 group-hover:scale-x-100 group-active:scale-x-100 group-focus-within:scale-x-100" />
             </span>
-            <span className="inline-flex items-center gap-2 transition-all duration-500 group-hover:translate-x-1 group-hover:text-primary/80">
+            <span className="inline-flex items-center gap-2 transition-all duration-500 group-hover:translate-x-1 group-hover:text-primary/80 group-active:translate-x-1 group-focus-within:translate-x-1 group-active:text-primary/80 group-focus-within:text-primary/80">
               Case Study
-              <ArrowUpRight size={14} className="transition-transform duration-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              <ArrowUpRight size={14} className="transition-transform duration-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-active:translate-x-0.5 group-focus-within:translate-x-0.5 group-active:-translate-y-0.5 group-focus-within:-translate-y-0.5" />
             </span>
           </div>
         </div>

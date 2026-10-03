@@ -115,7 +115,7 @@ const Hero = () => {
 
           <h1
             ref={refs.name}
-            className="relative font-display text-5xl md:text-7xl lg:text-8xl font-black tracking-[-0.02em] uppercase text-foreground"
+            className="relative font-display text-[clamp(1.6rem,10.5vw,3rem)] md:text-7xl lg:text-8xl font-black tracking-[-0.02em] uppercase text-foreground whitespace-nowrap"
             style={{
               textShadow: '0 3px 0 rgba(27,35,51,0.06), 1px 4px 0 rgba(27,35,51,0.04)',
             }}

@@ -194,6 +194,51 @@
   left: 100%;
 }
 
+/* Travelling ink line around a chip border (skills tags) */
+@property --sweep-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.tag-sweep {
+  position: relative;
+}
+
+.tag-sweep::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: conic-gradient(
+    from var(--sweep-angle),
+    transparent 0deg,
+    var(--primary) 25deg,
+    var(--amber) 80deg,
+    transparent 150deg,
+    transparent 360deg
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.tag-sweep:hover::before {
+  opacity: 1;
+  animation: tag-sweep 1.8s linear infinite;
+}
+
+@keyframes tag-sweep {
+  to {
+    --sweep-angle: 360deg;
+  }
+}
+
 .link-underline {
   position: relative;
 }
@@ -265,5 +310,9 @@
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+
+  .tag-sweep:hover::before {
+    animation: none !important;
   }
 }

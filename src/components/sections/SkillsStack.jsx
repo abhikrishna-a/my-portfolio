@@ -66,7 +66,7 @@ const SkillsStack = () => {
                   {skill.tags.map(tag => (
                     <span
                       key={tag}
-                      className="px-4 py-2 text-xs font-mono font-bold tracking-wider uppercase rounded-[4px] border border-primary/40 text-primary transition-colors duration-300 hover:bg-primary/10"
+                      className="tag-sweep px-4 py-2 text-xs font-mono font-bold tracking-wider uppercase rounded-[4px] border border-primary/40 text-primary transition-colors duration-300 hover:bg-primary/10"
                     >
                       {tag}
                     </span>

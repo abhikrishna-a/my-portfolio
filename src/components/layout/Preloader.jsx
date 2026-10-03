@@ -1,32 +1,44 @@
 import { useState, useEffect } from 'react';
+import useReducedMotion from '../effects/useReducedMotion';
+
+// The overlay length is a fixed time budget rather than a tick count, so it is
+// the same ~720ms whether the tab is foregrounded, throttled, or on a slow phone.
+const FILL_MS = 360;
+const HOLD_MS = 160;
+const OUT_MS = 200;
 
 const Preloader = () => {
+  const reduced = useReducedMotion();
   const [progress, setProgress] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
   const [isExiting, setIsExiting] = useState(false);
-  const [phase, setPhase] = useState('loading');
+  const [isDone, setIsDone] = useState(false);
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setProgress((prev) => {
-        if (prev >= 100) {
-          clearInterval(timer);
-          setPhase('complete');
-          setTimeout(() => setIsExiting(true), 400);
-          setTimeout(() => setIsLoading(false), 1200);
-          return 100;
-        }
-        return prev + 2;
-      });
-    }, 20);
-    return () => clearInterval(timer);
-  }, []);
+    if (reduced) return;
+    const t0 = performance.now();
+    let raf = 0;
+    const step = (now) => {
+      const p = Math.min(1, (now - t0) / FILL_MS);
+      setProgress(Math.round(p * 100));
+      if (p < 1) raf = requestAnimationFrame(step);
+    };
+    raf = requestAnimationFrame(step);
+    const exitAt = setTimeout(() => setIsExiting(true), FILL_MS + HOLD_MS);
+    const doneAt = setTimeout(() => setIsDone(true), FILL_MS + HOLD_MS + OUT_MS);
+    return () => {
+      cancelAnimationFrame(raf);
+      clearTimeout(exitAt);
+      clearTimeout(doneAt);
+    };
+  }, [reduced]);
 
-  if (!isLoading) return null;
+  if (reduced || isDone) return null;
+
+  const phase = progress >= 100 ? 'complete' : 'loading';
 
   return (
     <div
-      className={`fixed inset-0 z-[99999] bg-background text-foreground flex flex-col items-center justify-center transition-transform duration-800 ease-[cubic-bezier(0.76,0,0.24,1)] ${
+      className={`fixed inset-0 z-[99999] bg-background text-foreground flex flex-col items-center justify-center transition-transform duration-200 ease-[cubic-bezier(0.76,0,0.24,1)] ${
         isExiting ? '-translate-y-full' : 'translate-y-0'
       }`}
       role="status"
@@ -42,7 +54,7 @@ const Preloader = () => {
 
       <div className="relative mt-8 w-56 h-[3px] bg-foreground/15 overflow-hidden">
         <div
-          className="absolute top-0 left-0 h-full bg-primary transition-all duration-75 ease-linear"
+          className="absolute top-0 left-0 h-full bg-primary"
           style={{ width: `${progress}%` }}
         />
         {phase === 'loading' && (

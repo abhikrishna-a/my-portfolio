@@ -142,6 +142,16 @@ const Hero = () => {
             </span>
           </h1>
 
+          {/* This delay was 0.55 -> 0.2 and back again, measured, and it is not
+              worth touching. Hypothesis: introReveal uses fill-mode `both`, so
+              this <p> starts at opacity 0 and cannot be an LCP candidate until it
+              paints, so the delay should sit directly on top of LCP.
+              Result: six Lighthouse mobile runs per arm, back to back, same
+              machine, idle. LCP median was 2.95s at 0.2 and 2.99s at 0.55 --
+              no difference. Something other than this stagger holds LCP at
+              ~2.95s; it is not identified. Kept at 0.55 because 0.2 bought
+              nothing and the cascade rhythm is better this way. Do not retry
+              this without finding the real constraint first. */}
           <Stagger delay={0.55}>
             <p ref={refs.subtitle} className="mt-6 font-mono text-xs md:text-sm tracking-[0.05em] max-w-[460px] leading-relaxed text-foreground/80">
               Engineering interfaces that feel alive, from the database to the pixel that bends light

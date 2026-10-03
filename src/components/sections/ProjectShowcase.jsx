@@ -297,9 +297,16 @@ const ProjectShowcase = ({ project, onClose }) => {
                 <div className="no-scrollbar max-h-[72vh] overflow-y-auto overscroll-contain">
                   {project.screenshots.map((screenshot, idx) => (
                     <div key={idx} className="border-t border-foreground/12">
+                      {/* loading/decoding only. No width/height here on purpose: the six
+                          screenshots have four different intrinsic ratios
+                          (1920x915, x897, x931, x930) and `h-auto` derives the
+                          box from whatever is declared, so one hardcoded pair
+                          would distort the ones that differ. */}
                       <img
                         src={screenshot}
                         alt={`${project.title} screenshot ${idx + 1}`}
+                        loading="lazy"
+                        decoding="async"
                         className={`block w-full h-auto object-cover ${project.screenshotClass || ''}`}
                       />
                       <div className="flex items-center justify-between gap-4 bg-secondary/70 px-4 py-2.5 md:px-5">

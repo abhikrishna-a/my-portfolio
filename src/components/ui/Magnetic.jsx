@@ -31,7 +31,7 @@ const Magnetic = ({ children }) => {
   const reset = () => {
     const el = ref.current;
     if (!el) return;
-    el.style.transition = 'transform 0.5s cubic-bezier(0.25, 1, 0.5, 1)';
+    el.style.transition = 'transform 0.5s cubic-bezier(0.22, 1, 0.36, 1)';
     el.style.transform = 'translate3d(0px, 0px, 0)';
   };
 

@@ -61,20 +61,19 @@ export default {
           from: { transform: 'translateX(-56px)' },
           to: { transform: 'translateX(168px)' },
         },
-        signalBlink: {
-          '0%, 100%': { opacity: '1' },
-          '50%': { opacity: '0.3' },
-        },
+        // signalBlink used to be defined here as well as in index.css, with a
+        // different mid value (0.3 here, 0.25 there). The hero blink is driven
+        // by an inline style, which resolves to the index.css copy, so this one
+        // was unused config carrying a latent disagreement.
       },
       animation: {
-        revealUp: 'revealUp 0.6s cubic-bezier(0.215, 0.61, 0.355, 1) forwards',
-        revealDown: 'revealDown 0.6s cubic-bezier(0.215, 0.61, 0.355, 1) forwards',
+        revealUp: 'revealUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards',
+        revealDown: 'revealDown 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards',
         fadeIn: 'fadeIn 0.5s ease-out forwards',
-        scaleUp: 'scaleUp 0.6s cubic-bezier(0.215, 0.61, 0.355, 1) forwards',
+        scaleUp: 'scaleUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards',
         scrollDot: 'scrollDot 2s infinite ease-in-out',
         marquee: 'marquee 20s linear infinite',
         streak: 'streak 1.4s linear infinite',
-        signalBlink: 'signalBlink 2s ease-in-out infinite',
       },
     },
   },

@@ -268,6 +268,47 @@
   }
 }
 
+/* Travelling ink line around the whole project card, same effect as the skills
+   tags above. It cannot reuse .tag-sweep: the card already spends ::before on
+   .card-shine's shine band, and .card-shine sets overflow:hidden, which would
+   clip an inset:-1px ring entirely. So this draws on ::after at inset:0, which
+   traces the inner edge of the card's 1px border instead of covering it.
+   --sweep-angle and @keyframes tag-sweep are reused rather than redeclared. */
+.card-sweep {
+  position: relative;
+}
+.card-sweep::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: conic-gradient(
+    from var(--sweep-angle),
+    transparent 0deg,
+    var(--primary) 25deg,
+    var(--amber) 80deg,
+    transparent 150deg,
+    transparent 360deg
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  z-index: 2;
+}
+/* :active and :focus-visible match the tag behaviour, so the line is reachable
+   by touch and keyboard rather than being hover-only. */
+.card-sweep:hover::after,
+.card-sweep:active::after,
+.card-sweep:focus-visible::after {
+  opacity: 1;
+  animation: tag-sweep 1.8s linear infinite;
+}
+
 .link-underline {
   position: relative;
 }
@@ -353,6 +394,14 @@
   }
 
   .tag-sweep:hover::before {
+    animation: none !important;
+  }
+
+  /* Same for the project card's travelling line, otherwise the card would be
+     the only continuously animated element left on the page. */
+  .card-sweep:hover::after,
+  .card-sweep:active::after,
+  .card-sweep:focus-visible::after {
     animation: none !important;
   }
 }

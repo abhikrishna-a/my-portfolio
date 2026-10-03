@@ -249,7 +249,7 @@ const ProjectCard = ({ project, index, onClick }) => {
       <button
         type="button"
         onClick={() => onClick(project)}
-        className="group relative w-full overflow-hidden rounded-[0.9rem] bg-card text-left transition-all duration-700 motion-safe:hover:-translate-y-1 motion-safe:active:-translate-y-1 hover:border-primary/45 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 focus-visible:ring-offset-2 focus-visible:ring-offset-background border border-foreground/15 card-shine active:border-primary/45 focus-visible:border-primary/45"
+        className="group relative w-full overflow-hidden rounded-[0.9rem] bg-card text-left transition-all duration-700 motion-safe:hover:-translate-y-1 motion-safe:active:-translate-y-1 hover:border-primary/45 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 focus-visible:ring-offset-2 focus-visible:ring-offset-background border border-foreground/15 card-shine card-sweep active:border-primary/45 focus-visible:border-primary/45"
         aria-label={`Open ${project.title} project`}
       >
         <div className="relative flex items-center justify-between border-b border-foreground/12 px-5 py-3">

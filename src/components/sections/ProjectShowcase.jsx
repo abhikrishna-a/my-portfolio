@@ -1,23 +1,77 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { X, ExternalLink, Github } from 'lucide-react';
 
+const FOCUSABLE =
+  'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])';
+
 const ProjectShowcase = ({ project, onClose }) => {
+  const panelRef = useRef(null);
+  const closeRef = useRef(null);
+  const restoreFocusRef = useRef(null);
+
   useEffect(() => {
-    if (project) {
-      document.body.style.overflow = 'hidden';
-    } else {
+    if (!project) {
       document.body.style.overflow = '';
+      document.body.style.paddingRight = '';
+      return;
     }
 
-    return () => {
-      document.body.style.overflow = '';
+    // Locking overflow removes the scrollbar, which shifts the whole page
+    // sideways by its width. Pad by the same amount so opening the overlay
+    // does not move anything.
+    const gap = window.innerWidth - document.documentElement.clientWidth;
+    document.body.style.overflow = 'hidden';
+    if (gap > 0) document.body.style.paddingRight = `${gap}px`;
+
+    restoreFocusRef.current = document.activeElement;
+    closeRef.current?.focus();
+
+    const onKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        e.stopPropagation();
+        onClose();
+        return;
+      }
+      if (e.key !== 'Tab') return;
+
+      // Keep Tab inside the overlay. Without this, tabbing walks straight out
+      // of the dialog and into the page behind it, which is still visible and
+      // still focusable.
+      const items = panelRef.current?.querySelectorAll(FOCUSABLE);
+      if (!items?.length) return;
+      const first = items[0];
+      const last = items[items.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
     };
-  }, [project]);
+
+    document.addEventListener('keydown', onKeyDown);
+
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
+      document.body.style.overflow = '';
+      document.body.style.paddingRight = '';
+      // Send focus back where it came from, so keyboard users are not dumped
+      // at the top of the document.
+      restoreFocusRef.current?.focus?.();
+    };
+  }, [project, onClose]);
 
   if (!project) return null;
 
   return (
-    <div className="fixed inset-0 z-[99999] overflow-y-auto overflow-x-hidden bg-background">
+    <div
+      ref={panelRef}
+      role="dialog"
+      aria-modal="true"
+      aria-label={`${project.title} case study`}
+      className="fixed inset-0 z-[99999] overflow-y-auto overflow-x-hidden bg-background"
+    >
       <div className="log-paper pointer-events-none absolute inset-0 opacity-70" aria-hidden="true" />
 
       <div className="relative flex flex-col items-center">
@@ -30,7 +84,9 @@ const ProjectShowcase = ({ project, onClose }) => {
               <h2 className="font-display text-xl font-black tracking-tight md:text-2xl text-foreground uppercase">{project.title}</h2>
             </div>
             <button
+              ref={closeRef}
               onClick={onClose}
+              aria-label={`Close ${project.title}`}
               className="flex items-center gap-2 rounded-md border-[1.5px] border-foreground/30 px-4 py-2 text-sm font-bold uppercase tracking-[0.2em] text-foreground transition-colors hover:bg-primary hover:text-background hover:border-primary md:px-6 md:py-3"
             >
               <X size={20} />

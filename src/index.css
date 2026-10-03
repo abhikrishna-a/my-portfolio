@@ -21,7 +21,7 @@
     --accent-hair: rgba(179, 58, 44, 0.3);
     --secondary: rgba(234, 227, 210, 0.5);
     --card: rgba(255, 252, 242, 0.7);
-    --muted: #6d6f66;
+    --muted: #696b62;
     --border: rgba(27, 35, 51, 0.16);
     --amber: #b33a2c;
   }
@@ -32,6 +32,25 @@
     scroll-behavior: smooth;
     scrollbar-width: thin;
     scrollbar-color: rgba(43, 79, 155, 0.4) transparent;
+    /* The nav dock is fixed at the bottom. Without this, an anchor jump or a
+       #hash landing puts the last line of the target section underneath the
+       dock and there is no way to read it. */
+    scroll-padding-bottom: 6.5rem;
+  }
+
+  /* Anchors under the bottom dock need the same clearance when the page is
+     viewed with the browser chrome collapsed on a phone. */
+  @media (max-width: 767px) {
+    html {
+      scroll-padding-bottom: 7.5rem;
+    }
+  }
+
+  /* Safe-area padding for notched / gesture-bar devices. The dock is fixed to
+     the bottom edge, so without this it sits under the home indicator. */
+  body {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
   }
 
   /* Must match the CustomCursor gate in CustomCursor.jsx. These two used to
@@ -320,6 +339,13 @@
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+
+  /* Smooth scrolling is motion too. The global transition/animation override
+     above does not touch scroll-behavior, so without this a reduced-motion
+     visitor still gets a long animated glide on every anchor jump. */
+  html {
+    scroll-behavior: auto !important;
   }
 
   .tag-sweep:hover::before {

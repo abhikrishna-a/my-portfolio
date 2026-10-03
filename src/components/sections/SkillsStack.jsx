@@ -54,9 +54,9 @@ const SkillsStack = () => {
                       {skill.spec}
                     </span>
                   </div>
-                  <h4 className="font-display text-2xl md:text-3xl font-bold mb-4 tracking-tight uppercase">
+                  <h3 className="font-display text-2xl md:text-3xl font-bold mb-4 tracking-tight uppercase">
                     {skill.title}
-                  </h4>
+                  </h3>
                   <p className="text-foreground/80 text-base md:text-lg leading-relaxed">
                     {skill.description}
                   </p>

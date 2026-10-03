@@ -74,22 +74,30 @@ const Navbar = () => {
             <a
               key={item.label}
               href={item.href}
-              aria-label={item.label}
-              aria-current={isActive ? 'page' : undefined}
+              aria-current={isActive ? 'location' : undefined}
               className={`group relative flex items-center gap-2 px-3 py-2 rounded-md transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 focus-visible:ring-offset-2 ${
                 isActive ? 'bg-primary text-background' : 'text-foreground/70 hover:text-primary'
               }`}
             >
-              <span className="hidden md:inline font-mono text-[9px] font-bold tracking-widest opacity-60">
+              {/* The name comes from a single always-present sr-only label.
+                  Previously the anchor carried aria-label="Home" while also
+                  rendering the visible text "01" and a duplicate tooltip, none
+                  of which were in the accessible name -- WCAG "Label in Name"
+                  failure. The index and the tooltip are decorative repeats,
+                  so they are hidden from assistive tech. The sr-only label also
+                  means the link has a name at every width, which it did not
+                  before below lg where the visible label is display:none. */}
+              <span aria-hidden="true" className="hidden md:inline font-mono text-[9px] font-bold tracking-widest opacity-75">
                 {item.index}
               </span>
-              <span className={`transition-colors duration-300 ${isActive ? 'text-background' : ''}`}>
+              <span aria-hidden="true" className={`transition-colors duration-300 ${isActive ? 'text-background' : ''}`}>
                 {item.icon}
               </span>
-              <span className="hidden lg:inline font-mono text-[10px] font-bold uppercase tracking-[0.18em]">
+              <span aria-hidden="true" className="hidden lg:inline font-mono text-[10px] font-bold uppercase tracking-[0.18em]">
                 {item.label}
               </span>
-              <span className="absolute -top-11 left-1/2 -translate-x-1/2 px-3 py-1 bg-foreground text-background text-[10px] font-mono tracking-[0.18em] uppercase rounded-md opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap">
+              <span className="sr-only">{item.label}</span>
+              <span aria-hidden="true" className="absolute -top-11 left-1/2 -translate-x-1/2 px-3 py-1 bg-foreground text-background text-[10px] font-mono tracking-[0.18em] uppercase rounded-md opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap">
                 {item.label}
               </span>
             </a>

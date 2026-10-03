@@ -8,7 +8,6 @@ import PortfolioGrid from './components/sections/PortfolioGrid'
 import AboutSection from './components/sections/AboutSection'
 import ResumeSection from './components/sections/ResumeSection'
 import Footer from './components/layout/Footer'
-import useSmoothScroll from './hooks/useSmoothScroll'
 import CustomCursor from './components/layout/CustomCursor'
 import Preloader from './components/layout/Preloader'
 import LogbookPaper from './components/effects/LogbookPaper'
@@ -21,9 +20,8 @@ function App() {
     window.scrollTo(0, 0);
   }, []);
 
-  useSmoothScroll();
   return (
-    <main className="relative min-h-screen bg-background text-foreground overflow-x-hidden">
+    <main className="relative min-h-[100dvh] bg-background text-foreground overflow-x-hidden">
       {/* Direction contract lives as an HTML comment in index.html (seed key 3fc37d6d). */}
       <Preloader />
       <CustomCursor />

@@ -84,7 +84,7 @@ const Hero = () => {
     <section
       ref={sectionRef}
       id="home"
-      className="relative z-10 min-h-screen flex flex-col items-center justify-center overflow-hidden"
+      className="relative z-10 min-h-[100dvh] flex flex-col items-center justify-center overflow-hidden"
     >
       <div ref={bgRef} className="absolute inset-0 will-change-transform" style={{ transformOrigin: 'center center' }} />
 

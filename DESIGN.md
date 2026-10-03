@@ -12,22 +12,44 @@ A recruiter opens the log and reads skills, builds, and contact like signed meas
 
 | Token | Value | Purpose |
 |---|---|---|
-| `--background` | `#F4F0E4` | Ledger paper (warm, not sterile) |
-| `--foreground` | `#1B2333` | Ink-black text |
-| `--primary` | `#2B4F9B` | Ink-blue actions/emphasis |
-| `--primary-dim` | `#4A6CB5` | Secondary blue accents |
-| `--secondary` | `#EDE7D4` | Ruled-paper tint (alternate bands) |
-| `--card` | `#FBFAF2` | Card face (near-white) |
-| `--muted` | `#6B7482` | Grayed annotations |
-| `--stamp-red` | `#B3392D` | Corrections, urgency, "signed" |
+| `--background` | `#f4f0e4` | Ledger paper (warm, not sterile) |
+| `--foreground` | `#1b2333` | Ink-black text |
+| `--primary` | `#2b4f9b` | Ink-blue actions/emphasis |
+| `--primary-dim` | `#1e3a75` | Secondary blue accents |
+| `--secondary` | `rgba(234, 227, 210, 0.5)` | Ruled-paper tint (alternate bands) |
+| `--card` | `rgba(255, 252, 242, 0.7)` | Card face (near-white, translucent) |
+| `--muted` | `#696b62` | Grayed annotations |
+| `--amber` | `#b33a2c` | Corrections, urgency, "signed" |
+| `--border` | `rgba(27, 35, 51, 0.16)` | Hairlines and rules |
+| `--primary-hair` | `rgba(43, 79, 155, 0.2)` | Tinted hairlines |
 
-Contrast on paper: primary 6.83:1, stamp-red 5.20:1, foreground ~15:1 — all pass AA for normal text.
+Contrast measured against `--background` (WCAG 2.x relative luminance):
+
+| Pair | Ratio | Grade |
+|---|---|---|
+| `--foreground` | 13.81:1 | AAA |
+| `--primary-dim` | 9.61:1 | AAA |
+| `--primary` | 6.84:1 | AA |
+| `--amber` | 5.18:1 | AA |
+| `--muted` | 4.75:1 | AA |
+| `--muted` on `--card` (composited `#fcf8ee`) | 5.10:1 | AA |
+
+`--muted` was `#6d6f66` until it failed AA at 4.05:1 and was corrected to
+`#696b62`. Every value above is read from `src/index.css`, which is
+authoritative; this table is a mirror of it, not a second source.
 
 ### Type
 
-- **Body — Spectral** (serif): the "written entry" voice; journal narration for paragraphs.
-- **Display — Archivo** (900 weight, tight tracking): heavy stamped uppercase ledger heads.
-- **Data — JetBrains Mono**: measurements, labels, stamps, coordinates, timestamps.
+- **Body — Spectral** (serif): the "written entry" voice; journal narration for paragraphs. Weights 400/500/600.
+- **Display — Archivo** (900 weight, tight tracking): heavy stamped uppercase ledger heads. Weights 700/900.
+- **Data — JetBrains Mono**: measurements, labels, stamps, coordinates, timestamps. Weights 400/500/700.
+
+Loaded from Google Fonts. The stylesheet is requested with
+`rel=preload as=style` plus a `media="print"` swap rather than a
+render-blocking `<link>`, and a `<noscript>` copy carries the stylesheet for
+users without JS. Only five files actually load: Archivo variable, JetBrains
+Mono, and Spectral at three weights. There is no italic text on the site, so no
+italic face is requested.
 
 ### Corners / materials
 

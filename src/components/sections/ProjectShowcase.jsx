@@ -1,23 +1,77 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { X, ExternalLink, Github } from 'lucide-react';
 
+const FOCUSABLE =
+  'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])';
+
 const ProjectShowcase = ({ project, onClose }) => {
+  const panelRef = useRef(null);
+  const closeRef = useRef(null);
+  const restoreFocusRef = useRef(null);
+
   useEffect(() => {
-    if (project) {
-      document.body.style.overflow = 'hidden';
-    } else {
+    if (!project) {
       document.body.style.overflow = '';
+      document.body.style.paddingRight = '';
+      return;
     }
 
-    return () => {
-      document.body.style.overflow = '';
+    // Locking overflow removes the scrollbar, which shifts the whole page
+    // sideways by its width. Pad by the same amount so opening the overlay
+    // does not move anything.
+    const gap = window.innerWidth - document.documentElement.clientWidth;
+    document.body.style.overflow = 'hidden';
+    if (gap > 0) document.body.style.paddingRight = `${gap}px`;
+
+    restoreFocusRef.current = document.activeElement;
+    closeRef.current?.focus();
+
+    const onKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        e.stopPropagation();
+        onClose();
+        return;
+      }
+      if (e.key !== 'Tab') return;
+
+      // Keep Tab inside the overlay. Without this, tabbing walks straight out
+      // of the dialog and into the page behind it, which is still visible and
+      // still focusable.
+      const items = panelRef.current?.querySelectorAll(FOCUSABLE);
+      if (!items?.length) return;
+      const first = items[0];
+      const last = items[items.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
     };
-  }, [project]);
+
+    document.addEventListener('keydown', onKeyDown);
+
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
+      document.body.style.overflow = '';
+      document.body.style.paddingRight = '';
+      // Send focus back where it came from, so keyboard users are not dumped
+      // at the top of the document.
+      restoreFocusRef.current?.focus?.();
+    };
+  }, [project, onClose]);
 
   if (!project) return null;
 
   return (
-    <div className="fixed inset-0 z-[99999] overflow-y-auto overflow-x-hidden bg-background">
+    <div
+      ref={panelRef}
+      role="dialog"
+      aria-modal="true"
+      aria-label={`${project.title} case study`}
+      className="fixed inset-0 z-[99999] overflow-y-auto overflow-x-hidden bg-background"
+    >
       <div className="log-paper pointer-events-none absolute inset-0 opacity-70" aria-hidden="true" />
 
       <div className="relative flex flex-col items-center">
@@ -30,8 +84,10 @@ const ProjectShowcase = ({ project, onClose }) => {
               <h2 className="font-display text-xl font-black tracking-tight md:text-2xl text-foreground uppercase">{project.title}</h2>
             </div>
             <button
+              ref={closeRef}
               onClick={onClose}
-              className="flex items-center gap-2 rounded-md border-[1.5px] border-foreground/30 px-4 py-2 text-sm font-bold uppercase tracking-[0.2em] text-foreground transition-colors hover:bg-primary hover:text-background hover:border-primary md:px-6 md:py-3"
+              aria-label={`Close ${project.title}`}
+              className="flex items-center gap-2 rounded-md border-[1.5px] border-foreground/30 px-4 py-2 text-sm font-bold uppercase tracking-[0.2em] text-foreground transition-colors hover:bg-primary hover:text-background hover:border-primary md:px-6 md:py-3 active:bg-primary focus-visible:bg-primary active:text-background focus-visible:text-background active:border-primary focus-visible:border-primary"
             >
               <X size={20} />
               <span className="hidden md:inline">Close</span>
@@ -116,7 +172,7 @@ const ProjectShowcase = ({ project, onClose }) => {
                       href={project.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex w-full items-center justify-center gap-2 rounded-md bg-primary px-6 py-4 text-sm font-bold uppercase tracking-[0.2em] text-background transition-colors hover:bg-primary-dim"
+                      className="flex w-full items-center justify-center gap-2 rounded-md bg-primary px-6 py-4 text-sm font-bold uppercase tracking-[0.2em] text-background transition-colors hover:bg-primary-dim active:bg-primary-dim focus-visible:bg-primary-dim"
                     >
                       Visit Site <ExternalLink size={18} />
                     </a>
@@ -126,7 +182,7 @@ const ProjectShowcase = ({ project, onClose }) => {
                       href={project.github}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex w-full items-center justify-center gap-2 rounded-md border-[1.5px] border-foreground/30 px-6 py-4 text-sm font-bold uppercase tracking-[0.2em] text-foreground transition-colors hover:bg-primary hover:text-background hover:border-primary"
+                      className="flex w-full items-center justify-center gap-2 rounded-md border-[1.5px] border-foreground/30 px-6 py-4 text-sm font-bold uppercase tracking-[0.2em] text-foreground transition-colors hover:bg-primary hover:text-background hover:border-primary active:bg-primary focus-visible:bg-primary active:text-background focus-visible:text-background active:border-primary focus-visible:border-primary"
                     >
                       Source Code <Github size={18} />
                     </a>
@@ -202,7 +258,7 @@ const ProjectShowcase = ({ project, onClose }) => {
                   href={project.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 rounded-md bg-primary px-7 py-4 text-sm font-bold uppercase tracking-[0.2em] text-background transition-colors hover:bg-primary-dim focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 focus-visible:ring-offset-2 focus-visible:ring-offset-card"
+                  className="inline-flex items-center justify-center gap-2 rounded-md bg-primary px-7 py-4 text-sm font-bold uppercase tracking-[0.2em] text-background transition-colors hover:bg-primary-dim focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 focus-visible:ring-offset-2 focus-visible:ring-offset-card active:bg-primary-dim focus-visible:bg-primary-dim"
                 >
                   Live Site <ExternalLink size={18} />
                 </a>
@@ -241,9 +297,16 @@ const ProjectShowcase = ({ project, onClose }) => {
                 <div className="no-scrollbar max-h-[72vh] overflow-y-auto overscroll-contain">
                   {project.screenshots.map((screenshot, idx) => (
                     <div key={idx} className="border-t border-foreground/12">
+                      {/* loading/decoding only. No width/height here on purpose: the six
+                          screenshots have four different intrinsic ratios
+                          (1920x915, x897, x931, x930) and `h-auto` derives the
+                          box from whatever is declared, so one hardcoded pair
+                          would distort the ones that differ. */}
                       <img
                         src={screenshot}
                         alt={`${project.title} screenshot ${idx + 1}`}
+                        loading="lazy"
+                        decoding="async"
                         className={`block w-full h-auto object-cover ${project.screenshotClass || ''}`}
                       />
                       <div className="flex items-center justify-between gap-4 bg-secondary/70 px-4 py-2.5 md:px-5">

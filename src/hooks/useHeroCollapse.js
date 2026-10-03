@@ -49,6 +49,7 @@ export default function useHeroCollapse(config) {
     let raf = 0;
     let ticking = false;
     let captureTimer = null;
+    let isReset = true;
 
     const capture = () => {
       const wr = wrap.getBoundingClientRect();
@@ -63,6 +64,7 @@ export default function useHeroCollapse(config) {
           dy: cy - (r.top + r.height / 2),
         };
       }
+      isReset = false;
     };
 
     const apply = () => {
@@ -70,6 +72,14 @@ export default function useHeroCollapse(config) {
       const p = clamp(-sr.top / sr.height, 0, 1);
 
       if (p <= 0.001) {
+        // Already parked: skip the writes entirely. This branch runs on every
+        // scroll frame for as long as the hero is on screen, so re-writing six
+        // identical inline styles 60 times a second is pure cost. capture() is
+        // deliberately not called here -- it reads six bounding rects, and
+        // calling it right after those writes forces a synchronous layout on
+        // every frame. The centers only move on resize, so measure there.
+        if (isReset) return;
+        isReset = true;
         for (const { key } of config) {
           const el = refs[key].current;
           if (!el) continue;
@@ -77,10 +87,10 @@ export default function useHeroCollapse(config) {
           el.style.opacity = '1';
           el.style.willChange = 'auto';
         }
-        capture();
         return;
       }
 
+      isReset = false;
       for (const { key, offset, rot } of config) {
         const el = refs[key].current;
         if (!el) continue;
@@ -108,16 +118,23 @@ export default function useHeroCollapse(config) {
       });
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    window.addEventListener('resize', handleScroll);
+    const handleResize = () => {
+      capture();
+      handleScroll();
+    };
 
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleResize);
+
+    capture();
     handleScroll();
 
-    captureTimer = setTimeout(handleScroll, 1300);
+    // Re-measure once webfonts have swapped in and the hero has reflowed.
+    captureTimer = setTimeout(handleResize, 1300);
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', handleScroll);
+      window.removeEventListener('resize', handleResize);
       cancelAnimationFrame(raf);
       clearTimeout(captureTimer);
     };

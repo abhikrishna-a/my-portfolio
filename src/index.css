@@ -1,4 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Spectral:ital,wght@0,400;0,500;0,600;1,400;1,500&family=JetBrains+Mono:wght@400;500;700&display=swap');
+/* Fonts are loaded from index.html with <link> + preconnect, not from an
+   @import here. An @import is a nested render-blocking request: the browser
+   cannot discover it until this stylesheet has downloaded and parsed, which
+   cost 978ms of first paint on Lighthouse mobile. Weights are trimmed to the
+   ones actually used (700/900 Archivo, 400/500/600 Spectral, 400/500/700
+   JetBrains Mono); there is no italic text anywhere in the site. */
 
 @tailwind base;
 @tailwind components;
@@ -16,7 +21,7 @@
     --accent-hair: rgba(179, 58, 44, 0.3);
     --secondary: rgba(234, 227, 210, 0.5);
     --card: rgba(255, 252, 242, 0.7);
-    --muted: #6d6f66;
+    --muted: #696b62;
     --border: rgba(27, 35, 51, 0.16);
     --amber: #b33a2c;
   }
@@ -27,9 +32,27 @@
     scroll-behavior: smooth;
     scrollbar-width: thin;
     scrollbar-color: rgba(43, 79, 155, 0.4) transparent;
+    /* The nav dock is fixed at the bottom, ~72px tall plus a 24-32px offset.
+       Without this, an anchor jump puts the last line of the target section
+       underneath the dock and there is no way to read it. Measured at 320px
+       the dock was covering text 29px past its own top edge, so this is set
+       well above the dock height rather than to match it. */
+    scroll-padding-bottom: 11rem;
   }
 
-  @media (min-width: 1024px) {
+  /* Safe-area padding for notched / gesture-bar devices. The dock is fixed to
+     the bottom edge, so without this it sits under the home indicator. */
+  body {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+
+  /* Must match the CustomCursor gate in CustomCursor.jsx. These two used to
+     disagree: a touch-capable laptop 1280px wide matched min-width:1024px on
+     both sides, which hid the real cursor and drew a fake dot for a pointer
+     that does not exist. (hover:hover) and (pointer:fine) is the actual
+     question -- "does this device have a mouse?" */
+  @media (hover: hover) and (pointer: fine) {
     body,
     a,
     button {
@@ -186,11 +209,15 @@
   width: 50%;
   height: 100%;
   background: linear-gradient(90deg, transparent 0%, rgba(43, 79, 155, 0.07) 50%, transparent 100%);
-  transition: left 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: left 0.7s cubic-bezier(0.22, 1, 0.36, 1);
   pointer-events: none;
   z-index: 1;
 }
-.card-shine:hover::before {
+/* :active and :focus-visible carry the same reveal, so the shine is not a
+   hover-only effect that a finger or a keyboard can never trigger. */
+.card-shine:hover::before,
+.card-shine:active::before,
+.card-shine:focus-visible::before {
   left: 100%;
 }
 
@@ -228,7 +255,9 @@
   transition: opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.tag-sweep:hover::before {
+.tag-sweep:hover::before,
+.tag-sweep:active::before,
+.tag-sweep:focus-visible::before {
   opacity: 1;
   animation: tag-sweep 1.8s linear infinite;
 }
@@ -237,6 +266,47 @@
   to {
     --sweep-angle: 360deg;
   }
+}
+
+/* Travelling ink line around the whole project card, same effect as the skills
+   tags above. It cannot reuse .tag-sweep: the card already spends ::before on
+   .card-shine's shine band, and .card-shine sets overflow:hidden, which would
+   clip an inset:-1px ring entirely. So this draws on ::after at inset:0, which
+   traces the inner edge of the card's 1px border instead of covering it.
+   --sweep-angle and @keyframes tag-sweep are reused rather than redeclared. */
+.card-sweep {
+  position: relative;
+}
+.card-sweep::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: conic-gradient(
+    from var(--sweep-angle),
+    transparent 0deg,
+    var(--primary) 25deg,
+    var(--amber) 80deg,
+    transparent 150deg,
+    transparent 360deg
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  z-index: 2;
+}
+/* :active and :focus-visible match the tag behaviour, so the line is reachable
+   by touch and keyboard rather than being hover-only. */
+.card-sweep:hover::after,
+.card-sweep:active::after,
+.card-sweep:focus-visible::after {
+  opacity: 1;
+  animation: tag-sweep 1.8s linear infinite;
 }
 
 .link-underline {
@@ -252,9 +322,11 @@
   background: var(--primary);
   transform: scaleX(0);
   transform-origin: left;
-  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
 }
-.link-underline:hover::after {
+.link-underline:hover::after,
+.link-underline:active::after,
+.link-underline:focus-visible::after {
   transform: scaleX(1);
 }
 
@@ -262,10 +334,12 @@
   background-image: linear-gradient(rgba(43, 79, 155, 0.16), rgba(43, 79, 155, 0.16));
   background-size: 0% 100%;
   background-repeat: no-repeat;
-  transition: background-size 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: background-size 0.5s cubic-bezier(0.22, 1, 0.36, 1);
   background-position: left center;
 }
-.text-highlight:hover {
+.text-highlight:hover,
+.text-highlight:active,
+.text-highlight:focus-visible {
   background-size: 100% 100%;
 }
 
@@ -312,7 +386,22 @@
     transition-duration: 0.01ms !important;
   }
 
+  /* Smooth scrolling is motion too. The global transition/animation override
+     above does not touch scroll-behavior, so without this a reduced-motion
+     visitor still gets a long animated glide on every anchor jump. */
+  html {
+    scroll-behavior: auto !important;
+  }
+
   .tag-sweep:hover::before {
+    animation: none !important;
+  }
+
+  /* Same for the project card's travelling line, otherwise the card would be
+     the only continuously animated element left on the page. */
+  .card-sweep:hover::after,
+  .card-sweep:active::after,
+  .card-sweep:focus-visible::after {
     animation: none !important;
   }
 }

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import { ArrowUpRight } from 'lucide-react';
 import Reveal from '../ui/Reveal';
 import ProjectShowcase from './ProjectShowcase';
@@ -9,7 +9,6 @@ const projects = [
     subtitle: "AI-Powered Multi-Tenant ERP Platform",
     tagline: "AI Business Operating System",
     category: "ERP Platform",
-    image: "/skyrict.webp",
     coverImage: "/skyrict.webp",
     coverAlt: "Skyrict AI Business Operating System landing page with the Business Pulse dashboard preview",
     coverWidth: 1920,
@@ -74,13 +73,12 @@ const projects = [
     subtitle: "Student Management Portal",
     tagline: "One Portal for Every Course",
     category: "Web Application",
-    image: "/edusphere.png",
     tags: ["Django", "Python", "PostgreSQL", "SQLite", "Cloudinary", "Vercel"],
-    description: "A student management portal where students register, browse the course catalogue, request enrollment and track their academic record — with a separate staff console for approving requests and managing courses.",
+    description: "A student management portal where students register, browse the course catalogue, request enrollment and track their academic record â€” with a separate staff console for approving requests and managing courses.",
     meta: "Course enrollment & student records",
     link: "https://student-management-eight-rho.vercel.app/",
     github: "https://github.com/abhikrishna-a/student-management",
-    screenshots: ["/edusphere-1.png", "/edusphere-2.png"],
+    screenshots: ["/edusphere-1.webp", "/edusphere-2.webp"],
     fileNo: "FILE 01",
     status: "SHIPPED",
     date: "2026",
@@ -102,7 +100,7 @@ const projects = [
       },
       {
         title: "Roles & Access Control",
-        body: "Access is decided in one place. A custom middleware class checks every request against a public allowlist, then requires authentication, then blocks students from staff routes and staff from student routes — redirecting each to their own dashboard instead of returning a 403.",
+        body: "Access is decided in one place. A custom middleware class checks every request against a public allowlist, then requires authentication, then blocks students from staff routes and staff from student routes â€” redirecting each to their own dashboard instead of returning a 403.",
         bullets: [
           "Public allowlist: landing, login, register, logout",
           "Anonymous users are redirected to login",
@@ -112,7 +110,7 @@ const projects = [
       },
       {
         title: "Registration & Authentication",
-        body: "Registration creates a user with a role, so a single sign-in serves both audiences and the middleware routes each to the correct dashboard. Django's built-in password hashing and session handling do the underlying work — no custom auth layer to maintain.",
+        body: "Registration creates a user with a role, so a single sign-in serves both audiences and the middleware routes each to the correct dashboard. Django's built-in password hashing and session handling do the underlying work â€” no custom auth layer to maintain.",
       },
       {
         title: "Course Catalogue & Enrollment",
@@ -122,7 +120,7 @@ const projects = [
         title: "Enrollment Approval Workflow",
         body: "Enrollment is a first-class record, not a boolean. An explicit join model between students and courses carries a status that starts pending and moves to approved or rejected, along with purchase and approval timestamps. A uniqueness constraint on the student-course pair makes duplicate requests impossible at the database level, and ordering by most recent request puts the newest activity first.",
         bullets: [
-          "Status: pending → approved or rejected",
+          "Status: pending â†’ approved or rejected",
           "Records when the request was made and when it was decided",
           "Database constraint prevents the same student requesting the same course twice",
           "Staff approve or reject from the console",
@@ -134,7 +132,7 @@ const projects = [
       },
       {
         title: "Architecture & Data",
-        body: "A conventional Django layout — URL conf, views, forms, models, admin — split across two apps, one for the student experience and one for staff. Four models carry the domain: departments, courses, the student profile, and the enrollment join. Server-rendered templates keep the whole thing a single deployable process with no separate API to keep in sync.",
+        body: "A conventional Django layout â€” URL conf, views, forms, models, admin â€” split across two apps, one for the student experience and one for staff. Four models carry the domain: departments, courses, the student profile, and the enrollment join. Server-rendered templates keep the whole thing a single deployable process with no separate API to keep in sync.",
       },
       {
         title: "Deployment & Media",
@@ -148,7 +146,7 @@ const projects = [
       },
       {
         title: "Why It Is Technically Significant",
-        body: "It is a complete multi-role application rather than a CRUD demo: authentication, role-based routing, a stateful approval workflow enforced by the database, staff tooling, and serverless deployment. Every part of the enrollment path — request, review, decision, record — is implemented and reachable from the UI.",
+        body: "It is a complete multi-role application rather than a CRUD demo: authentication, role-based routing, a stateful approval workflow enforced by the database, staff tooling, and serverless deployment. Every part of the enrollment path â€” request, review, decision, record â€” is implemented and reachable from the UI.",
       },
     ],
   },
@@ -157,12 +155,11 @@ const projects = [
     subtitle: "E-Commerce Web Application",
     tagline: "Shopping Without The Noise",
     category: "E-Commerce",
-    image: "/Sprint.X.png",
     tags: ["React", "Django", "REST Framework", "JWT", "PostgreSQL", "Material UI", "Tailwind CSS"],
-    description: "A full-stack e-commerce application — a React storefront over a Django REST API and PostgreSQL, with a server-synced cart, checkout, order history and a separate admin console backed by its own analytics endpoint.",
+    description: "A full-stack e-commerce application â€” a React storefront over a Django REST API and PostgreSQL, with a server-synced cart, checkout, order history and a separate admin console backed by its own analytics endpoint.",
     meta: "Storefront, checkout & admin console",
     github: "https://github.com/abhikrishna-a/Ecommerce_online",
-    screenshots: ["/SprintX1.png", "/SprintX2.png"],
+    screenshots: ["/SprintX1.webp", "/SprintX2.webp"],
     fileNo: "FILE 02",
     status: "BUILT",
     date: "2026",
@@ -194,7 +191,7 @@ const projects = [
       },
       {
         title: "Authentication & Session Handling",
-        body: "Authentication is a custom DRF class rather than the stock one. It accepts the access token from an Authorization header or from an HttpOnly cookie, and a token that has expired is treated as anonymous rather than as an error when it arrived by cookie — so a stale browser session degrades to a logged-out page instead of a failed request. Access tokens last thirty minutes and refresh tokens seven days. Login also re-hashes any still-plaintext password it finds in storage as a side effect of a successful sign-in.",
+        body: "Authentication is a custom DRF class rather than the stock one. It accepts the access token from an Authorization header or from an HttpOnly cookie, and a token that has expired is treated as anonymous rather than as an error when it arrived by cookie â€” so a stale browser session degrades to a logged-out page instead of a failed request. Access tokens last thirty minutes and refresh tokens seven days. Login also re-hashes any still-plaintext password it finds in storage as a side effect of a successful sign-in.",
         bullets: [
           "Token accepted from Bearer header or HttpOnly cookie",
           "Expired cookie tokens fall back to anonymous, not to an error",
@@ -204,7 +201,7 @@ const projects = [
       },
       {
         title: "Roles & Authorization",
-        body: "Three permission classes cover the API: admin-only, admin-or-read-only, and admin-or-owner. The last is the one that matters — reading an order is allowed if you are its owner, but modifying or deleting one is admin-only. The order list is scoped the same way, filtered to the caller's own orders unless the caller is an admin.",
+        body: "Three permission classes cover the API: admin-only, admin-or-read-only, and admin-or-owner. The last is the one that matters â€” reading an order is allowed if you are its owner, but modifying or deleting one is admin-only. The order list is scoped the same way, filtered to the caller's own orders unless the caller is an admin.",
       },
       {
         title: "Cart State",
@@ -218,7 +215,7 @@ const projects = [
       },
       {
         title: "Checkout & Orders",
-        body: "Checkout is a single page rather than a wizard: address, city, state, pin code and payment method, with cash on delivery as the default. Pricing is computed in one place — Indian Rupee formatting through Intl.NumberFormat, a flat shipping charge, tax at eight percent of the subtotal, and a rounded total. The resulting order is posted with a unique order number and a pending status, and submitted orders are listed per user on their own account page.",
+        body: "Checkout is a single page rather than a wizard: address, city, state, pin code and payment method, with cash on delivery as the default. Pricing is computed in one place â€” Indian Rupee formatting through Intl.NumberFormat, a flat shipping charge, tax at eight percent of the subtotal, and a rounded total. The resulting order is posted with a unique order number and a pending status, and submitted orders are listed per user on their own account page.",
       },
       {
         title: "Catalogue Discovery",
@@ -232,7 +229,7 @@ const projects = [
       },
       {
         title: "Admin Console & Analytics",
-        body: "An admin area sits behind a protected route: a dashboard, product management, order management, user management and a separate admin sign-in, wrapped in its own layout shell. The dashboard reads a dedicated analytics endpoint that computes total revenue, month-over-month revenue and order growth, a twelve-month revenue series, the top five products by units sold, and a conversion rate — all on the server rather than in the browser.",
+        body: "An admin area sits behind a protected route: a dashboard, product management, order management, user management and a separate admin sign-in, wrapped in its own layout shell. The dashboard reads a dedicated analytics endpoint that computes total revenue, month-over-month revenue and order growth, a twelve-month revenue series, the top five products by units sold, and a conversion rate â€” all on the server rather than in the browser.",
       },
       {
         title: "Stack & Tooling",
@@ -240,7 +237,7 @@ const projects = [
       },
       {
         title: "Why It Is Technically Significant",
-        body: "It is a complete commerce loop rather than a UI shell: catalogue, cart, checkout, order history, and an admin console that can act on all of it, over an API with real authorization. The parts that are easiest to skip are the parts that are done — token refresh with request replay, ownership checks on orders, request deduplication under StrictMode, and analytics computed server-side.",
+        body: "It is a complete commerce loop rather than a UI shell: catalogue, cart, checkout, order history, and an admin console that can act on all of it, over an API with real authorization. The parts that are easiest to skip are the parts that are done â€” token refresh with request replay, ownership checks on orders, request deduplication under StrictMode, and analytics computed server-side.",
       },
     ],
   },
@@ -252,16 +249,16 @@ const ProjectCard = ({ project, index, onClick }) => {
       <button
         type="button"
         onClick={() => onClick(project)}
-        className="group relative w-full overflow-hidden rounded-[0.9rem] bg-card text-left transition-all duration-700 motion-safe:hover:-translate-y-1 hover:border-primary/45 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 focus-visible:ring-offset-2 focus-visible:ring-offset-background border border-foreground/15 card-shine"
+        className="group relative w-full overflow-hidden rounded-[0.9rem] bg-card text-left transition-all duration-700 motion-safe:hover:-translate-y-1 motion-safe:active:-translate-y-1 hover:border-primary/45 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 focus-visible:ring-offset-2 focus-visible:ring-offset-background border border-foreground/15 card-shine card-sweep active:border-primary/45 focus-visible:border-primary/45"
         aria-label={`Open ${project.title} project`}
       >
         <div className="relative flex items-center justify-between border-b border-foreground/12 px-5 py-3">
           <span className="flex items-center gap-3">
             <span className="font-mono text-[9px] font-bold uppercase tracking-[0.3em] text-muted">
-              Project File — {project.fileNo}
+              Project File â€” {project.fileNo}
             </span>
           </span>
-          <span className="font-mono text-[9px] font-bold uppercase tracking-[0.3em] text-primary-dim transition-colors duration-300 group-hover:text-primary">
+          <span className="font-mono text-[9px] font-bold uppercase tracking-[0.3em] text-primary-dim transition-colors duration-300 group-hover:text-primary group-active:text-primary group-focus-within:text-primary">
             {project.category}
           </span>
         </div>
@@ -270,7 +267,7 @@ const ProjectCard = ({ project, index, onClick }) => {
           <div className="absolute inset-x-4 top-3 bottom-3 rounded-lg border border-foreground/12 bg-background" />
           <div className="absolute top-3 left-10 w-20 h-5 tape -rotate-2 opacity-90" aria-hidden="true" />
           <div className="absolute bottom-3 right-8 w-16 h-5 tape rotate-2 opacity-90" aria-hidden="true" />
-          <div className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-md border border-foreground/12 bg-background transition-all duration-700 group-hover:border-primary/30">
+          <div className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-md border border-foreground/12 bg-background transition-all duration-700 group-hover:border-primary/30 group-active:border-primary/30 group-focus-within:border-primary/30">
             <span className="absolute inset-0 flex items-center justify-center font-display text-4xl md:text-6xl font-black uppercase text-primary/[0.05] select-none">
               {project.title.split(' ')[0]}
             </span>
@@ -295,7 +292,7 @@ const ProjectCard = ({ project, index, onClick }) => {
                 </p>
               )}
             </div>
-            <span className="mt-1 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-md border-[1.5px] border-foreground/25 text-foreground transition-all duration-300 group-hover:-translate-y-0.5 group-hover:border-primary group-hover:bg-primary group-hover:text-background">
+            <span className="mt-1 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-md border-[1.5px] border-foreground/25 text-foreground transition-all duration-300 group-hover:-translate-y-0.5 group-hover:border-primary group-hover:bg-primary group-hover:text-background group-active:-translate-y-0.5 group-focus-within:-translate-y-0.5 group-active:border-primary group-focus-within:border-primary group-active:bg-primary group-focus-within:bg-primary group-active:text-background group-focus-within:text-background">
               <ArrowUpRight size={16} />
             </span>
           </div>
@@ -331,21 +328,21 @@ const ProjectCard = ({ project, index, onClick }) => {
             {project.tags.map(tag => (
               <span
                 key={tag}
-                className="tag-sweep rounded-[4px] border border-primary/40 px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-widest text-primary transition-colors duration-500 group-hover:border-primary/70 group-hover:bg-primary/10"
+                className="tag-sweep rounded-[4px] border border-primary/40 px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-widest text-primary transition-colors duration-500 group-hover:border-primary/70 group-hover:bg-primary/10 group-active:border-primary/70 group-focus-within:border-primary/70 group-active:bg-primary/10 group-focus-within:bg-primary/10"
               >
                 {tag}
               </span>
             ))}
           </div>
 
-          <div className="mt-4 flex items-center justify-between border-t border-foreground/12 pt-3.5 text-xs font-mono font-bold uppercase tracking-[0.2em] text-foreground/70 transition-colors duration-500 group-hover:border-primary/25">
-            <span className="inline-flex items-center gap-2 transition-all duration-500 group-hover:text-primary group-hover:translate-x-1">
+          <div className="mt-4 flex items-center justify-between border-t border-foreground/12 pt-3.5 text-xs font-mono font-bold uppercase tracking-[0.2em] text-foreground/70 transition-colors duration-500 group-hover:border-primary/25 group-active:border-primary/25 group-focus-within:border-primary/25">
+            <span className="inline-flex items-center gap-2 transition-all duration-500 group-hover:text-primary group-hover:translate-x-1 group-active:text-primary group-focus-within:text-primary group-active:translate-x-1 group-focus-within:translate-x-1">
               Open Project
-              <span className="block h-px w-8 origin-left bg-primary scale-x-0 transition-transform duration-500 group-hover:scale-x-100" />
+              <span className="block h-px w-8 origin-left bg-primary scale-x-0 transition-transform duration-500 group-hover:scale-x-100 group-active:scale-x-100 group-focus-within:scale-x-100" />
             </span>
-            <span className="inline-flex items-center gap-2 transition-all duration-500 group-hover:translate-x-1 group-hover:text-primary/80">
+            <span className="inline-flex items-center gap-2 transition-all duration-500 group-hover:translate-x-1 group-hover:text-primary/80 group-active:translate-x-1 group-focus-within:translate-x-1 group-active:text-primary/80 group-focus-within:text-primary/80">
               Case Study
-              <ArrowUpRight size={14} className="transition-transform duration-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              <ArrowUpRight size={14} className="transition-transform duration-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-active:translate-x-0.5 group-focus-within:translate-x-0.5 group-active:-translate-y-0.5 group-focus-within:-translate-y-0.5" />
             </span>
           </div>
         </div>

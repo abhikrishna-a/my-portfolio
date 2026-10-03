@@ -22,7 +22,15 @@ const Footer = () => {
   };
 
   return (
-    <footer id="contact" className="relative text-foreground py-20 px-6">
+    <footer
+      id="contact"
+      // pt/pb replace the old py-20. The extra bottom padding reserves room for
+      // the fixed dock, which sits over the end of the page: measured at maximum
+      // scroll it was covering the last block of text at every width from 320 to
+      // 1440. The dock is ~72px tall plus a 24px / md:32px offset, so this is set
+      // above that rather than exactly to it.
+      className="relative text-foreground px-6 pt-20 pb-36 md:pb-40"
+    >
       {/* Corner marks */}
       <div className="absolute top-6 left-6 w-7 h-7 border border-foreground/30 border-r-0 border-b-0" aria-hidden="true" />
       <div className="absolute top-6 right-6 w-7 h-7 border border-foreground/30 border-l-0 border-b-0" aria-hidden="true" />
@@ -44,7 +52,7 @@ const Footer = () => {
         <Reveal delay={0.2} origin="bottom" distance={24} scale={0.98}>
           <Magnetic>
             <div onClick={copyToClipboard} className="relative group cursor-pointer" role="button" tabIndex={0} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); copyToClipboard(); } }} aria-label="Copy email to clipboard">
-              <div className="px-8 py-6 rounded-lg border-[1.5px] border-foreground/30 bg-card transition-all duration-300 group-hover:border-primary flex items-center gap-4 card-shine">
+              <div className="px-8 py-6 rounded-lg border-[1.5px] border-foreground/30 bg-card transition-all duration-300 group-hover:border-primary flex items-center gap-4 card-shine group-active:border-primary group-focus-within:border-primary">
                 <span className="font-mono text-lg md:text-2xl font-bold tracking-tight">
                   {email}
                 </span>
@@ -63,13 +71,13 @@ const Footer = () => {
 
         <div className="mt-28 w-full flex flex-col md:flex-row justify-between items-center gap-10 border-t border-foreground/12 pt-12">
           <div className="flex gap-6">
-            <a href="https://www.linkedin.com/in/abhikrishna22" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="inline-flex h-11 w-11 items-center justify-center rounded-md border-[1.5px] border-foreground/25 text-foreground hover:text-background hover:bg-primary hover:border-primary transition-all duration-300">
+            <a href="https://www.linkedin.com/in/abhikrishna22" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="inline-flex h-11 w-11 items-center justify-center rounded-md border-[1.5px] border-foreground/25 text-foreground hover:text-background hover:bg-primary hover:border-primary transition-all duration-300 active:text-background focus-visible:text-background active:bg-primary focus-visible:bg-primary active:border-primary focus-visible:border-primary">
               <Linkedin size={18} />
             </a>
-            <a href="https://github.com/abhikrishna-a" target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="inline-flex h-11 w-11 items-center justify-center rounded-md border-[1.5px] border-foreground/25 text-foreground hover:text-background hover:bg-primary hover:border-primary transition-all duration-300">
+            <a href="https://github.com/abhikrishna-a" target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="inline-flex h-11 w-11 items-center justify-center rounded-md border-[1.5px] border-foreground/25 text-foreground hover:text-background hover:bg-primary hover:border-primary transition-all duration-300 active:text-background focus-visible:text-background active:bg-primary focus-visible:bg-primary active:border-primary focus-visible:border-primary">
               <Github size={18} />
             </a>
-            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=abhikrishna616@gmail.com" target="_blank" rel="noopener noreferrer" aria-label="Email" className="inline-flex h-11 w-11 items-center justify-center rounded-md border-[1.5px] border-foreground/25 text-foreground hover:text-background hover:bg-primary hover:border-primary transition-all duration-300">
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=abhikrishna616@gmail.com" target="_blank" rel="noopener noreferrer" aria-label="Email" className="inline-flex h-11 w-11 items-center justify-center rounded-md border-[1.5px] border-foreground/25 text-foreground hover:text-background hover:bg-primary hover:border-primary transition-all duration-300 active:text-background focus-visible:text-background active:bg-primary focus-visible:bg-primary active:border-primary focus-visible:border-primary">
               <Mail size={18} />
             </a>
           </div>

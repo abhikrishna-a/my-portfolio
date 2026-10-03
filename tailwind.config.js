@@ -4,7 +4,11 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
-  darkMode: 'class',
+  // No `darkMode` key. The previous `darkMode: 'class'` was inert: the project
+  // contains zero `dark:` variants and zero `.dark` selectors, so it could never
+  // have produced a dark theme. Setting it only implied one existed.
+  // Light is the single theme. If a dark theme is ever wanted, add it as
+  // explicit tokens in src/index.css rather than by flipping a switch here.
   theme: {
     extend: {
       colors: {

@@ -34,7 +34,12 @@
     scrollbar-color: rgba(43, 79, 155, 0.4) transparent;
   }
 
-  @media (min-width: 1024px) {
+  /* Must match the CustomCursor gate in CustomCursor.jsx. These two used to
+     disagree: a touch-capable laptop 1280px wide matched min-width:1024px on
+     both sides, which hid the real cursor and drew a fake dot for a pointer
+     that does not exist. (hover:hover) and (pointer:fine) is the actual
+     question -- "does this device have a mouse?" */
+  @media (hover: hover) and (pointer: fine) {
     body,
     a,
     button {

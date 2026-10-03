@@ -1,4 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Spectral:ital,wght@0,400;0,500;0,600;1,400;1,500&family=JetBrains+Mono:wght@400;500;700&display=swap');
+/* Fonts are loaded from index.html with <link> + preconnect, not from an
+   @import here. An @import is a nested render-blocking request: the browser
+   cannot discover it until this stylesheet has downloaded and parsed, which
+   cost 978ms of first paint on Lighthouse mobile. Weights are trimmed to the
+   ones actually used (700/900 Archivo, 400/500/600 Spectral, 400/500/700
+   JetBrains Mono); there is no italic text anywhere in the site. */
 
 @tailwind base;
 @tailwind components;

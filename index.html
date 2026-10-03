@@ -3,6 +3,21 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- The font stylesheet is loaded non-render-blocking. As a plain
+         stylesheet link it cost 996ms of first paint on Lighthouse mobile;
+         preconnect already warms both origins, and display=swap means text
+         paints immediately in the fallback and swaps when the file lands.
+         The noscript copy covers JS being unavailable. -->
+    <!-- Preload the same URL at high priority first. A media="print"
+         stylesheet on its own is fetched at very low priority, so the Archivo
+         900 that the hero LCP element needs arrived after first paint and
+         pushed LCP to 2.7s against a 1.2s FCP. The preload response is reused
+         by the stylesheet link below, so this costs no extra request. -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;900&family=Spectral:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" as="style" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;900&family=Spectral:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" media="print" onload="this.media='all'; this.onload=null" />
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;900&family=Spectral:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" /></noscript>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Abhikrishna - Designer and Developer crafting digital products that solve problems and look beautiful." />
     <meta name="author" content="Abhikrishna" />

@@ -51,6 +51,19 @@ const ProjectShowcase = ({ project, onClose }) => {
                   {project.description || 'A comprehensive digital solution tailored for modern needs, focusing on usability, performance, and clean design.'}
                 </p>
 
+                {project.subtitle && (
+                  <>
+                    <p className="mt-4 font-mono text-xs font-bold uppercase tracking-[0.24em] text-primary-dim">
+                      {project.subtitle}
+                    </p>
+                    {project.tagline && (
+                      <p className="mt-1 font-display text-lg font-bold tracking-tight text-foreground md:text-xl">
+                        {project.tagline}
+                      </p>
+                    )}
+                  </>
+                )}
+
                 <div className="mt-8 flex flex-wrap gap-2">
                   {project.tags.map((tag) => (
                     <span key={tag} className="rounded-[4px] border border-primary/40 px-3 py-1.5 font-mono text-[10px] font-bold uppercase tracking-widest text-primary">
@@ -74,18 +87,22 @@ const ProjectShowcase = ({ project, onClose }) => {
                       <dt className="font-mono text-[10px] font-bold uppercase tracking-[0.25em] text-muted">Category</dt>
                       <dd className="font-mono text-xs font-bold uppercase tracking-wider text-foreground">{project.category}</dd>
                     </div>
-                    <div className="ledger-row flex items-baseline justify-between gap-4 py-2.5">
-                      <dt className="font-mono text-[10px] font-bold uppercase tracking-[0.25em] text-muted">Role</dt>
-                      <dd className="font-mono text-xs font-bold uppercase tracking-wider text-foreground">{project.role}</dd>
-                    </div>
+                    {project.role && (
+                      <div className="ledger-row flex items-baseline justify-between gap-4 py-2.5">
+                        <dt className="font-mono text-[10px] font-bold uppercase tracking-[0.25em] text-muted">Role</dt>
+                        <dd className="font-mono text-xs font-bold uppercase tracking-wider text-foreground">{project.role}</dd>
+                      </div>
+                    )}
                     <div className="ledger-row flex items-baseline justify-between gap-4 py-2.5">
                       <dt className="font-mono text-[10px] font-bold uppercase tracking-[0.25em] text-muted">Stack</dt>
                       <dd className="text-right font-mono text-xs font-bold uppercase tracking-wider text-foreground">{project.tags.join(' · ')}</dd>
                     </div>
-                    <div className="ledger-row flex items-baseline justify-between gap-4 py-2.5">
-                      <dt className="font-mono text-[10px] font-bold uppercase tracking-[0.25em] text-muted">Duration</dt>
-                      <dd className="font-mono text-xs font-bold uppercase tracking-wider text-foreground">{project.duration}</dd>
-                    </div>
+                    {project.duration && (
+                      <div className="ledger-row flex items-baseline justify-between gap-4 py-2.5">
+                        <dt className="font-mono text-[10px] font-bold uppercase tracking-[0.25em] text-muted">Duration</dt>
+                        <dd className="font-mono text-xs font-bold uppercase tracking-wider text-foreground">{project.duration}</dd>
+                      </div>
+                    )}
                     <div className="flex items-baseline justify-between gap-4 pt-2.5 pb-1">
                       <dt className="font-mono text-[10px] font-bold uppercase tracking-[0.25em] text-muted">Status</dt>
                       <dd className={`font-mono text-xs font-bold uppercase tracking-wider ${project.status === 'SHIPPED' ? 'text-amber' : 'text-primary'}`}>{project.status}</dd>
@@ -136,39 +153,77 @@ const ProjectShowcase = ({ project, onClose }) => {
             </div>
           )}
 
-          {project.problem && project.solution && (
+          {project.sections && project.sections.length > 0 && (
             <div className="rounded-[0.9rem] border border-foreground/15 bg-card p-7 md:p-8">
-              <div className="flex flex-col gap-8 md:grid md:grid-cols-2 md:gap-10">
-                <div>
-                  <span className="stamp stamp-red mb-4">Problem</span>
-                  <p className="mt-4 text-base font-medium leading-relaxed text-foreground/80">
-                    {project.problem}
-                  </p>
-                </div>
-                <div className="md:border-l md:border-foreground/12 md:pl-10">
-                  <span className="stamp mb-4">Solution</span>
-                  <p className="mt-4 text-base font-medium leading-relaxed text-foreground/80">
-                    {project.solution}
-                  </p>
-                </div>
+              <div className="mb-6 flex items-center justify-between gap-4">
+                <span className="stamp">Dossier</span>
+                <span className="font-mono text-[9px] font-bold uppercase tracking-[0.25em] text-muted">
+                  {project.sections.length} Entries · Filed Notes
+                </span>
+              </div>
+              <div className="grid grid-cols-1 gap-x-10 gap-y-8 md:grid-cols-2">
+                {project.sections.map((section, idx) => (
+                  <div key={section.title} className="measure-cell">
+                    <div className="mb-3 flex items-baseline gap-3">
+                      <span className="font-mono text-[10px] font-bold uppercase tracking-[0.25em] text-primary-dim">
+                        {String(idx + 1).padStart(2, '0')}
+                      </span>
+                      <h3 className="font-display text-lg font-black tracking-tight uppercase text-foreground md:text-xl">
+                        {section.title}
+                      </h3>
+                    </div>
+                    <p className="text-base font-medium leading-relaxed text-foreground/80">{section.body}</p>
+                    {section.bullets && (
+                      <ul className="mt-4 space-y-2 border-t border-foreground/12 pt-4">
+                        {section.bullets.map((bullet) => (
+                          <li key={bullet} className="flex gap-3 text-sm font-medium leading-relaxed text-foreground/75">
+                            <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-amber/70" aria-hidden="true" />
+                            <span>{bullet}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                ))}
               </div>
             </div>
           )}
 
-          <div className="flex flex-col gap-5 md:gap-8">
-            <div className="flex items-end justify-between gap-4">
-              <div>
-                <span className="mb-2 block font-mono text-[10px] font-bold uppercase tracking-[0.3em] text-muted">
-                  Plate — Print Series
-                </span>
-                <h3 className="ledger-head font-display text-2xl font-black tracking-tight uppercase md:text-3xl text-foreground">Project Screens & Flow</h3>
+          {project.subtitle && project.link && (
+            <div className="rounded-[0.9rem] border border-foreground/15 bg-card p-7 md:p-8">
+              <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
+                <div>
+                  <span className="stamp mb-4">End of Entry</span>
+                  <p className="font-display text-xl font-black tracking-tight uppercase text-foreground md:text-2xl">
+                    {project.tagline || project.title}
+                  </p>
+                </div>
+                <a
+                  href={project.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 rounded-md bg-primary px-7 py-4 text-sm font-bold uppercase tracking-[0.2em] text-background transition-colors hover:bg-primary-dim focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 focus-visible:ring-offset-2 focus-visible:ring-offset-card"
+                >
+                  Live Site <ExternalLink size={18} />
+                </a>
               </div>
-              <span className="stamp-red font-mono text-[9px] font-bold uppercase tracking-[0.25em] text-amber">
-                {project.screenshots?.length || 1} {project.screenshots?.length === 1 ? 'Plate' : 'Plates'}
-              </span>
             </div>
+          )}
 
-            {project.screenshots && project.screenshots.length > 0 ? (
+          {project.screenshots && project.screenshots.length > 0 && (
+            <div className="flex flex-col gap-5 md:gap-8">
+              <div className="flex items-end justify-between gap-4">
+                <div>
+                  <span className="mb-2 block font-mono text-[10px] font-bold uppercase tracking-[0.3em] text-muted">
+                    Plate — Print Series
+                  </span>
+                  <h3 className="ledger-head font-display text-2xl font-black tracking-tight uppercase md:text-3xl text-foreground">Project Screens & Flow</h3>
+                </div>
+                <span className="stamp-red font-mono text-[9px] font-bold uppercase tracking-[0.25em] text-amber">
+                  {project.screenshots.length} {project.screenshots.length === 1 ? 'Plate' : 'Plates'}
+                </span>
+              </div>
+
               <div className={`relative overflow-hidden rounded-[0.9rem] border border-foreground/15 bg-card ${project.screenshotFrameClass || ''}`}>
                 <div className="absolute -top-2 left-12 w-24 h-6 tape -rotate-2 opacity-90" aria-hidden="true" />
                 <div className="flex items-center justify-between gap-4 px-4 pt-4 md:px-5">
@@ -203,17 +258,22 @@ const ProjectShowcase = ({ project, onClose }) => {
                   ))}
                 </div>
               </div>
-            ) : (
-              <div className="relative overflow-hidden rounded-[0.9rem] border border-foreground/15 bg-card">
-                <div className="absolute -top-2 left-12 w-24 h-6 tape -rotate-2 opacity-90" aria-hidden="true" />
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="h-full w-full object-cover"
-                />
-              </div>
-            )}
-          </div>
+            </div>
+          )}
+
+          {project.coverImage && (
+            <div className="overflow-hidden rounded-[0.9rem] border border-foreground/15 bg-card shadow-[0_10px_30px_-18px_rgba(27,35,51,0.45)]">
+              <img
+                src={project.coverImage}
+                alt={project.coverAlt}
+                loading="lazy"
+                decoding="async"
+                width={project.coverWidth}
+                height={project.coverHeight}
+                className="block w-full h-auto object-cover object-top"
+              />
+            </div>
+          )}
         </div>
       </div>
     </div>

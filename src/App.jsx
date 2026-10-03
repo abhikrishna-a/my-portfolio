@@ -6,6 +6,7 @@ import Marquee from './components/ui/Marquee'
 import SkillsStack from './components/sections/SkillsStack'
 import PortfolioGrid from './components/sections/PortfolioGrid'
 import AboutSection from './components/sections/AboutSection'
+import ResumeSection from './components/sections/ResumeSection'
 import Footer from './components/layout/Footer'
 import useSmoothScroll from './hooks/useSmoothScroll'
 import CustomCursor from './components/layout/CustomCursor'
@@ -34,6 +35,7 @@ function App() {
       <SkillsStack />
       <PortfolioGrid />
       <AboutSection />
+      <ResumeSection />
       <Footer />
     </main>
   )

@@ -75,7 +75,7 @@ italic face is requested.
 ## Components
 
 - **Navbar** — floating mono/paper chip, links are `link-underline` (scaleX ink rule).
-- **Hero** — owner header row, stamped name with an `aria-hidden` outline echo (the double-print), availability blink, ruled measurements row (20+ projects / 100+ problems / 1 goal), two stamped actions, margin note.
+- **Hero** — owner header row, stamped name with an `aria-hidden` outline echo (the double-print), availability blink, ruled measurements row (3 featured projects / 100+ problems / 1 goal), two stamped actions, margin note.
 - **Marquee** — ruled ticker of engineering disciplines.
 - **SkillsStack** — ledger table: rows with index, name, tags, proficiency rule bars (measurement, not bars).
 - **PortfolioGrid** — case cards with index/tech/role stamps, watermark number, corner marks.

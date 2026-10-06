@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { Copy, Linkedin, Github, Mail, Check } from 'lucide-react';
+import { Copy, Linkedin, Github, Instagram, Mail, Check } from 'lucide-react';
 import Reveal from '../ui/Reveal';
 import Magnetic from '../ui/Magnetic';
 
@@ -76,6 +76,9 @@ const Footer = () => {
             </a>
             <a href="https://github.com/abhikrishna-a" target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="inline-flex h-11 w-11 items-center justify-center rounded-md border-[1.5px] border-foreground/25 text-foreground hover:text-background hover:bg-primary hover:border-primary transition-all duration-300 active:text-background focus-visible:text-background active:bg-primary focus-visible:bg-primary active:border-primary focus-visible:border-primary">
               <Github size={18} />
+            </a>
+            <a href="https://www.instagram.com/_ab.krishx_/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="inline-flex h-11 w-11 items-center justify-center rounded-md border-[1.5px] border-foreground/25 text-foreground hover:text-background hover:bg-primary hover:border-primary transition-all duration-300 active:text-background focus-visible:text-background active:bg-primary focus-visible:bg-primary active:border-primary focus-visible:border-primary">
+              <Instagram size={18} />
             </a>
             <a href="https://mail.google.com/mail/?view=cm&fs=1&to=abhikrishna616@gmail.com" target="_blank" rel="noopener noreferrer" aria-label="Email" className="inline-flex h-11 w-11 items-center justify-center rounded-md border-[1.5px] border-foreground/25 text-foreground hover:text-background hover:bg-primary hover:border-primary transition-all duration-300 active:text-background focus-visible:text-background active:bg-primary focus-visible:bg-primary active:border-primary focus-visible:border-primary">
               <Mail size={18} />

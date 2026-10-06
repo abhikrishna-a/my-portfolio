@@ -33,7 +33,7 @@ Single-page site: Home → Skills → Portfolio → About → Résumé → Conta
   - Skyrict — FastAPI/Python multi-tenant ERP with Next.js, PostgreSQL RLS, Redis, JWT RS256, MFA, Docker; live at skyrict.in.
 - Dossier content is written from each project's source code. Where the old card copy disagreed with the code, the code won and the claims were corrected or dropped. Corrections so far: EduSphere was labelled "React + DRF" but is a Django monolith; Sprint.X claimed "40+ products" (there are 14) and a "three-step checkout" (checkout is a single-page form, not a wizard).
 - Source-of-truth warning: `D:\Program Files\track\Ecommerce\TrackField` is a DIFFERENT, non-functional project — it does not boot, has no backend, and is not the repo the portfolio links to. Sprint.X is `github.com/abhikrishna-a/Ecommerce_online` (Backend/ + Frontend/). Never write Sprint.X copy from TrackField.
-- Self-reported stats "20+ Projects" and "100+ Problems Solved" are confirmed. The former "10+ Hours Coding" stat is replaced by a goal-themed card (decision: not a counted number).
+- The "20+ Projects" hero stat was replaced with "3 Featured Projects" on 2026-10-06 — no evidence in this repo or on GitHub supported 20+. See SEO.md "Verified claims". "100+ Problems Solved" is still on the hero and is still uncounted; do not publish either number in SEO copy until counted. The former "10+ Hours Coding" stat was replaced by a goal-themed card (decision: not a counted number).
 - README's claimed dark/light theme toggle never existed; it was removed from the README on 2026-10-04. Light is the single theme.
 - `portfolio.image` is declared on all three projects and read nowhere — the grid card renders no image, only a watermark of the project's first word. Either the grid should show thumbnails or the field should be removed.
 - The six project PNGs were replaced with lossless WebP on 2026-10-04 (1.80 MB → 0.92 MB, pixel-identical). The original PNGs are still in `public/` and still copied into `dist/`, referenced by nothing.
@@ -52,7 +52,7 @@ Single-page site: Home → Skills → Portfolio → About → Résumé → Conta
 - Resume PDF published at public/abhikrishna-resume.pdf, served from the Résumé section with the download attribute preserving the filename `Abhikrishna(Full Stack developer).pdf`. Source of truth: the PDF, not any LaTeX draft.
 - EduSphere's landing-page marketing figures (200+ courses, 5k+ students, 98% success, 50+ instructors) are placeholders and must never appear on the site.
 - No testimonials, case studies, or press in the repo — future work must not fabricate these.
-- Confirmed stat claims: "20+ Projects", "100+ Problems Solved".
+- Stat claims: "100+ Problems Solved" (still self-reported, uncounted). "20+ Projects" was dropped 2026-10-06 as unsupported — the hero now reads "3 Featured Projects".
 
 ## Product Principles
 

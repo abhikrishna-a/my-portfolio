@@ -19,16 +19,85 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;900&family=Spectral:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" media="print" onload="this.media='all'; this.onload=null" />
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;900&family=Spectral:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" /></noscript>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <meta name="description" content="Abhikrishna - Designer and Developer crafting digital products that solve problems and look beautiful." />
+
+    <!-- SEO — canonical host is the live Vercel deployment. robots.txt and
+         sitemap.xml used to declare https://abhikrishna.com/, a domain that
+         never resolved, so the sitemap was unreachable at its own declared URL.
+         Keep these four (canonical / robots.txt / sitemap.xml / og:url) on the
+         same host — scripts/seo-check.mjs fails the build if they drift apart. -->
+    <link rel="canonical" href="https://abhikrishna-portfolio.vercel.app/" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="theme-color" content="#f4f0e4" />
     <meta name="author" content="Abhikrishna" />
-    <meta property="og:title" content="Abhikrishna | Portfolio" />
-    <meta property="og:description" content="Designer and Developer crafting digital products that solve problems and look beautiful." />
+
+    <!-- "20+ Projects" was deliberately kept out of this copy: the repository
+         holds 3 featured projects and GitHub shows 15 public repos (~10
+         distinct once forks, the profile README and three portfolio duplicates
+         are removed). "selected projects" is the claim the evidence supports. -->
+    <meta name="description" content="Full-stack developer building products from the database to the pixel. React, Django REST, FastAPI and PostgreSQL. See selected projects, résumé and contact." />
+    <title>Abhikrishna — Full-Stack Developer | React &amp; Django</title>
+
+    <!-- Open Graph / LinkedIn / Facebook -->
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Abhikrishna | Portfolio" />
+    <meta property="og:locale" content="en_IN" />
+    <meta property="og:url" content="https://abhikrishna-portfolio.vercel.app/" />
+    <meta property="og:title" content="Abhikrishna — Full-Stack Developer | React &amp; Django" />
+    <meta property="og:description" content="Full-stack developer building products from the database to the pixel. React, Django REST, FastAPI and PostgreSQL. See selected projects, résumé and contact." />
+    <meta property="og:image" content="https://abhikrishna-portfolio.vercel.app/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Abhikrishna — Full-Stack Developer" />
+
+    <!-- X / Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
-    <title>Abhikrishna | Portfolio</title>
+    <meta name="twitter:title" content="Abhikrishna — Full-Stack Developer | React &amp; Django" />
+    <meta name="twitter:description" content="Full-stack developer building products from the database to the pixel. React, Django REST, FastAPI and PostgreSQL. See selected projects, résumé and contact." />
+    <meta name="twitter:image" content="https://abhikrishna-portfolio.vercel.app/og.png" />
+    <meta name="twitter:image:alt" content="Abhikrishna — Full-Stack Developer" />
+
+    <!-- Entity graph. The Person carries an explicit @id and WebSite.publisher
+         points back at it, so Google binds this site, the LinkedIn profile, the
+         GitHub account and the Instagram account to one person instead of four
+         unrelated URLs. -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Person",
+            "@id": "https://abhikrishna-portfolio.vercel.app/#person",
+            "name": "Abhikrishna",
+            "url": "https://abhikrishna-portfolio.vercel.app/",
+            "jobTitle": "Full-Stack Developer",
+            "email": "mailto:abhikrishna616@gmail.com",
+            "sameAs": [
+              "https://www.linkedin.com/in/abhikrishna22",
+              "https://github.com/abhikrishna-a",
+              "https://www.instagram.com/_ab.krishx_/"
+            ],
+            "knowsAbout": [
+              "React",
+              "Django REST Framework",
+              "FastAPI",
+              "PostgreSQL",
+              "Next.js"
+            ]
+          },
+          {
+            "@type": "WebSite",
+            "name": "Abhikrishna | Portfolio",
+            "url": "https://abhikrishna-portfolio.vercel.app/",
+            "publisher": {
+              "@id": "https://abhikrishna-portfolio.vercel.app/#person"
+            }
+          }
+        ]
+      }
+    </script>
   </head>
   <body>
-    <!-- SEED: THESIS — The portfolio is an engineer's working field logbook; the site itself is the artifact, dated stamped entries and ruled measurement tables proving craft from the database to the pixel, refusing the dark name-hero rut and the resume-as-site. OWN-WORLD — Aged ledger paper ground with a faint engineering grid, a red margin rule and punched holes; ink-blue primary, stamp-red corrections; body in a clean grotesque, data in mono, display set as heavy stamped uppercase; double-ruled ledger heads, tape, corner marks, and rubber stamps. STORY — A recruiter opens the log and reads skills, builds, and contact like signed measured entries; the ink is dry, the verdict their own, contact one glance away. FIRST VIEWPORT — An open logbook sheet: stamped owner header row, heavy stamped name, one-line subtitle, availability stamp, a ruled measurements row (20+ projects / 100+ problems / 1 goal), and stamped actions toward the builds, with a margin note pointing in. FORM — The Engineering Field Logbook, grounded candidate 5 of 7; seed key 3fc37d6d. FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md. -->
+    <!-- SEED: THESIS — The portfolio is an engineer's working field logbook; the site itself is the artifact, dated stamped entries and ruled measurement tables proving craft from the database to the pixel, refusing the dark name-hero rut and the resume-as-site. OWN-WORLD — Aged ledger paper ground with a faint engineering grid, a red margin rule and punched holes; ink-blue primary, stamp-red corrections; body in a clean grotesque, data in mono, display set as heavy stamped uppercase; double-ruled ledger heads, tape, corner marks, and rubber stamps. STORY — A recruiter opens the log and reads skills, builds, and contact like signed measured entries; the ink is dry, the verdict their own, contact one glance away. FIRST VIEWPORT — An open logbook sheet: stamped owner header row, heavy stamped name, one-line subtitle, availability stamp, a ruled measurements row (3 featured projects / 100+ problems / 1 goal), and stamped actions toward the builds, with a margin note pointing in. FORM — The Engineering Field Logbook, grounded candidate 5 of 7; seed key 3fc37d6d. FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md. -->
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

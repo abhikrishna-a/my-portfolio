@@ -17,8 +17,12 @@ const collapseConfig = [
 const NAME = 'ABHIKRISHNA';
 const CHIPS = ['React', 'Django REST', 'REST APIs'];
 
+// The 20+ figure was dropped on 2026-10-06: nothing in this repo or on GitHub
+// supports it (3 featured builds, 15 public repos of which ~10 are distinct
+// once forks, the profile README and three portfolio duplicates are removed).
+// See SEO.md "Verified claims". Do not restore an uncounted number here.
 const measurements = [
-  { to: 20, suffix: '+', label: 'Projects' },
+  { to: 3, suffix: '', label: 'Featured Projects' },
   { to: 100, suffix: '+', label: 'Problems Solved' },
   { to: 1, suffix: '', label: 'Goal — Build & Ship' },
 ];

@@ -191,21 +191,43 @@ scanning your profile should not see the same project three times.
 
 ## Manual steps (cannot be done from this repo)
 
+Run once, in order, after a deploy that carries the SEO changes
+(`npm run seo:live` first — see step 6).
+
 1. **Google Search Console** — URL-prefix property
    `https://abhikrishna-portfolio.vercel.app/` (a *Domain* property would need
-   DNS TXT, impossible on `*.vercel.app`). Used the **HTML file** method: the
-   file Google generated is at `public/google12ef0d74b12c4142.html` and is
-   served at `/google12ef0d74b12c4142.html`. **Deploy first, then click
-   Verify** — it 404s until the build carrying it is live.
-2. **Submit sitemap** in GSC: `https://abhikrishna-portfolio.vercel.app/sitemap.xml`
-3. **Request indexing** for the root URL after the deploy that carries these changes.
-4. **Bing Webmaster Tools** — "Import from Google Search Console" covers it in one click.
-5. Apply the LinkedIn / Instagram / GitHub edits above.
-6. Link every other profile you own → portfolio, so the `sameAs` set and the
-   actual backlinks match.
-7. **Post-deploy validation:** `npm run seo:live` — asserts canonical, OG/Twitter
+   DNS TXT, impossible on `*.vercel.app`). Verification uses the **HTML file**
+   method: the file Google generated is at `public/google12ef0d74b12c4142.html`
+   and is served at `/google12ef0d74b12c4142.html`. Verify once, whenever
+   Google asks again — the file 404s only if it is absent from the deploy.
+2. **Confirm the deploy was indexed** — property → **URL Inspection** → paste
+   the root URL → **Test Live URL**. The live test should show the new title
+   ("Abhikrishna Anand — Full-Stack Developer | React & Django") in Page
+   indexing. Then (and only then) click **Request Indexing**. Processing is a
+   queue: allow days, don't re-request on cooldown.
+3. **Submit the sitemap** in GSC → Sitemaps →
+   `https://abhikrishna-portfolio.vercel.app/sitemap.xml` (one `<loc>`, the root).
+4. **Bing Webmaster Tools** — "Import from Google Search Console" covers
+   verification and the property in one click; then submit the same sitemap
+   again inside Bing.
+5. **Set every profile's display name to `Abhikrishna Anand`** — the one
+   signal that ties search results to the site's JSON-LD `name`:
+   - GitHub → Settings → Profile → Name (bio/README heading too, and keep the
+     Website field on the portfolio).
+   - LinkedIn → edit the intro card name (first `Abhikrishna`, last `Anand`);
+     add the portfolio as a **Featured → Link** and under Contact info — the
+     highest-value backlink. This is the last known missing cross-link.
+   - Instagram → Edit profile → Name = `Abhikrishna Anand`, Website = the
+     portfolio. The handle `_ab.krishx_` deliberately stays a non-match;
+     `sameAs` does the binding.
+   - Link every other profile you own → portfolio, so the `sameAs` set and the
+     actual backlinks match.
+6. **Post-deploy validation:** `npm run seo:live` — asserts canonical, OG/Twitter
    tags, JSON-LD, robots.txt and sitemap.xml **as actually served**, not as built.
-   It fails against a stale deploy, which is what `dist/`-only checking cannot catch.
+   It fails against a stale deploy, which is what `dist/`-only checking cannot
+   catch. Fast-forwarding `perf-responsive-polish` → `main` and pushing (or
+   merging via PR) is what actually releases the build; the branch is kept
+   ahead of `main` for review.
 
 ## Out of scope (deliberately)
 

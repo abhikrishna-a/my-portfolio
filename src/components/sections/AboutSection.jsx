@@ -24,7 +24,7 @@ const AboutSection = () => {
             </p>
             <div className="mt-8 flex items-center justify-center gap-4 font-mono text-[10px] uppercase tracking-[0.3em] text-muted">
               <span className="h-px w-12 bg-foreground/30" />
-              <span className="text-primary-dim">— Abhikrishna</span>
+              <span className="text-primary-dim">— Abhikrishna Anand</span>
               <span className="h-px w-12 bg-foreground/30" />
             </div>
           </div>

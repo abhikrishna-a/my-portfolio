@@ -71,16 +71,16 @@ const Footer = () => {
 
         <div className="mt-28 w-full flex flex-col md:flex-row justify-between items-center gap-10 border-t border-foreground/12 pt-12">
           <div className="flex gap-6">
-            <a href="https://www.linkedin.com/in/abhikrishna22" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="inline-flex h-11 w-11 items-center justify-center rounded-md border-[1.5px] border-foreground/25 text-foreground hover:text-background hover:bg-primary hover:border-primary transition-all duration-300 active:text-background focus-visible:text-background active:bg-primary focus-visible:bg-primary active:border-primary focus-visible:border-primary">
+            <a href="https://www.linkedin.com/in/abhikrishna22" target="_blank" rel="me noopener noreferrer" aria-label="LinkedIn" className="inline-flex h-11 w-11 items-center justify-center rounded-md border-[1.5px] border-foreground/25 text-foreground hover:text-background hover:bg-primary hover:border-primary transition-all duration-300 active:text-background focus-visible:text-background active:bg-primary focus-visible:bg-primary active:border-primary focus-visible:border-primary">
               <Linkedin size={18} />
             </a>
-            <a href="https://github.com/abhikrishna-a" target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="inline-flex h-11 w-11 items-center justify-center rounded-md border-[1.5px] border-foreground/25 text-foreground hover:text-background hover:bg-primary hover:border-primary transition-all duration-300 active:text-background focus-visible:text-background active:bg-primary focus-visible:bg-primary active:border-primary focus-visible:border-primary">
+            <a href="https://github.com/abhikrishna-a" target="_blank" rel="me noopener noreferrer" aria-label="GitHub" className="inline-flex h-11 w-11 items-center justify-center rounded-md border-[1.5px] border-foreground/25 text-foreground hover:text-background hover:bg-primary hover:border-primary transition-all duration-300 active:text-background focus-visible:text-background active:bg-primary focus-visible:bg-primary active:border-primary focus-visible:border-primary">
               <Github size={18} />
             </a>
-            <a href="https://www.instagram.com/_ab.krishx_/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="inline-flex h-11 w-11 items-center justify-center rounded-md border-[1.5px] border-foreground/25 text-foreground hover:text-background hover:bg-primary hover:border-primary transition-all duration-300 active:text-background focus-visible:text-background active:bg-primary focus-visible:bg-primary active:border-primary focus-visible:border-primary">
+            <a href="https://www.instagram.com/_ab.krishx_/" target="_blank" rel="me noopener noreferrer" aria-label="Instagram" className="inline-flex h-11 w-11 items-center justify-center rounded-md border-[1.5px] border-foreground/25 text-foreground hover:text-background hover:bg-primary hover:border-primary transition-all duration-300 active:text-background focus-visible:text-background active:bg-primary focus-visible:bg-primary active:border-primary focus-visible:border-primary">
               <Instagram size={18} />
             </a>
-            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=abhikrishna616@gmail.com" target="_blank" rel="noopener noreferrer" aria-label="Email" className="inline-flex h-11 w-11 items-center justify-center rounded-md border-[1.5px] border-foreground/25 text-foreground hover:text-background hover:bg-primary hover:border-primary transition-all duration-300 active:text-background focus-visible:text-background active:bg-primary focus-visible:bg-primary active:border-primary focus-visible:border-primary">
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=abhikrishna616@gmail.com" target="_blank" rel="me noopener noreferrer" aria-label="Email" className="inline-flex h-11 w-11 items-center justify-center rounded-md border-[1.5px] border-foreground/25 text-foreground hover:text-background hover:bg-primary hover:border-primary transition-all duration-300 active:text-background focus-visible:text-background active:bg-primary focus-visible:bg-primary active:border-primary focus-visible:border-primary">
               <Mail size={18} />
             </a>
           </div>
@@ -88,7 +88,7 @@ const Footer = () => {
           <div className="font-mono text-foreground/70 font-bold uppercase text-xs tracking-widest flex items-center gap-4">
             <span>©Portfolio</span>
             <span className="w-1 h-1 bg-amber/70 rounded-full" />
-            <span className="text-primary-dim">Abhikrishna.</span>
+            <span className="text-primary-dim">Abhikrishna Anand.</span>
             <span className="w-1 h-1 bg-amber/70 rounded-full" />
             <span className="stamp-red">Signed</span>
           </div>

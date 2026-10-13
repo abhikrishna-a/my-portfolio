@@ -20,7 +20,7 @@ const ResumeSection = () => {
               <div>
                 <span className="stamp mb-4">Curriculum Vitae</span>
                 <p className="font-display text-xl font-black uppercase tracking-tight text-foreground md:text-2xl">
-                  Abhikrishna A — Python Full-Stack Developer
+                  Abhikrishna Anand — Python Full-Stack Developer
                 </p>
                 <p className="mt-3 max-w-xl text-base font-medium leading-relaxed text-foreground/80">
                   Experience, projects, and technical skills in one document. PDF, 54 KB.
@@ -29,7 +29,7 @@ const ResumeSection = () => {
 
               <a
                 href="/abhikrishna-resume.pdf"
-                download="Abhikrishna(Full Stack developer).pdf"
+                download="Abhikrishna Anand (Full Stack developer).pdf"
                 className="inline-flex shrink-0 items-center justify-center gap-2 rounded-md bg-primary px-7 py-4 text-sm font-bold uppercase tracking-[0.2em] text-background transition-colors hover:bg-primary-dim focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/70 focus-visible:ring-offset-2 focus-visible:ring-offset-card active:bg-primary-dim focus-visible:bg-primary-dim"
               >
                 <Download size={18} />

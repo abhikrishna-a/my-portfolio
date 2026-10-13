@@ -125,6 +125,7 @@ const Hero = () => {
 
           <h1
             ref={refs.name}
+            aria-label="Abhikrishna Anand"
             className="relative font-display text-[clamp(1.6rem,10.5vw,3rem)] md:text-7xl lg:text-8xl font-black tracking-[-0.02em] uppercase text-foreground whitespace-nowrap"
             style={{
               textShadow: '0 3px 0 rgba(27,35,51,0.06), 1px 4px 0 rgba(27,35,51,0.04)',
@@ -144,6 +145,12 @@ const Hero = () => {
             <span className="relative inline-block">
               <Letters text={NAME} />
             </span>
+            {/* Full legal name for assistive tech and text extraction. The
+                per-letter spans above animate but read as "ABHIKRISHNA", so
+                the h1's accessible name comes from aria-label and this sr-only
+                node. The visible wordmark is unchanged: "ABHIKRISHNA ANAND" on
+                one nowrap line overflows the hero at <=360px. */}
+            <span className="sr-only">Abhikrishna Anand</span>
           </h1>
 
           {/* This delay was 0.55 -> 0.2 and back again, measured, and it is not

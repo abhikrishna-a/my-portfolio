@@ -40,7 +40,7 @@ Copy verbatim wherever a profile asks for a title, bio, or headline. Consistency
 across surfaces is what lets Google bind them to one entity.
 
 ```
-Abhikrishna — Full-Stack Developer
+Abhikrishna Anand — Full-Stack Developer
 React · Django REST · FastAPI · PostgreSQL · Next.js
 Building products from the database to the pixel
 Kozhikode, Kerala, India
@@ -52,7 +52,7 @@ https://abhikrishna-portfolio.vercel.app/
 
 | Field | Site | GitHub | LinkedIn |
 | --- | --- | --- | --- |
-| Display name | Abhikrishna | Abhikrishna A | ? |
+| Display name | Abhikrishna Anand | Abhikrishna Anand | Abhikrishna Anand |
 | Title | Full-Stack Developer | Developer Intern at Bridgeon | ? |
 | Location | *(absent)* | kozhikode, kerala | ? |
 | Employer | *(absent)* | Bridgeon | ? |
@@ -110,7 +110,7 @@ Open to full-stack and frontend opportunities. abhikrishna616@gmail.com
 Handle deliberately diverges from the brand — that is fine, `sameAs` in the
 JSON-LD is what tells Google they are the same person, and it is wired.
 
-**Name field** (searchable, 30 chars): `Abhikrishna`
+**Name field** (searchable, 30 chars): `Abhikrishna Anand`
 **Bio**:
 
 ```
@@ -131,7 +131,7 @@ your name.
 
 ## GitHub — `github.com/abhikrishna-a`
 
-**Name:** `Abhikrishna` (drop the trailing "A" — match the site and LinkedIn)
+**Name:** `Abhikrishna Anand`
 **Bio** (160 char limit):
 
 ```
@@ -141,7 +141,7 @@ Full-Stack Developer · React, Django REST, FastAPI, PostgreSQL · Building from
 **Profile repo `abhikrishna-a/abhikrishna-a` README:**
 
 ```markdown
-### Hi, I'm Abhikrishna — Full-Stack Developer
+### Hi, I'm Abhikrishna Anand — Full-Stack Developer
 
 Building products from the database to the pixel.
 
